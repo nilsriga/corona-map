@@ -1,0 +1,48 @@
+{
+  "name": "corona-map-latvia",
+  "version": "0.0.2",
+  "description": "",
+  "main": "server.js",
+  "nodemonConfig": {
+    "watch": [
+      "."
+    ],
+    "ignore": [
+      "build",
+      "node_modules"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no server.js specified\" && exit 1",
+    "build": "rimraf build/ && babel ./ --out-dir build/ --ignore node_modules,babelrc,package.json,npm-debug.log --copy-files",
+    "start": "npm run build && node build/server.js",
+    "watch": "nodemon --exec npm start",
+    "hot": "nodemon --exec babel-node server.js"
+  },
+  "keywords": [
+    "corona",
+    "map",
+    "latvia"
+  ],
+  "author": "snotrman",
+  "license": "GPL-2.0-only",
+  "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "axios": "^0.19.2",
+    "csv": "^5.3.2",
+    "csv-parse": "^4.8.8",
+    "csv-parser": "^2.3.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "node-sheets": "^1.1.0",
+    "nodemon": "^2.0.2",
+    "npm-check-updates": "^4.0.4",
+    "rimraf": "^3.0.2",
+    "serve": "^11.3.0",
+    "stupid-sheets": "0.0.3"
+  }
+}

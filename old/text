@@ -1,0 +1,4 @@
+id, origin, originCooLat, originCooLng, lat, lng, labelDateOfDiagnosis, firstKnowlege, description, link
+1, Milāna, , , lidosta, <RĪGAS COORDINĀTASlat>, <RĪGAS COORDINĀTASLng>, 23.976440, "#1, 29.februārī", "29.02.20", "29.februārī, 17.55 ielidojusi Rīgā 'airBaltic' lidmašīna 'BT-226' no Itālijas. 2. Martā paziņots tvnetā", "https://www.tvnet.lv/6913081/covid-19-sasniedz-latviju-pirma-saslimusi-sieviete-no-rigas"
+2, Itālijas Ziemeļi, , , <lidosta, 56.918022, 23.971848, "#2, 7.martā", "07.03.20", "vīrietis atgriezās no Itālijas, kopā ar 39 citiem lidmašīnas pasažieriem.",  https://www.tvnet.lv/6917287/otrais-inficetais-latvija-atgriezies-no-italijas-kalnu-kurorta"
+3, italija, , , 56.928302, 23.973660, "
