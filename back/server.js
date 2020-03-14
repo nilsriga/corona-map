@@ -3,6 +3,7 @@
 import Express from "express"
 import http from "http"
 import https from "https"
+import cors from "cors"
 const dotenv = require('dotenv').config();
 
 
@@ -23,6 +24,7 @@ const router = Express.Router()
 
 express.set("env", env)
 express.set("port", port)
+express.use(cors())
 express.use("/", router)
 routes(express)
 

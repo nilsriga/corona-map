@@ -1,65 +1,105 @@
-import React, { Component } from 'react'
-import { Map, GoogleApiWrapper } from 'google-maps-react';
-// import { GoogleMap, LoadScript } from '@react-google-maps/api'
+import React from "react";
+import { compose, withProps } from "recompose";
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from "react-google-maps";
+import MyStyle from "./MyStyleJSON.js"
 
 
-const mapStyles = {
-  width: '100%',
-  height: '100%',
-};
+let i = 0
 
-
-class MainMap extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      stores: [{lat: 47.49855629475769, lng: -122.14184416996333},
-              {latitude: 47.359423, longitude: -122.021071},
-              {latitude: 47.2052192687988, longitude: -121.988426208496},
-              {latitude: 47.6307081, longitude: -122.1434325},
-              {latitude: 47.3084488, longitude: -122.2140121},
-              {latitude: 47.5524695, longitude: -122.0425407}],
-      google: {}
-    }
-  }
-  render() {
-    return (
-      <div>
-        {/* <LoadScript
-          id="script-loader"
-          googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY}
-        > */}
-        {/* <Map
-          defaultZoom={12}
-          defaultCenter={{
-            lat: 56.955533,
-            lng: 24.090859
-          }}
-        >
-        </Map> */}
-
-          <Map
-            google={this.props.google}
-            zoom={8}
-            style={mapStyles}
-            initialCenter={{ lat: 47.444, lng: -122.176 }}
-          />
-        {/* </LoadScript> */}
-      </div>
-    )
-  }
+let state = {
+  data: [1, 2, 3, 4, 5]
 }
 
-// export default GoogleApiWrapper(
-//   (props) => ({
-//     apiKey: process.env.REACT_APP_MAPS_API_KEY,
-//     language: props.language,
-//   }
-// ))(MainMap)
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_MAPS_API_KEY
-})(MainMap);
+const data = async () => {
+  return new Promise((resolve, reject) => {
+    let data
+    fetch("http://localhost")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          resolve(data = JSON.parse(result))
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+  })
+}
+
+const MainMap = compose(
+
+  withProps({
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}`,
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ height: `400px` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+  }),
+  withScriptjs,
+  withGoogleMap
+)(props => (
+
+  <GoogleMap defaultZoom={8}
+    defaultCenter={{
+      lat: 56.955533,
+      lng: 24.090859
+    }}
+    defaultOptions={MyStyle}
+  >
+
+    {
+      console.log(data())
+    }
+
+    {
+      state.data.map(item => (
+        i = i + 0.01,
+
+        <Marker
+          key={item + Math.random() * 10000000000000000}
+          position={{
+            lat: 56.955332 + i,
+            lng: 24.090854 - i
+          }}
+        />
+
+      ))
+    }
 
 
-// export default MainMap;
+
+    {/* <Marker
+      position={{
+        lat: 56.955332,
+        lng: 24.090854
+      }} />
+    <Marker
+      position={{
+        lat: 56.955437,
+        lng: 24.090854
+      }} />
+    <Marker
+      position={{
+        lat: 56.955532,
+        lng: 24.090851
+      }} />
+    <Marker
+      position={{
+        lat: 56.955231,
+        lng: 24.090855
+      }} /> */}
+
+
+
+
+
+  </GoogleMap>
+));
+
+
+export default MainMap
+
