@@ -21,6 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "serve": "PORT=$(grep PORT .env | cut -d '=' -f2) && serve -s build -l $PORT",
+    "production": "react-scripts build && PORT=$(grep PORT .env | cut -d '=' -f2) && HTTPS=true SSL_CRT_FILE=/var/www/https-certificates/fullchain.pem && SSL_KEY_FILE=/var/www/https-certificates/privkey.pem && serve --ssl-cert $SSL_CRT_FILE --ssl-key $SSL_KEY_FILE build -l $PORT",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
