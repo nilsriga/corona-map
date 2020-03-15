@@ -256,11 +256,11 @@ const MainMap = compose(
                         {item.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {item.dateOfFirstContactWIthLatvia}</li> : ""}
                         {item.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {item.dateOfDiagnosisBroadcast}</li> : ""}
                         {item.descriptionTitle ? <li>Īsumā: {item.descriptionTitle}</li> : ""}
-                        {item.link ? <li>{item.link}</li> : ""}
                         {item.descriptionHeader ? <li>{item.descriptionHeader}</li> : ""}
-                        {item.extraLink1 ? <li>{item.extraLink1}</li> : ""}
-                        {item.extraLink2 ? <li>{item.extraLink2}</li> : ""}
-                        {item.extraLink3 ? <li>{item.extraLink3}</li> : ""}
+                        {item.link ? <li><a href={item.link}>{item.link}</a></li> : ""}
+                        {item.extraLink1 ? <li><a href={item.extraLink1}>{item.extraLink1}</a></li> : ""}
+                        {item.extraLink2 ? <li><a href={item.extraLink2}>{item.extraLink1}</a></li> : ""}
+                        {item.extraLink3 ? <li><a href={item.extraLink3}>{item.extraLink1}</a></li> : ""}
 
                       </ul>
                     </div>
