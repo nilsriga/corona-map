@@ -1,5 +1,10 @@
 api/node_modules
 api/build
+api/.env
+
 ui/node_modules
-build
+ui/build
+
+ui/.env
+
 git-clones
