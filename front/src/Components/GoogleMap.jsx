@@ -1,5 +1,5 @@
-import React from "react";
-import { compose, withProps } from "recompose";
+import React, { useEffect } from "react";
+import { compose, withProps, lifecycle } from "recompose";
 import {
   withScriptjs,
   withGoogleMap,
@@ -7,6 +7,7 @@ import {
   Marker,
 } from "react-google-maps";
 import MyStyle from "./MyStyleJSON.js"
+import _ from "lodash"
 
 
 let i = 0
@@ -15,6 +16,10 @@ let state = {
   data: [1, 2, 3, 4, 5]
 }
 
+// componentDidMount() {
+//   setTimeout(this.myMethod, 1000/60)
+// }
+
 const data = async () => {
   return new Promise((resolve, reject) => {
     let data
@@ -22,16 +27,43 @@ const data = async () => {
       .then(res => res.json())
       .then(
         (result) => {
-          resolve(data = JSON.parse(result))
+          resolve(state.data = JSON.parse(result))
         },
         (error) => {
           console.log(error)
+          state.data = JSON.parse(error)
         }
       )
   })
 }
 
 const MainMap = compose(
+  lifecycle({
+    componentWillMount() {
+    },
+    componentDidMount() {
+      this.setState({ data: [] });
+      fetch("http://localhost")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          state.data = JSON.parse(result)
+        },
+        (error) => {
+          console.log(error)
+          state.data = JSON.parse(error)
+        }
+      )
+    //   fetch("https://api.github.com/users/tomchentw/repos?per_page=100")
+    //     .then(r => r.json())
+    //     .then(data =>
+    //       _.reverse(_.sortBy(_.filter(data, it => !it.fork), "pushed_at"))
+    //     )
+    //     .then(data => this.setState({ data }));
+    }
+  
+  }),
+
 
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}`,
@@ -39,10 +71,12 @@ const MainMap = compose(
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
-  withScriptjs,
-  withGoogleMap
-)(props => (
+    withScriptjs,
+    withGoogleMap
 
+) (props =>{
+return (
+console.log(props),
   <GoogleMap defaultZoom={8}
     defaultCenter={{
       lat: 56.955533,
@@ -52,13 +86,15 @@ const MainMap = compose(
   >
 
     {
-      console.log(data())
+      console.log(data()),
+      console.log(state.data),
+      console.log(state)
     }
 
     {
       state.data.map(item => (
         i = i + 0.01,
-
+        console.log(item),
         <Marker
           key={item + Math.random() * 10000000000000000}
           position={{
@@ -98,7 +134,11 @@ const MainMap = compose(
 
 
   </GoogleMap>
-));
+
+
+)
+
+} );
 
 
 export default MainMap
