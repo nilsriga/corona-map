@@ -7,7 +7,7 @@ import {
   Marker,
   Polyline,
   InfoWindow,
-  Circle
+  // Circle
   // DirectionsRenderer
 } from "react-google-maps";
 import MyStyle from "./MyStyleJSON.js"
