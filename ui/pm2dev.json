@@ -3,7 +3,7 @@
         {
             "name": "ui-dev",
             "script": "npm",
-            "args": "run-script start",
+            "args": "run-script dev",
             "watch": "src"
         }
     ]
