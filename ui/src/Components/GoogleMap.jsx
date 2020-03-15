@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
-import { compose, withProps, lifecycle } from "recompose";
+import React from "react";
+import { compose, withProps, lifecycle, withStateHandlers } from "recompose";
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   Marker,
   Polyline,
-  MarkerClusterer
+  InfoWindow,
+  Circle
   // DirectionsRenderer
 } from "react-google-maps";
 import MyStyle from "./MyStyleJSON.js"
+const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
 
 let state = {
@@ -17,25 +19,28 @@ let state = {
   lineSymbol: {},
   markerIcon: {},
   labelOrigin: {},
-  i: 0
+  i: 0,
+  total: 0
 }
 
+
+
 // THIS SPREADS OUT THE POINTS A BIT
-// function getOffsetCoo(coo) {
+function getOffsetCoo(coo) {
 
-//   let i = (Math.random() * 0.001).toFixed(5)
-//   let num = coo
-//   for (let y = 0; y < 10; y++) {
-//     let sign = Math.random()
-//     if (sign === 0) {
-//       num = (num + i).toFixed(5)
-//     } else {
-//       num = (num - i).toFixed(5)
-//     }
-//   }
+  let i = (Math.random() * 0.001).toFixed(5)
+  let num = coo
+  for (let y = 0; y < 10; y++) {
+    let sign = Math.random()
+    if (sign === 0) {
+      num = (num + i).toFixed(5)
+    } else {
+      num = (num - i).toFixed(5)
+    }
+  }
 
-//   return num
-// }
+  return num
+}
 
 function getOffsetXY(num) {
   let i = (Math.random() * 12)
@@ -59,11 +64,18 @@ const MainMap = compose(
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}`,
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
+    containerElement: <div style={{ height: "90vh" }} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withScriptjs,
   withGoogleMap,
+  withStateHandlers(() => ({
+    isOpen: false,
+  }), {
+    onToggleOpen: ({ isOpen }) => () => ({
+      isOpen: !isOpen,
+    })
+  }),
   lifecycle({
     componentWillMount() {
       this.setState({ data: [] });
@@ -77,34 +89,32 @@ const MainMap = compose(
 
 
 
-      state.labelOrigin = new window.google.maps.Point(9, 9)
+      state.labelOrigin = new window.google.maps.Point(12, 66)
 
       state.lineSymbol = {
         path: linePath
       }
 
-      fetch("http://localhost")
+      fetch(process.env.REACT_APP_API_HOST)
         .then(res => res.json())
         .then(
           (result) => {
             state.data = result
+            state.total = result.length
           },
           (error) => {
             console.log(error)
-            state.data = JSON.parse(error)
+            state.data = error
           }
         )
         .then(data => this.setState({ data }))
         .then(data => {
           // THIS ENABLES DIRECTIONS
           // state.data.forEach(item => {
-
           //   const selfLat = parseFloat(item.selfCooLat)
           //   const selfLng = parseFloat(item.selfCooLng)
           //   const originLat = parseFloat(item.originCooLat)
           //   const originLng = parseFloat(item.originCooLng)
-
-
           //   DirectionsService.route({
           //     origin: {
           //       lat: originLat,
@@ -145,38 +155,66 @@ const MainMap = compose(
       onClick={props.onMarkerClustererClick}
       averageCenter
       enableRetinaIcons
-      gridSize={60}
+      gridSize={5}
+      ignoreHidden={true}
+    // ENABLE THIS FOR CUSTOM CLUSTER ICON
+    // styles={[
+    //   {
+    //     textColor: '#c2fff1',
+    //     height: 100,
+    //     url: "https://iconsplace.com/wp-content/uploads/_icons/fffff0/32/png/biohazard-icon-7-32.png",
+    //     width: 100,
+    //   },
+    //   {
+    //     textColor: '#c2fff1',
+    //     height: 56,
+    //     url: "https://iconsplace.com/wp-content/uploads/_icons/fffff0/32/png/biohazard-icon-7-32.png",
+    //     width: 56,
+    //   },
+    //   {
+    //     textColor: '#c2fff1',
+    //     height: 66,
+    //     url: "https://iconsplace.com/wp-content/uploads/_icons/fffff0/32/png/biohazard-icon-7-32.png",
+    //     width: 66,
+    //   },
+    //   {
+    //     textColor: '#c2fff1',
+    //     height: 78,
+    //     url: "https://iconsplace.com/wp-content/uploads/_icons/fffff0/32/png/biohazard-icon-7-32.png",
+    //     width: 78,
+    //   },
+    //   {
+    //     textColor: '#c2fff1',
+    //     height: 90,
+    //     url: "https://iconsplace.com/wp-content/uploads/_icons/fffff0/32/png/biohazard-icon-7-32.png",
+    //     width: 90,
+    //   }]}
     >
 
       {/* {THIS ENABLES DIRECTIONS} */}
       {/* {props.directions && <DirectionsRenderer directions={props.directions} />} */}
-
       {
         state.data.map((item, index, arr) => {
 
 
-          const selfLat = parseFloat(item.selfCooLat)
-          const selfLng = parseFloat(item.selfCooLng)
-          const originLat = parseFloat(item.originCooLat)
-          const originLng = parseFloat(item.originCooLng)
-
+          // const selfLat = parseFloat(item.selfCooLat)
+          // const selfLng = parseFloat(item.selfCooLng)
+          // const originLat = parseFloat(item.originCooLat)
+          // const originLng = parseFloat(item.originCooLng)
 
           // THIS MAKES MARKERS BE SPREAD OUT A MORE
+          const selfLat = parseFloat(getOffsetCoo(item.selfCooLat))
+          const selfLng = parseFloat(getOffsetCoo(item.selfCooLng))
+          const originLat = parseFloat(getOffsetCoo(item.originCooLat))
+          const originLng = parseFloat(getOffsetCoo(item.originCooLng))
 
-
-          // const selfLat = parseFloat(getOffsetCoo(item.selfCooLat))
-          // const selfLng = parseFloat(getOffsetCoo(item.selfCooLng))
-          // const originLat = parseFloat(getOffsetCoo(item.originCooLat))
-          // const originLng = parseFloat(getOffsetCoo(item.originCooLng))
-
-          // return (state.data.map((item, index, arr) => {
 
 
           state.markerIcon = {
-            url: 'https://iconsplace.com/wp-content/uploads/_icons/fffff0/256/png/biohazard-icon-7-256.png',
-            scaledSize: new window.google.maps.Size(25, 25),
+            url: 'https://iconsplace.com/wp-content/uploads/_icons/fffff0/32/png/biohazard-icon-7-32.png',
+            // scaledSize: new window.google.maps.Size(25, 25),
             origin: new window.google.maps.Point(0, 0),
-            anchor: new window.google.maps.Point(getOffsetXY(30), getOffsetXY(60)),
+            // anchor: new window.google.maps.Point(getOffsetXY(30), getOffsetXY(60)),
             labelOrigin: new window.google.maps.Point(getOffsetXY(35), getOffsetXY(65))
           }
 
@@ -189,6 +227,7 @@ const MainMap = compose(
                   lng: originLng
                 }}
                 visible={false}
+              // ENABLE THIS FOR CUSTOM MARKER ICON
               // icon={state.markerIcon}
               // label={{
               //   text: item.label,
@@ -198,21 +237,78 @@ const MainMap = compose(
               // }}
               />
 
-              < Marker
+
+
+
+              <MarkerWithInfoWindow
+                position={{
+                  lat: selfLat,
+                  lng: selfLng
+                }}
+                content={(
+                  <div style={{ opacity: 0.75 }}>
+                    <div>
+                      <ul>
+
+                        {item.label ? <h3>{item.label}</h3> : ""}
+                        {item.origin ? <li>Izcelsme: {item.origin}</li> : ""}
+                        {item.totalInfected ? <li>Inficētais Nr.: {item.totalInfected}</li> : ""}
+                        {item.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {item.dateOfFirstContactWIthLatvia}</li> : ""}
+                        {item.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {item.dateOfDiagnosisBroadcast}</li> : ""}
+                        {item.descriptionTitle ? <li>Īsumā: {item.descriptionTitle}</li> : ""}
+                        {item.link ? <li>{item.link}</li> : ""}
+                        {item.descriptionHeader ? <li>{item.descriptionHeader}</li> : ""}
+                        {item.extraLink1 ? <li>{item.extraLink1}</li> : ""}
+                        {item.extraLink2 ? <li>{item.extraLink2}</li> : ""}
+                        {item.extraLink3 ? <li>{item.extraLink3}</li> : ""}
+
+                      </ul>
+                    </div>
+                  </div>
+                )} />
+
+
+              {/* <Marker
                 key={index + "Coordinates"}
                 position={{
                   lat: selfLat,
                   lng: selfLng
                 }}
                 icon={state.markerIcon}
-                onClick={() => { console.log(123) }}
-              // label={{
-              //   text: item.label,
-              //   color: "#fff7f8",
-              //   fontSize: "16px",
-              //   labelOrigin: state.labelOrigin
-              // }}
-              />
+                onClick={props.onToggleOpen}
+              >
+
+                {
+                props.isOpen && <InfoWindow
+                  key={index + "Info"}
+                  onCloseClick={props.onToggleOpen}
+                >
+                  <div style={{ opacity: 0.75 }}>
+                    <div>
+                      <ul>
+
+
+                        {item.label ? <h3>{item.label}</h3> : ""}
+                        {item.origin ? <li>Izcelsme: {item.origin}</li> : ""}
+                        {item.totalInfected ? <li>Inficētais Nr.: {item.totalInfected}</li> : ""}
+                        {item.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {item.dateOfFirstContactWIthLatvia}</li> : ""}
+                        {item.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {item.dateOfDiagnosisBroadcast}</li> : ""}
+                        {item.descriptionTitle ? <li>Īsumā: {item.descriptionTitle}</li> : ""}
+                        {item.link ? <li>{item.link}</li> : ""}
+                        {item.descriptionHeader ? <li>{item.descriptionHeader}</li> : ""}
+                        {item.extraLink1 ? <li>{item.extraLink1}</li> : ""}
+                        {item.extraLink2 ? <li>{item.extraLink2}</li> : ""}
+                        {item.extraLink3 ? <li>{item.extraLink3}</li> : ""}
+
+                      </ul>
+                    </div>
+                  </div>
+                </InfoWindow>
+                }
+
+              </Marker> */}
+
+
 
               < Polyline
                 path={
@@ -234,45 +330,62 @@ const MainMap = compose(
                   strokeWeight: 2.2,
                   icons: [{
                     icon: state.lineSymbol,
-                    // offset: '100%',
                     scale: 200,
                     repeat: '20px'
 
                   }],
-
-
                 }}
               />
+
+              {/* IF YOU CAN FIGURE OUT HOW TO PUT TEXT INSIDE A CIRCLE - THIS WILL LOOK BETTER */}
+              {/* <Circle
+                center={{
+                  lat: 57.235968,
+                  lng: 23.779556
+                }}
+                radius={20000}
+                options={{
+                  geodesic: true,
+                  fillColor: "#5a617e",
+                  strokeColor: '#f50530',
+                  strokeWeight: 0.2,
+
+                }}
+                lable={"asdf"}
+                text={"asdf"}
+                zIndex={1000000}
+                onCloseClick={props.onToggleOpen}
+              >
+              </Circle> */}
+
             </div>
           )
-          // })
-          // )
+
+
         })
       }
 
-
-
+      {/* STATIC MARKER WITH RIGA COORDINATES */}
       {/* <Marker
       position={{
         lat: 56.955332,
         lng: 24.090854
-      }} />
-    <Marker
-      position={{
-        lat: 56.955437,
-        lng: 24.090854
-      }} />
-    <Marker
-      position={{
-        lat: 56.955532,
-        lng: 24.090851
-      }} />
-    <Marker
-      position={{
-        lat: 56.955231,
-        lng: 24.090855
       }} /> */}
 
+      {
+        <InfoWindow
+          position={{
+            lat: 57.235968,
+            lng: 23.779556
+          }}
+          visible={true}
+        >
+          <div style={{ opacity: 0.75 }}>
+            <h2>LV Kopā: {state.total}</h2>
+            <p>{(new Date()).getUTCDate() + "." + (new Date()).getUTCMonth() + "." + (new Date()).getFullYear()}</p>
+          </div>
+        </InfoWindow>
+      }
 
 
     </MarkerClusterer>
@@ -284,5 +397,43 @@ const MainMap = compose(
 ));
 
 
-// export default enhance(MainMap)
+
+class MarkerWithInfoWindow extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      isOpen: false
+    }
+    this.onToggleOpen = this.onToggleOpen.bind(this);
+  }
+
+  onToggleOpen() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
+  render() {
+    return (
+      <Marker
+      key={Math.random() * 1000 + "Coordinates"}
+      position={this.props.position}
+      onClick={this.onToggleOpen}
+      icon={state.markerIcon}
+      >
+
+        {this.state.isOpen && <InfoWindow onCloseClick={this.onToggleOpen}>
+
+          {this.props.content}
+
+        </InfoWindow>}
+
+      </Marker>
+    )
+  }
+}
+
+
+
 export default MainMap
