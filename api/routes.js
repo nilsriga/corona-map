@@ -5,6 +5,6 @@ export default (express) => {
     var googleSheetsJson = await getGoogleSheetsJson()
     // console.log(googleSheetsJson.data)
     
-    res.send(JSON.stringify(await googleSheetsJson))
+    res.send(await googleSheetsJson.toString())
   });
 };

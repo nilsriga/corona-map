@@ -1,4 +1,5 @@
-back/node_modules
-back/build
-front/node_modules
+api/node_modules
+api/build
+ui/node_modules
 build
+git-clones
