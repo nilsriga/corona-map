@@ -89,7 +89,7 @@ const MainMap = compose(
 
 
 
-      state.labelOrigin = new window.google.maps.Point(12, 66)
+      // state.labelOrigin = new window.google.maps.Point(12, 66)
 
       state.lineSymbol = {
         path: linePath
@@ -191,6 +191,8 @@ const MainMap = compose(
     //   }]}
     >
 
+
+
       {/* {THIS ENABLES DIRECTIONS} */}
       {/* {props.directions && <DirectionsRenderer directions={props.directions} />} */}
       {
@@ -220,6 +222,8 @@ const MainMap = compose(
 
           return (
             <div key={Math.random() * 10000000000000000}>
+
+
               < Marker
                 key={index + "origin"}
                 position={{
@@ -227,24 +231,33 @@ const MainMap = compose(
                   lng: originLng
                 }}
                 visible={false}
-              // ENABLE THIS FOR CUSTOM MARKER ICON
-              // icon={state.markerIcon}
-              // label={{
-              //   text: item.label,
-              //   color: "#fff7f8",
-              //   fontSize: "16px",
-              //   labelOrigin: state.labelOrigin
-              // }}
+                // ENABLE THIS FOR CUSTOM MARKER ICON
+                // icon={state.markerIcon}
+                label={{
+                  text: item.label,
+                  color: "#fff7f8",
+                  fontSize: "16px",
+                  labelOrigin: state.labelOrigin
+                }}
               />
 
 
 
 
               <MarkerWithInfoWindow
-                position={{
-                  lat: selfLat,
-                  lng: selfLng
-                }}
+                position={
+                  item.id === "1" 
+                  ?
+                  {
+                    lat: parseFloat(item.selfCooLat),
+                    lng: parseFloat(item.selfCooLng)
+                  }
+                  :
+                  {
+                    lat: selfLat,
+                    lng: selfLng
+                  }
+                }
                 content={(
                   <div style={{ opacity: 0.75 }}>
                     <div>
@@ -265,7 +278,9 @@ const MainMap = compose(
                       </ul>
                     </div>
                   </div>
-                )} />
+                )}
+                label={item.id === "1" ? item.label : ""}
+              />
 
 
               {/* <Marker
@@ -417,10 +432,11 @@ class MarkerWithInfoWindow extends React.Component {
   render() {
     return (
       <Marker
-      key={Math.random() * 1000 + "Coordinates"}
-      position={this.props.position}
-      onClick={this.onToggleOpen}
-      icon={state.markerIcon}
+        key={Math.random() * 1000 + "Coordinates"}
+        position={this.props.position}
+        onClick={this.onToggleOpen}
+        icon={state.markerIcon}
+        label={this.props.label}
       >
 
         {this.state.isOpen && <InfoWindow onCloseClick={this.onToggleOpen}>
