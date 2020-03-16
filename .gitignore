@@ -1,7 +1,7 @@
 api/node_modules
 api/build
 api/.env
-api/request.counter
+api/.counter
 
 ui/node_modules
 ui/build
@@ -12,4 +12,4 @@ git-clones
 old
 old/
 old/*
-api/request.counter
+
