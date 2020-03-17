@@ -1,17 +1,16 @@
 import React from 'react';
 import Home from './Home.jsx';
 import "./App.css"
-import Twitter from './Components/Twitter';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
 
-      <div>
+      <div >
 
-        <Home ></Home>
-        <Twitter/>
-      </div>
+        < Home > </Home>
+        
+      </ div >
 
     </div>
   );

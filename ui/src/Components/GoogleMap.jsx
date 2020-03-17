@@ -94,7 +94,7 @@ const MainMap = compose(
         path: linePath
       }
 
-      fetch('http://latvijaskoronakarte.online:8080')
+      fetch(process.env.REACT_APP_API_HOST)
         .then(res => res.json())
         .then(
           (result) => {

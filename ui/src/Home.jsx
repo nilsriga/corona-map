@@ -10,6 +10,7 @@ import {
 	Icon
 } from "semantic-ui-react";
 import MainMap from "./Components/GoogleMap";
+import Twitter from './Components/Twitter';
 
 class Home extends Component {
 
@@ -30,81 +31,139 @@ class Home extends Component {
 		const { activeIndex } = this.state
 		return (
 			<Segment inverted>
-				<Container>
-					<Grid divided stackable>
-						<Grid.Row>
-							<Grid.Column stretched>
-
-								<Header as="h4">TVNET + SPKC Twitter</Header>
-								<List>
+				<Grid divided stackable>
+					<Grid.Row>
 
 
-									<List.Item>
 
-										<Accordion inverted>
-											<Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
-												<Icon name='dropdown' />
-												What is a dog?
-											</Accordion.Title>
-											<Accordion.Content active={activeIndex === 0}>
-												<p>
-													A dog is a type of domesticated animal. Known for its loyalty and
-													faithfulness, it can be found as a welcome guest in many
-													households across the world.
-												</p>
-											</Accordion.Content>
+						<Grid.Column width={3} divided streached >
 
-											<Accordion.Title active={activeIndex === 1} index={1} onClick={this.handleClick}>
-												<Icon name='dropdown' />
-												What kinds of dogs are there?
-											</Accordion.Title>
-											<Accordion.Content active={activeIndex === 1}>
-												<p>
-													There are many breeds of dogs. Each breed varies in size and
-													temperament. Owners often select a breed of dog that they find to
-													be compatible with their own lifestyle and desires from a
-													companion.
-												</p>
-											</Accordion.Content>
+							<Segment compact inverted>
+
+								<Header as="h4">SPKC Twitter</Header>
+								<Twitter />
+
+							</Segment>
+
+						</Grid.Column>
 
 
-										</Accordion>
 
 
-										Mushy
-									</List.Item>
+						<Grid.Column width={10} >
+
+							<Segment raised style={{ padding: "0" }}>
+								<MainMap />
+							</Segment>
+
+						</Grid.Column>
 
 
-									<List.Item as="a" target="_blank" href="http://finchecker.eu/contact-us">
-										Sushy
-									</List.Item>
 
 
-								</List>
+						<Grid.Column width={3} divided stretched >
+
+							<Grid.Row color={"gray"}>
+
+								<Header as="h4" inverted>Inficētie</Header>
 
 
-							</Grid.Column>
+								<Segment style={{ padding: "0" }} >
 
-							<Grid.Column width={14}>
 
-								<Segment style={{ padding: "1px" }}>
-									<MainMap />
+									<Accordion styled>
+
+
+										<Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
+											<Icon name='dropdown' />
+										#60 Inficētais
+         							 </Accordion.Title>
+										<Accordion.Content active={activeIndex === 0}>
+											Info:...
+									</Accordion.Content>
+
+
+
+										<Accordion.Title active={activeIndex === 1} index={1} onClick={this.handleClick}>
+											<Icon name='dropdown' />
+										#59 Inficētais
+        						    </Accordion.Title>
+										<Accordion.Content active={activeIndex === 1}>
+											Info:...
+									</Accordion.Content>
+
+
+
+										<Accordion.Title active={activeIndex === 2} index={2} onClick={this.handleClick}>
+											<Icon name='dropdown' />
+										#58 Inficētais
+         							</Accordion.Title>
+										<Accordion.Content active={activeIndex === 2}>
+											Info:...
+									</Accordion.Content>
+
+
+									</Accordion>
 								</Segment>
 
-							</Grid.Column>
 
-							<Grid.Column divided stretched>
 
-								<Grid.Row>Info Par Inficiētajiem</Grid.Row>
+							</Grid.Row>
 
-								<Divider></Divider>
+							<Divider></Divider>
 
-								<Grid.Row>WHO FACTS</Grid.Row>
+							<Grid.Row>
 
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
-				</Container>
+								<Header as="h4" inverted>COVID-19 Fakti</Header>
+
+								<Segment style={{ padding: "0" }} >
+
+
+
+									<Accordion styled>
+
+
+										<Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
+											<Icon name='dropdown' />
+										#60 Inficētais
+         							 </Accordion.Title>
+										<Accordion.Content active={activeIndex === 0}>
+											Info:...
+									</Accordion.Content>
+
+
+
+										<Accordion.Title active={activeIndex === 1} index={1} onClick={this.handleClick}>
+											<Icon name='dropdown' />
+										#59 Inficētais
+        						    </Accordion.Title>
+										<Accordion.Content active={activeIndex === 1}>
+											Info:...
+									</Accordion.Content>
+
+
+
+										<Accordion.Title active={activeIndex === 2} index={2} onClick={this.handleClick}>
+											<Icon name='dropdown' />
+										#58 Inficētais
+         							</Accordion.Title>
+										<Accordion.Content active={activeIndex === 2}>
+											Info:...
+									</Accordion.Content>
+
+
+									</Accordion>
+								</Segment>
+
+
+							</Grid.Row>
+
+						</Grid.Column>
+
+
+
+					</Grid.Row>
+				</Grid>
 			</Segment>
 		);
 	}

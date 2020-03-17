@@ -13,10 +13,14 @@ const twiter = () => {
     return (
         <>
             <TwitterTimelineEmbed
+                autoHeight={true}
+                theme={'dark'}
                 sourceType="SPKCentrs"
                 screenName="SPKCentrs"
-                options={{ height: 400 ,
-                    width:200}}
+                options={{ 
+                    height: 400 ,
+                    width:200
+                }}
             />
 
         </>
