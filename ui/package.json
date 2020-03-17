@@ -1,44 +1,47 @@
 {
-  "name": "corona",
-  "version": "0.1.0",
-  "private": false,
-  "dependencies": {
-    "@react-google-maps/api": "^1.8.5",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "core-js": "^3.6.4",
-    "eslint-plugin-flowtype": "^4.6.0",
-    "google-maps-react": "^2.0.2",
-    "npm": "^6.14.2",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-google-maps": "^9.4.5",
-    "react-scripts": "3.4.0",
-    "typescript": "^3.8.3"
-  },
-  "scripts": {
-    "hot": "react-scripts start",
-    "build": "react-scripts build",
-    "dev": "npm run build && serve build/ -l 80",
-    "serve": "PORT=$(grep PORT .env | cut -d '=' -f2) && serve -s build -l $PORT",
-    "production": "react-scripts build && PORT=$(grep PORT .env | cut -d '=' -f2) && HTTPS=true SSL_CRT_FILE=/var/www/https-certificates/fullchain.pem && SSL_KEY_FILE=/var/www/https-certificates/privkey.pem && serve --ssl-cert $SSL_CRT_FILE --ssl-key $SSL_KEY_FILE build -l $PORT",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "corona",
+    "version": "0.1.0",
+    "private": false,
+    "dependencies": {
+        "@react-google-maps/api": "^1.8.5",
+        "@types/googlemaps": "^3.39.3",
+        "@types/markerclustererplus": "^2.1.33",
+        "@types/node": "^13.9.1",
+        "@types/react": "^16.0.0",
+        "core-js": "^3.6.4",
+        "eslint-plugin-flowtype": "^3.13.0",
+        "eslint-plugin-import": "^2.20.1",
+        "google-maps-react": "^2.0.2",
+        "npm": "^6.14.2",
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
+        "react-google-maps": "^9.4.5",
+        "react-scripts": "3.4.0",
+        "semantic-ui-react": "^0.88.2",
+        "typescript": "^3.8.3"
+    },
+    "scripts": {
+        "hot": "react-scripts start",
+        "build": "react-scripts build",
+        "dev": "npm run build && serve build/ -l 80",
+        "serve": "PORT=$(grep PORT .env | cut -d '=' -f2) && serve -s build -l $PORT",
+        "production": "react-scripts build && PORT=$(grep PORT .env | cut -d '=' -f2) && HTTPS=true SSL_CRT_FILE=/var/www/https-certificates/fullchain.pem && SSL_KEY_FILE=/var/www/https-certificates/privkey.pem && serve --ssl-cert $SSL_CRT_FILE --ssl-key $SSL_KEY_FILE build -l $PORT",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
 }

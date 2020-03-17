@@ -24,7 +24,6 @@ let state = {
 }
 
 
-
 // THIS SPREADS OUT THE POINTS A BIT
 function getOffsetCoo(coo) {
 
@@ -235,7 +234,7 @@ const MainMap = compose(
                 // icon={state.markerIcon}
                 label={{
                   text: item.label,
-                  color: "#fff7f8",
+                  color: "#FFFFFF",
                   fontSize: "16px",
                   labelOrigin: state.labelOrigin
                 }}
@@ -246,17 +245,17 @@ const MainMap = compose(
 
               <MarkerWithInfoWindow
                 position={
-                  item.id === "1" 
-                  ?
-                  {
-                    lat: parseFloat(item.selfCooLat),
-                    lng: parseFloat(item.selfCooLng)
-                  }
-                  :
-                  {
-                    lat: selfLat,
-                    lng: selfLng
-                  }
+                  item.id === "1"
+                    ?
+                    {
+                      lat: parseFloat(item.selfCooLat),
+                      lng: parseFloat(item.selfCooLng)
+                    }
+                    :
+                    {
+                      lat: selfLat,
+                      lng: selfLng
+                    }
                 }
                 content={(
                   <div style={{ opacity: 0.75 }}>
@@ -431,6 +430,7 @@ class MarkerWithInfoWindow extends React.Component {
 
   render() {
     return (
+
       <Marker
         key={Math.random() * 1000 + "Coordinates"}
         position={this.props.position}
@@ -446,6 +446,7 @@ class MarkerWithInfoWindow extends React.Component {
         </InfoWindow>}
 
       </Marker>
+
     )
   }
 }

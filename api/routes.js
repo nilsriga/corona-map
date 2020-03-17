@@ -4,11 +4,11 @@ export default (express) => {
   express.get("/", async (req, res) => {
     var googleSheetsJson = await getGoogleSheetsJson()
     // console.log(googleSheetsJson.data)
-    fs.appendFile('.counter', "1 \n", (err) => {
+    fs.appendFile('.counter', "1 " + new Date().toUTCString() + "\n", (err) => {
       if (err) {
-        console.log(err)
+        throw new Error("Corona error at api / path.")
       };
-      console.log(1);
+      console.log("1 " + new Date().toUTCString() + "\n");
     });
     res.send(await googleSheetsJson.toString())
   });
