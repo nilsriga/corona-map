@@ -11,24 +11,39 @@ import {
 } from "semantic-ui-react";
 import MainMap from "./Components/GoogleMap";
 import Twitter from './Components/Twitter';
+// import TvnetRss from "./Components/Tvnet"
 
 class Home extends Component {
 
 
-	state = { activeIndex: -1 }
+	state = { 
+		activeInfectedIndex: -1,
+		activeFactIndex: -1
+	}
 
-	handleClick = (e, titleProps) => {
+	handleInfectedClick = (e, titleProps) => {
 		const { index } = titleProps
-		const { activeIndex } = this.state
-		const newIndex = activeIndex === index ? -1 : index
+		const { activeInfectedIndex } = this.state
+		const newIndex = activeInfectedIndex === index ? -1 : index
 
-		this.setState({ activeIndex: newIndex })
+		this.setState({ activeInfectedIndex: newIndex })
+	}
+
+	handleFactClick = (e, titleProps) => {
+		const { index } = titleProps
+		const { activeFactIndex } = this.state
+		const newIndex = activeFactIndex === index ? -1 : index
+
+		this.setState({ activeFactIndex: newIndex })
 	}
 
 
 
 	render() {
-		const { activeIndex } = this.state
+		const { 
+			activeFactIndex,
+			activeInfectedIndex
+		 } = this.state
 		return (
 			<Segment inverted>
 				<Grid divided stackable>
@@ -74,31 +89,31 @@ class Home extends Component {
 									<Accordion styled>
 
 
-										<Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
+										<Accordion.Title active={activeInfectedIndex === 0} index={0} onClick={this.handleInfectedClick}>
 											<Icon name='dropdown' />
 										#60 Inficētais
          							 </Accordion.Title>
-										<Accordion.Content active={activeIndex === 0}>
+										<Accordion.Content active={activeInfectedIndex === 0}>
 											Info:...
 									</Accordion.Content>
 
 
 
-										<Accordion.Title active={activeIndex === 1} index={1} onClick={this.handleClick}>
+										<Accordion.Title active={activeInfectedIndex === 1} index={1} onClick={this.handleInfectedClick}>
 											<Icon name='dropdown' />
 										#59 Inficētais
         						    </Accordion.Title>
-										<Accordion.Content active={activeIndex === 1}>
+										<Accordion.Content active={activeInfectedIndex === 1}>
 											Info:...
 									</Accordion.Content>
 
 
 
-										<Accordion.Title active={activeIndex === 2} index={2} onClick={this.handleClick}>
+										<Accordion.Title active={activeInfectedIndex === 2} index={2} onClick={this.handleInfectedClick}>
 											<Icon name='dropdown' />
 										#58 Inficētais
          							</Accordion.Title>
-										<Accordion.Content active={activeIndex === 2}>
+										<Accordion.Content active={activeInfectedIndex === 2}>
 											Info:...
 									</Accordion.Content>
 
@@ -123,31 +138,31 @@ class Home extends Component {
 									<Accordion styled>
 
 
-										<Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
+										<Accordion.Title active={activeFactIndex === 0} index={0} onClick={this.handleFactClick}>
 											<Icon name='dropdown' />
 										#60 Inficētais
          							 </Accordion.Title>
-										<Accordion.Content active={activeIndex === 0}>
+										<Accordion.Content active={activeFactIndex === 0}>
 											Info:...
 									</Accordion.Content>
 
 
 
-										<Accordion.Title active={activeIndex === 1} index={1} onClick={this.handleClick}>
+										<Accordion.Title active={activeFactIndex === 1} index={1} onClick={this.handleFactClick}>
 											<Icon name='dropdown' />
 										#59 Inficētais
         						    </Accordion.Title>
-										<Accordion.Content active={activeIndex === 1}>
+										<Accordion.Content active={activeFactIndex === 1}>
 											Info:...
 									</Accordion.Content>
 
 
 
-										<Accordion.Title active={activeIndex === 2} index={2} onClick={this.handleClick}>
+										<Accordion.Title active={activeFactIndex === 2} index={2} onClick={this.handleFactClick}>
 											<Icon name='dropdown' />
 										#58 Inficētais
          							</Accordion.Title>
-										<Accordion.Content active={activeIndex === 2}>
+										<Accordion.Content active={activeFactIndex === 2}>
 											Info:...
 									</Accordion.Content>
 
