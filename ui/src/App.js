@@ -1,7 +1,7 @@
 import React from 'react';
 import Home from './Home.jsx';
 import "./App.css"
-
+import Twitter from './Components/Twitter';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <div>
 
         <Home ></Home>
-        
+        <Twitter/>
       </div>
 
     </div>
