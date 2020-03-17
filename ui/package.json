@@ -17,6 +17,7 @@
         "react-dom": "^16.13.0",
         "react-google-maps": "^9.4.5",
         "react-scripts": "3.4.0",
+        "react-twitter-embed": "^3.0.3",
         "semantic-ui-react": "^0.88.2",
         "typescript": "^3.8.3"
     },
