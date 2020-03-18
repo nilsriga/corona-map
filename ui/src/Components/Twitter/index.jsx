@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-    TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton,
-    TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare,
-    TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton
-} from 'react-twitter-embed';
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 
 const twiter = () => {
 
@@ -13,13 +9,17 @@ const twiter = () => {
     return (
         <>
             <TwitterTimelineEmbed
+                noHeader
+                noFooter
+                transparent
+                noScrollbar
                 autoHeight={true}
                 theme={'dark'}
                 sourceType="SPKCentrs"
                 screenName="SPKCentrs"
-                options={{ 
-                    height: 400 ,
-                    width:200
+                options={{
+                    height: 400,
+                    width: 200
                 }}
             />
 

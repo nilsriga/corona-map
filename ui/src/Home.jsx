@@ -1,24 +1,46 @@
 import React, { Component, } from "react";
 import {
 	Grid,
-	Container,
-	List,
 	Header,
-	Divider,
 	Segment,
 	Accordion,
-	Icon
+	Icon,
+	Divider
 } from "semantic-ui-react";
 import MainMap from "./Components/GoogleMap";
 import Twitter from './Components/Twitter';
-// import TvnetRss from "./Components/Tvnet"
+import "./Home.css"
+
+
 
 class Home extends Component {
 
 
-	state = { 
+	state = {
 		activeInfectedIndex: -1,
-		activeFactIndex: -1
+		activeFactIndex: -1,
+		infectedPeople: [],
+		tvnetRss: []
+	}
+
+	componentWillMount() {
+		
+		fetch( `${process.env.REACT_APP_API_HOST}`)
+			.then(res => res.json())
+			.then(
+				(result) => {
+					this.setState({ infectedPeople: result.reverse() })
+				},
+				(error) => {
+					console.log(error)
+					this.setState({ infectedPeople: error })
+				}
+			)
+	}
+
+	componentDidMount() {
+
+
 	}
 
 	handleInfectedClick = (e, titleProps) => {
@@ -39,11 +61,15 @@ class Home extends Component {
 
 
 
+
 	render() {
-		const { 
+		const {
 			activeFactIndex,
-			activeInfectedIndex
-		 } = this.state
+			activeInfectedIndex,
+			infectedPeople,
+			tvnetRss
+		} = this.state
+
 		return (
 			<Segment inverted>
 				<Grid divided stackable>
@@ -51,21 +77,19 @@ class Home extends Component {
 
 
 
-						<Grid.Column width={3} divided streached >
+						<Grid.Column stackable width={3} divided  >
 
-							<Segment compact inverted>
+							<Header inverted as="h4">SPKC Twittera Tvīti</Header>
+							<Twitter />
 
-								<Header as="h4">SPKC Twitter</Header>
-								<Twitter />
-
-							</Segment>
+							<Header inverted as="h4">TvNET Korona Ziņas</Header>
+							<Twitter />
 
 						</Grid.Column>
 
 
 
-
-						<Grid.Column width={10} >
+						<Grid.Column stackable width={10} >
 
 							<Segment raised style={{ padding: "0" }}>
 								<MainMap />
@@ -76,79 +100,78 @@ class Home extends Component {
 
 
 
-						<Grid.Column width={3} divided stretched >
+						<Grid.Column width={3} divided >
 
-							<Grid.Row color={"gray"}>
+							<Grid.Row >
 
-								<Header as="h4" inverted>Inficētie</Header>
-
-
-								<Segment style={{ padding: "0" }} >
-
-
-									<Accordion styled>
-
-
-										<Accordion.Title active={activeInfectedIndex === 0} index={0} onClick={this.handleInfectedClick}>
-											<Icon name='dropdown' />
-										#60 Inficētais
-         							 </Accordion.Title>
-										<Accordion.Content active={activeInfectedIndex === 0}>
-											Info:...
-									</Accordion.Content>
+								<Header as="h4" inverted>Inficēšanās</Header>
 
 
 
-										<Accordion.Title active={activeInfectedIndex === 1} index={1} onClick={this.handleInfectedClick}>
-											<Icon name='dropdown' />
-										#59 Inficētais
-        						    </Accordion.Title>
-										<Accordion.Content active={activeInfectedIndex === 1}>
-											Info:...
-									</Accordion.Content>
+								<div style={{ overflow: 'auto', maxHeight: 50 + "vh" }}>
+									{
+										infectedPeople.map((el, i) => {
+											return (
+
+												<Accordion key={Math.random() * i + 0} inverted styled>
 
 
-
-										<Accordion.Title active={activeInfectedIndex === 2} index={2} onClick={this.handleInfectedClick}>
-											<Icon name='dropdown' />
-										#58 Inficētais
-         							</Accordion.Title>
-										<Accordion.Content active={activeInfectedIndex === 2}>
-											Info:...
-									</Accordion.Content>
+													<Accordion.Title className={"accordion-title"} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
+														<Icon  corner name='dropdown' />
+														{el.label ? el.label + ", " + el.origin : ""}
+													</Accordion.Title>
+													<Accordion.Content style={{ color: "black" }} className={"accordion-content"} active={activeInfectedIndex === i}>
 
 
-									</Accordion>
-								</Segment>
+														{el.origin ? <li>Izcelsme: {el.origin}</li> : ""}
+														{el.totalInfected ? <li>Inficētais Nr.: {el.totalInfected}</li> : ""}
+														{el.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {el.dateOfFirstContactWIthLatvia}</li> : ""}
+														{el.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {el.dateOfDiagnosisBroadcast}</li> : ""}
+														{el.descriptionTitle ? <li>Īsumā: {el.descriptionTitle}</li> : ""}
+														{el.descriptionHeader ? <li>{el.descriptionHeader}</li> : ""}
+														{el.link ? <li><a href={el.link}>{el.link}</a></li> : ""}
+														{el.extraLink1 ? <li><a href={el.extraLink1}>{el.extraLink1}</a></li> : ""}
+														{el.extraLink2 ? <li><a href={el.extraLink2}>{el.extraLink1}</a></li> : ""}
+														{el.extraLink3 ? <li><a href={el.extraLink3}>{el.extraLink1}</a></li> : ""}
 
+
+													</Accordion.Content>
+
+
+												</Accordion>
+
+											)
+
+										})
+									}
+								</div>
 
 
 							</Grid.Row>
 
-							<Divider></Divider>
 
 							<Grid.Row>
 
-								<Header as="h4" inverted>COVID-19 Fakti</Header>
-
-								<Segment style={{ padding: "0" }} >
+								<Header as="h4" inverted >COVID-19 Fakti</Header>
 
 
+								<div style={{ overflow: 'auto', maxHeight: 50 + "vh" }}>
 
-									<Accordion styled>
+
+									<Accordion style={{ overflow: 'auto', maxHeight: 40 + "vh" }} inverted styled>
 
 
-										<Accordion.Title active={activeFactIndex === 0} index={0} onClick={this.handleFactClick}>
+										<Accordion.Title className={"accordion-title"} inverted active={activeFactIndex === 0} index={0} onClick={this.handleFactClick}>
 											<Icon name='dropdown' />
 										#60 Inficētais
          							 </Accordion.Title>
-										<Accordion.Content active={activeFactIndex === 0}>
+										<Accordion.Content style={{ overflow: 'auto', maxHeight: 25 + "vh" }} active={activeFactIndex === 0}>
 											Info:...
 									</Accordion.Content>
 
 
 
-										<Accordion.Title active={activeFactIndex === 1} index={1} onClick={this.handleFactClick}>
+										<Accordion.Title className={"accordion-title"} inverted active={activeFactIndex === 1} index={1} onClick={this.handleFactClick}>
 											<Icon name='dropdown' />
 										#59 Inficētais
         						    </Accordion.Title>
@@ -158,7 +181,7 @@ class Home extends Component {
 
 
 
-										<Accordion.Title active={activeFactIndex === 2} index={2} onClick={this.handleFactClick}>
+										<Accordion.Title className={"accordion-title"} inverted active={activeFactIndex === 2} index={2} onClick={this.handleFactClick}>
 											<Icon name='dropdown' />
 										#58 Inficētais
          							</Accordion.Title>
@@ -168,9 +191,8 @@ class Home extends Component {
 
 
 									</Accordion>
-								</Segment>
 
-
+								</div>
 							</Grid.Row>
 
 						</Grid.Column>
