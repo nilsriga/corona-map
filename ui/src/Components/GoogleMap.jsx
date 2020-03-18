@@ -420,11 +420,13 @@ class MarkerWithInfoWindow extends React.Component {
       isOpen: false
     }
     this.onToggleOpen = this.onToggleOpen.bind(this);
+  
   }
 
   onToggleOpen() {
     this.setState({
       isOpen: !this.state.isOpen
+      
     });
   }
 
