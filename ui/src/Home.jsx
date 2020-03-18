@@ -4,12 +4,14 @@ import {
 	Header,
 	Segment,
 	Accordion,
+	Comment,
 	Icon,
 	Divider
 } from "semantic-ui-react";
 import MainMap from "./Components/GoogleMap";
 import Twitter from './Components/Twitter';
 import "./Home.css"
+// import TvnetRss from "./Components/TvnetRss"
 
 
 
@@ -18,14 +20,15 @@ class Home extends Component {
 
 	state = {
 		activeInfectedIndex: -1,
+		activeTvnetIndex: -1,
 		activeFactIndex: -1,
 		infectedPeople: [],
 		tvnetRss: []
 	}
 
 	componentWillMount() {
-		
-		fetch( `${process.env.REACT_APP_API_HOST}`)
+
+		fetch(`${process.env.REACT_APP_API_HOST}`)
 			.then(res => res.json())
 			.then(
 				(result) => {
@@ -36,6 +39,20 @@ class Home extends Component {
 					this.setState({ infectedPeople: error })
 				}
 			)
+
+
+		fetch(process.env.REACT_APP_API_HOST + "/tvnet")
+			.then(res => res.json())
+			.then(
+				(result) => {
+					this.state.tvnetRss = result
+				},
+				(error) => {
+					console.log(error)
+					this.state.tvnetRss = error
+				}
+			)
+
 	}
 
 	componentDidMount() {
@@ -59,13 +76,20 @@ class Home extends Component {
 		this.setState({ activeFactIndex: newIndex })
 	}
 
+	handleTvnetClick = (e, titleProps) => {
+		const { index } = titleProps
+		const { activeTvnetIndex } = this.state
+		const newIndex = activeTvnetIndex === index ? -1 : index
 
+		this.setState({ activeTvnetIndex: newIndex })
+	}
 
 
 	render() {
 		const {
-			activeFactIndex,
 			activeInfectedIndex,
+			activeTvnetIndex,
+			activeFactIndex,
 			infectedPeople,
 			tvnetRss
 		} = this.state
@@ -82,8 +106,24 @@ class Home extends Component {
 							<Header inverted as="h4">SPKC Twittera Tvīti</Header>
 							<Twitter />
 
-							<Header inverted as="h4">TvNET Korona Ziņas</Header>
-							<Twitter />
+							<Header inverted as="h4">TvNet Korona Ziņas</Header>
+
+							<div style={{ overflow: 'auto', maxHeight: 30 + "vh" }}>
+								{tvnetRss.map((el, i) => {
+									return <Accordion key={Math.random() * i + 0} inverted styled>
+
+										<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i} index={i} onClick={this.handleTvnetClick}>
+											<Icon corner name='dropdown' />
+											{el.title}
+										</Accordion.Title>
+
+										<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
+											{el.content}
+										</Accordion.Content>
+
+									</Accordion>
+								})}
+							</div>
 
 						</Grid.Column>
 
@@ -117,7 +157,7 @@ class Home extends Component {
 
 
 													<Accordion.Title className={"accordion-title"} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
-														<Icon  corner name='dropdown' />
+														<Icon corner name='dropdown' />
 														{el.label ? el.label + ", " + el.origin : ""}
 													</Accordion.Title>
 													<Accordion.Content style={{ color: "black" }} className={"accordion-content"} active={activeInfectedIndex === i}>

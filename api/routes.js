@@ -1,7 +1,6 @@
 import getGoogleSheetsJson from "./SheetsController.js"
 import fs from "fs"
 import Parser from "rss-parser"
-import _ from "lodash"
 var ASQ = require("asynquence")
 
 let parser = new Parser();
@@ -47,8 +46,6 @@ export default (express) => {
     //https://www.tvnet.lv/rss
     express.get("/tvnet", async(req, res) => {
 
-        let tvnetRss = []
-
         ASQ()
             .then(async(done, msg) => {
 
@@ -56,20 +53,25 @@ export default (express) => {
                 let getRss = async() => {
 
                     let feed = await parser.parseURL('https://www.tvnet.lv/rss');
-                    console.log(feed)
 
-                    let a = _.filter(feed, () => {
+
+                    let filtered = feed.items.filter((el, i, arr) => {
+                        let filteredTemp = keywords.map((el2, i, arr) => {
+                            return el2.test(el.title)
+                        })
+                        return filteredTemp.includes(true) ? el : ""
 
                     })
 
-                    return tvnetRss
+                    return filtered
+
                 }
 
                 done(await getRss())
 
 
             })
-            .then((done, rss) => {
+            .then((done, tvnetRss) => {
                 res.send(tvnetRss)
             });
 
