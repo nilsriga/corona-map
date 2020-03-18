@@ -163,6 +163,8 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} >
 
+						<Header as="h4" inverted>Paliec Mājās, Sargā Ģimeni</Header>
+
 							<Segment raised style={{ padding: "0" }}>
 								<MainMap />
 							</Segment>
@@ -201,8 +203,8 @@ class Home extends Component {
 													{el.descriptionHeader ? <li>{el.descriptionHeader}</li> : ""}
 													{el.link ? <li><a href={el.link}>{el.link}</a></li> : ""}
 													{el.extraLink1 ? <li><a href={el.extraLink1}>{el.extraLink1}</a></li> : ""}
-													{el.extraLink2 ? <li><a href={el.extraLink2}>{el.extraLink1}</a></li> : ""}
-													{el.extraLink3 ? <li><a href={el.extraLink3}>{el.extraLink1}</a></li> : ""}
+													{el.extraLink2 ? <li><a href={el.extraLink2}>{el.extraLink2}</a></li> : ""}
+													{el.extraLink3 ? <li><a href={el.extraLink3}>{el.extraLink3}</a></li> : ""}
 
 												</Accordion.Content>
 
