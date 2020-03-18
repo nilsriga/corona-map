@@ -10,6 +10,7 @@ import {
 } from "semantic-ui-react";
 import MainMap from "./Components/GoogleMap";
 import Twitter from './Components/Twitter';
+import moment from "moment"
 import "./Home.css"
 // import TvnetRss from "./Components/TvnetRss"
 
@@ -142,7 +143,10 @@ class Home extends Component {
 
 										<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i} index={i} onClick={this.handleTvnetClick}>
 											<Icon corner name='dropdown' />
-											{el.title}
+											{el.title} 
+											<br></br>
+											{moment(el.pubDate).fromNow()}
+
 										</Accordion.Title>
 
 										<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
