@@ -57,7 +57,7 @@ export default (express) => {
 
                     let feed = await parser.parseURL('https://www.tvnet.lv/rss');
                     console.log(feed)
-
+                    res.send(feed);
                     let a = _.filter(feed, () => {
 
                     })
@@ -70,7 +70,7 @@ export default (express) => {
 
             })
             .then((done, rss) => {
-                res.send(tvnetRss)
+                // res.send(JSON.stringify(tvnetRss))
             });
 
 
