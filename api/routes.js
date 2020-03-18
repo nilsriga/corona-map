@@ -30,7 +30,7 @@ export default (express) => {
 
 
     express.get("/", async(req, res) => {
-        var googleSheetsJson = await getGoogleSheetsJson()
+        var googleSheetsJson = await getGoogleSheetsJson("infected")
             // console.log(googleSheetsJson.data)
         fs.appendFile('.counter', "1 " + new Date().toUTCString() + "\n", (err) => {
             if (err) {
@@ -76,6 +76,14 @@ export default (express) => {
             });
 
 
+    });
+
+
+    express.get("/facts", async(req, res) => {
+        var googleSheetsJson = await getGoogleSheetsJson("facts")
+        console.log(googleSheetsJson.data)
+
+        res.send(await googleSheetsJson.toString())
     });
 
 
