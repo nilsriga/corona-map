@@ -4,7 +4,7 @@ const PageNotFound = () => {
 
     return (
 
-        <h1>PageNotFound</h1>
+        <h1>Vai varētu būt gadījusies kļūda ievadot adresi? </h1>
     )
 
 }
