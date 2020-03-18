@@ -162,7 +162,7 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} >
 
-							<Header as="h4" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni</Header>
+							<Header as="h4" inverted textAlign={"center"} >Nometne "Štābiņš" Mājās {new Date().getFullYear()}</Header>
 
 							<Segment raised style={{ padding: "0" }}>
 								<MainMap />
