@@ -30,47 +30,46 @@ class Home extends Component {
 
 	componentWillMount() {
 
-		fetch(`${process.env.REACT_APP_API_HOST}`)
-			.then(res => res.json())
-			.then(
-				(result) => {
-					this.setState({ infectedPeople: result.reverse() })
-				},
-				(error) => {
-					console.log(error)
-					this.setState({ infectedPeople: error })
-				}
-			)
-
-
-		fetch(process.env.REACT_APP_API_HOST + "/tvnet")
-			.then(res => res.json())
-			.then(
-				(result) => {
-					this.state.tvnetRss = result
-				},
-				(error) => {
-					console.log(error)
-					this.state.tvnetRss = error
-				}
-			)
-
-
+		
+	}
+	
+	componentDidMount() {
 		fetch(process.env.REACT_APP_API_HOST + "/facts")
 			.then(res => res.json())
 			.then(
 				(result) => {
-					this.state.facts = result
+					this.setState({facts: result})
 				},
 				(error) => {
 					console.log(error)
 					this.state.facts = error
 				}
 			)
-
-	}
-
-	componentDidMount() {
+	
+	
+		fetch(process.env.REACT_APP_API_HOST + "/tvnet")
+			.then(res => res.json())
+			.then(
+				(result) => {
+					this.setState({tvnetRss: result})
+				},
+				(error) => {
+					console.log(error)
+					this.state.tvnetRss = error
+				}
+			)
+	
+		fetch(`${process.env.REACT_APP_API_HOST}`)
+			.then(res => res.json())
+			.then(
+				(result) => {
+					this.setState({infectedPeople: result.reverse()})
+				},
+				(error) => {
+					console.log(error)
+					this.state.infectedPeople = error
+				}
+			)
 
 
 	}
@@ -143,7 +142,7 @@ class Home extends Component {
 
 										<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i} index={i} onClick={this.handleTvnetClick}>
 											<Icon corner name='dropdown' />
-											{el.title} 
+											{el.title}
 											<br></br>
 											{moment(el.pubDate).fromNow()}
 
@@ -163,7 +162,7 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} >
 
-						<Header as="h4" inverted>Paliec Mājās, Sargā Ģimeni</Header>
+							<Header as="h4" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni</Header>
 
 							<Segment raised style={{ padding: "0" }}>
 								<MainMap />
@@ -193,7 +192,7 @@ class Home extends Component {
 													{el.label ? el.label + ", " + el.origin : ""}
 												</Accordion.Title>
 
-												<Accordion.Content  style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeInfectedIndex === i}>
+												<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeInfectedIndex === i}>
 
 													{el.origin ? <li>Izcelsme: {el.origin}</li> : ""}
 													{el.totalInfected ? <li>Inficētais Nr.: {el.totalInfected}</li> : ""}
@@ -219,7 +218,6 @@ class Home extends Component {
 
 
 							<Header inverted as="h4">Korona/COVID-19 Fakti</Header>
-
 							<div style={{ overflow: 'auto', maxHeight: 30 + "vh" }}>
 								{facts.map((el, i) => {
 									return <Accordion key={Math.random() * i + 0} inverted styled>
@@ -232,7 +230,7 @@ class Home extends Component {
 										<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFactIndex === i}>
 											{el.content}
 											<br></br>
-											<p href={el.link}>{el.linkTItle}</p> 
+											<p href={el.link}>{el.linkTItle}</p>
 										</Accordion.Content>
 
 									</Accordion>
