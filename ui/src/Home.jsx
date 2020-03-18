@@ -9,7 +9,8 @@ import {
 } from "semantic-ui-react";
 import MainMap from "./Components/GoogleMap";
 import Twitter from './Components/Twitter';
-import "./Home.css"
+import "./Home.css";
+
 
 
 
@@ -24,8 +25,8 @@ class Home extends Component {
 	}
 
 	componentWillMount() {
-		
-		fetch( `${process.env.REACT_APP_API_HOST}`)
+
+		fetch(`${process.env.REACT_APP_API_HOST}`)
 			.then(res => res.json())
 			.then(
 				(result) => {
@@ -83,7 +84,9 @@ class Home extends Component {
 							<Twitter />
 
 							<Header inverted as="h4">TvNET Korona Ziņas</Header>
-							<Twitter />
+		
+								
+							
 
 						</Grid.Column>
 
@@ -117,7 +120,7 @@ class Home extends Component {
 
 
 													<Accordion.Title className={"accordion-title"} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
-														<Icon  corner name='dropdown' />
+														<Icon corner name='dropdown' />
 														{el.label ? el.label + ", " + el.origin : ""}
 													</Accordion.Title>
 													<Accordion.Content style={{ color: "black" }} className={"accordion-content"} active={activeInfectedIndex === i}>
