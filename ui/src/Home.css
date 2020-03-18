@@ -1,0 +1,31 @@
+    .ui.grid>.row>.column {
+        padding: 0.2em!important;
+    }
+    
+    #root>div>div>div>div>div>div.ten.wide.column>div>div>div:nth-child(1) {
+        margin: -3px;
+        border-radius: 5px;
+    }
+    
+    #root>div>div>div>div>div>div:nth-child(3)>div.gray.row>div>div>div {
+        padding-top: 5px!important;
+        padding-bottom: 5px!important
+    }
+    
+    .accordion {
+        border-radius: 6px!important;
+    }
+    
+    .accordion-title {
+        background: #2f3133!important;
+    }
+    
+    #twitter-widget-0 {
+        width: 100%!important;
+        height: 50vh!important;
+        background: #2f3133!important;
+    }
+    
+    #root>div>div>div>div>div>div:nth-child(3)>div:nth-child(2)>h4 {
+        padding-top: 0.5em!important;
+    }

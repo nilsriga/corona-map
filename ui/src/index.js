@@ -2,13 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import MainMap from './Components/GoogleMap'
-
+import 'semantic-ui-css/semantic.min.css'
 
 ReactDOM.render(
-    <App>
-
-        <MainMap />
+    <App >
 
     </App>,
 
