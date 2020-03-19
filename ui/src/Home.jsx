@@ -82,6 +82,7 @@ class Home extends Component {
 		const newIndex = activeInfectedIndex === index ? -1 : index
 
 		this.setState({ activeInfectedIndex: newIndex })
+		
 	}
 
 	handleFactClick = (e, titleProps) => {

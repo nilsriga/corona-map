@@ -11,7 +11,10 @@ import {
   // DirectionsRenderer
 } from "react-google-maps";
 import MyStyle from "./MyStyleJSON.js"
+import moment from "moment"
+import "moment/locale/lv"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
+moment.locale('lv')
 
 
 let state = {
@@ -20,7 +23,8 @@ let state = {
   markerIcon: {},
   labelOrigin: {},
   i: 0,
-  total: 0
+  total: 0,
+  timeNow: moment().format('DD.MMM.YYYY')
 }
 
 
@@ -396,7 +400,8 @@ const MainMap = compose(
         >
           <div style={{ opacity: 0.75 }}>
             <h2>LV Kopā: {state.total}</h2>
-            <p>{(new Date()).getUTCDate() + "." + (new Date()).getUTCMonth() + "." + (new Date()).getFullYear()}</p>
+            {/* <p>{(new Date()).getUTCDate() + "." + (new Date()).getUTCMonth() + "." + (new Date()).getFullYear()}</p> */}
+            <p>{state.timeNow}</p>
           </div>
         </InfoWindow>
       }
