@@ -230,7 +230,7 @@ class Home extends Component {
 										<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFactIndex === i}>
 											{el.content}
 											<br></br>
-											<p href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss" }</p>
+											<a href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss" }</a>
 										</Accordion.Content>
 
 									</Accordion>

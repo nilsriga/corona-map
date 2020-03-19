@@ -24,14 +24,17 @@
 
 #Go-to-market plan
 
- - From governmental sources I have a reason to think that more precise data will be available once the infected count reaches a certain threshold, estimated in a week. 
- - I also have a reason to think that the government would find such a map tool useful for mapping the virus spread
+ - We have notified all the main news media and relevant governmental bodies of map's availiability, including the president.
+ - We will continue to check for data availiability daily and contine to let people know of such a maps availiability
+ - From governmental sources I have a reason to think that more precise data will be available once the infected count reaches a certain threshold, estimated in a week. 
+ - I also have a reason to think that the government would find such a map tool useful for mapping the virus spread and visualizing data
  - Let the president know that such a map is available
 
 #Resources that you need
 
  - A server
  - Dedication to manually keep up to date information following tvnet.lv, SPKC twitter account and WHO research and other data sources that might become available.
+ - An authoratative data source from which to update data automatically or manually
 
 #What did you achieve over these days (and what did you have beforehand)
 
