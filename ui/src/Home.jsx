@@ -136,7 +136,7 @@ class Home extends Component {
 
 							<Header inverted as="h4">TvNet Korona Ziņas</Header>
 
-							<div style={{ overflow: 'auto', maxHeight: 30 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 32 + "vh" }}>
 								{tvnetRss.map((el, i) => {
 									return <Accordion key={Math.random() * i + 0} inverted styled>
 
@@ -162,7 +162,7 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} >
 
-							<Header as="h4" inverted textAlign={"center"} >Nometne "Štābiņš" Mājās {new Date().getFullYear()}</Header>
+							<Header as="h3" inverted textAlign={"center"} >Nometne "Štābiņš" Mājās {new Date().getFullYear()}</Header>
 
 							<Segment raised style={{ padding: "0" }}>
 								<MainMap />
@@ -218,7 +218,7 @@ class Home extends Component {
 
 
 							<Header inverted as="h4">Korona/COVID-19 Fakti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 30 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 32 + "vh" }}>
 								{facts.map((el, i) => {
 									return <Accordion key={Math.random() * i + 0} inverted styled>
 
@@ -230,7 +230,7 @@ class Home extends Component {
 										<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFactIndex === i}>
 											{el.content}
 											<br></br>
-											<p href={el.link}>{el.linkTItle}</p>
+											<p href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss" }</p>
 										</Accordion.Content>
 
 									</Accordion>
