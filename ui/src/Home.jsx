@@ -12,6 +12,8 @@ import MainMap from "./Components/GoogleMap";
 import Twitter from './Components/Twitter';
 import moment from "moment"
 import "./Home.css"
+import "moment/locale/lv"
+moment.locale('lv')
 // import TvnetRss from "./Components/TvnetRss"
 
 
