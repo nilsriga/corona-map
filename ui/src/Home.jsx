@@ -164,7 +164,8 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} >
 
-							<Header as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni {new Date().getFullYear()}</Header>
+							<Header as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni <p>(atklātie gadījumi ir līdz pat 97% mazāk par patieso daudzumu)</p></Header>
+							 
 
 							<Segment raised style={{ padding: "0" }}>
 								<MainMap />
@@ -178,7 +179,8 @@ class Home extends Component {
 						<Grid.Column width={3} divided >
 
 
-							<Header as="h4" inverted>Inficēšanās</Header>
+							<Header as="h4" inverted>Atklātie Gadījumi</Header>
+								
 
 
 
