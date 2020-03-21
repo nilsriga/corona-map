@@ -21,6 +21,7 @@
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.4.0",
         "react-twitter-embed": "^3.0.3",
+        "react-youtube-embed": "^1.0.3",
         "semantic-ui-css": "^2.4.1",
         "semantic-ui-react": "^0.88.2",
         "typescript": "^3.8.3"

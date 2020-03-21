@@ -11,6 +11,7 @@ import {
 import MainMap from "./Components/GoogleMap";
 import Twitter from './Components/Twitter';
 import moment from "moment"
+import YouTube from 'react-youtube-embed'
 import "./Home.css"
 import "moment/locale/lv"
 moment.locale('lv')
@@ -25,6 +26,7 @@ class Home extends Component {
 		activeInfectedIndex: -1,
 		activeTvnetIndex: -1,
 		activeFactIndex: -1,
+		activeFirstFactIndex: 1,
 		infectedPeople: [],
 		tvnetRss: [],
 		facts: []
@@ -32,40 +34,40 @@ class Home extends Component {
 
 	componentWillMount() {
 
-		
+
 	}
-	
+
 	componentDidMount() {
 		fetch(process.env.REACT_APP_API_HOST + "/facts")
 			.then(res => res.json())
 			.then(
 				(result) => {
-					this.setState({facts: result})
+					this.setState({ facts: result })
 				},
 				(error) => {
 					console.log(error)
 					this.state.facts = error
 				}
 			)
-	
-	
+
+
 		fetch(process.env.REACT_APP_API_HOST + "/tvnet")
 			.then(res => res.json())
 			.then(
 				(result) => {
-					this.setState({tvnetRss: result})
+					this.setState({ tvnetRss: result })
 				},
 				(error) => {
 					console.log(error)
 					this.state.tvnetRss = error
 				}
 			)
-	
+
 		fetch(`${process.env.REACT_APP_API_HOST}`)
 			.then(res => res.json())
 			.then(
 				(result) => {
-					this.setState({infectedPeople: result.reverse()})
+					this.setState({ infectedPeople: result.reverse() })
 				},
 				(error) => {
 					console.log(error)
@@ -82,7 +84,7 @@ class Home extends Component {
 		const newIndex = activeInfectedIndex === index ? -1 : index
 
 		this.setState({ activeInfectedIndex: newIndex })
-		
+
 	}
 
 	handleFactClick = (e, titleProps) => {
@@ -109,6 +111,15 @@ class Home extends Component {
 		this.setState({ activeFactIndex: newIndex })
 	}
 
+	handleFirstFactClick = (e, titleProps) => {
+		const { index } = titleProps
+		const { activeFirstFactIndex } = this.state
+		const newIndex = activeFirstFactIndex === index ? -1 : index
+
+		this.setState({ activeFirstFactIndex: newIndex })
+	}
+
+
 
 	render() {
 		const {
@@ -117,7 +128,8 @@ class Home extends Component {
 			activeFactIndex,
 			infectedPeople,
 			tvnetRss,
-			facts
+			facts,
+			activeFirstFactIndex
 		} = this.state
 
 		return (
@@ -139,7 +151,7 @@ class Home extends Component {
 
 							<Header inverted as="h4">TvNet Korona Ziņas</Header>
 
-							<div style={{ overflow: 'auto', maxHeight: 32 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 40 + "vh" }}>
 								{tvnetRss.map((el, i) => {
 									return <Accordion key={Math.random() * i + 0} inverted styled>
 
@@ -166,7 +178,7 @@ class Home extends Component {
 						<Grid.Column stackable width={10} >
 
 							<Header as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni <p>(atklātie gadījumi ir līdz pat 97% mazāk par patieso daudzumu)</p></Header>
-							 
+
 
 							<Segment raised style={{ padding: "0" }}>
 								<MainMap />
@@ -181,7 +193,7 @@ class Home extends Component {
 
 
 							<Header as="h4" inverted>Atklātie Gadījumi</Header>
-								
+
 
 
 
@@ -223,9 +235,24 @@ class Home extends Component {
 
 
 							<Header inverted as="h4">Korona/COVID-19 Fakti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 32 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 40 + "vh" }}>
+
+								<Accordion key={0} inverted styled>
+
+									<Accordion.Title className={"accordion-title"} inverted active={activeFirstFactIndex} index={0} onClick={this.handleFirstFactClick}>
+										<Icon corner name='dropdown' />
+										Intervija Ar Izdzīvojušo
+									</Accordion.Title>
+
+									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex}>
+									<YouTube id='G9oqvJ3iXGI' />
+									</Accordion.Content>
+
+								</Accordion>
+
+
 								{facts.map((el, i) => {
-									return <Accordion key={Math.random() * i + 0} inverted styled>
+									return <Accordion key={Math.random() * i + 2} inverted styled>
 
 										<Accordion.Title className={"accordion-title"} inverted active={activeFactIndex === i} index={i} onClick={this.handleFactClick}>
 											<Icon corner name='dropdown' />
@@ -235,7 +262,7 @@ class Home extends Component {
 										<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFactIndex === i}>
 											{el.content}
 											<br></br>
-											<a href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss" }</a>
+											<a href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss"}</a>
 										</Accordion.Content>
 
 									</Accordion>
