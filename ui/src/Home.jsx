@@ -27,6 +27,7 @@ class Home extends Component {
 		activeTvnetIndex: -1,
 		activeFactIndex: -1,
 		activeFirstFactIndex: 1,
+		activeFirstTvnetIndex: 1,
 		infectedPeople: [],
 		tvnetRss: [],
 		facts: []
@@ -46,7 +47,7 @@ class Home extends Component {
 				},
 				(error) => {
 					console.log(error)
-					this.state.facts = error
+					this.setState({ facts: error })
 				}
 			)
 
@@ -59,7 +60,7 @@ class Home extends Component {
 				},
 				(error) => {
 					console.log(error)
-					this.state.tvnetRss = error
+					this.setState({ tvnetRss: error })
 				}
 			)
 
@@ -71,7 +72,7 @@ class Home extends Component {
 				},
 				(error) => {
 					console.log(error)
-					this.state.infectedPeople = error
+					this.setState({ infectedPeople: error })
 				}
 			)
 
@@ -119,6 +120,14 @@ class Home extends Component {
 		this.setState({ activeFirstFactIndex: newIndex })
 	}
 
+	handleFirstTvnetClick = (e, titleProps) => {
+		const { index } = titleProps
+		const { activeFirstTvnetIndex } = this.state
+		const newIndex = activeFirstTvnetIndex === index ? -1 : index
+
+		this.setState({ activeFirstTvnetIndex: newIndex })
+	}
+
 
 
 	render() {
@@ -129,7 +138,8 @@ class Home extends Component {
 			infectedPeople,
 			tvnetRss,
 			facts,
-			activeFirstFactIndex
+			activeFirstFactIndex,
+			activeFirstTvnetIndex
 		} = this.state
 
 		return (
@@ -143,41 +153,44 @@ class Home extends Component {
 
 
 
-							<Header inverted as="h4">SPKC Twittera Tvīti</Header>
+							<Header className="box-header" inverted as="h4">SPKC Twittera Tvīti</Header>
 							<Twitter />
 
 
 
+							<Header className="box-header" inverted as="h4">TvNet Korona Ziņas</Header>
 
-							<Header inverted as="h4">TvNet Korona Ziņas</Header>
-
-							<div style={{ overflow: 'auto', maxHeight: 40 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 35 + "vh" }}>
 								{tvnetRss.map((el, i) => {
-									return <Accordion key={Math.random() * i + 0} inverted styled>
 
-										<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i} index={i} onClick={this.handleTvnetClick}>
-											<Icon corner name='dropdown' />
-											{el.title}
-											<br></br>
-											{moment(el.pubDate).fromNow()}
 
-										</Accordion.Title>
+										return <Accordion key={Math.random() * i + 0} inverted styled>
+											<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i } index={i} onClick={this.handleTvnetClick}>
+												<Icon corner name='dropdown' />
+												{el.title}
+												{moment(el.pubDate).fromNow()}
 
-										<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
-											{el.content}
-										</Accordion.Content>
+											</Accordion.Title>
 
-									</Accordion>
-								})}
+											<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
+												<a href={el.link}><img class="ui small left floated image" src={el.enclosure.url} ></img></a>
+												<p>{el.content}</p>
+
+											</Accordion.Content>
+
+										</Accordion>
+										
+									}
+								)}
 							</div>
 
 						</Grid.Column>
 
 
 
-						<Grid.Column stackable width={10} >
+						<Grid.Column stackable width={10} className={"map-container"} >
 
-							<Header as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni <p>(atklātie gadījumi ir līdz pat 97% mazāk par patieso daudzumu)</p></Header>
+							<Header className="box-header" as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni</Header>
 
 
 							<Segment raised style={{ padding: "0" }}>
@@ -192,12 +205,12 @@ class Home extends Component {
 						<Grid.Column width={3} divided >
 
 
-							<Header as="h4" inverted>Atklātie Gadījumi</Header>
+							<Header className="box-header" as="h4" inverted>Atklātie Gadījumi</Header>
 
 
 
 
-							<div style={{ overflow: 'auto', maxHeight: 50 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 30 + "vh" }}>
 								{
 									infectedPeople.map((el, i) => {
 										return (
@@ -234,8 +247,8 @@ class Home extends Component {
 
 
 
-							<Header inverted as="h4">Korona/COVID-19 Fakti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 40 + "vh" }}>
+							<Header className="box-header" inverted as="h4">Korona/COVID-19 Fakti</Header>
+							<div style={{ overflow: 'auto', maxHeight: 55 + "vh" }}>
 
 								<Accordion key={0} inverted styled>
 
@@ -245,7 +258,7 @@ class Home extends Component {
 									</Accordion.Title>
 
 									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex}>
-									<YouTube id='G9oqvJ3iXGI' />
+										<YouTube id='G9oqvJ3iXGI' />
 									</Accordion.Content>
 
 								</Accordion>
@@ -276,6 +289,10 @@ class Home extends Component {
 
 					</Grid.Row>
 				</Grid>
+				<Segment inverted className={"footer"}>
+					<p>Karti uztur: https://github.com/snotrman/corona-map</p>
+					<p>nils.riga@gmail.com</p>
+				</Segment>
 			</Segment>
 		);
 	}
