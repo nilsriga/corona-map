@@ -167,7 +167,7 @@ class Home extends Component {
 										return <Accordion key={Math.random() * i + 0} inverted styled>
 											<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i } index={i} onClick={this.handleTvnetClick}>
 												<Icon corner name='dropdown' />
-												{el.title} + {" "}
+												{el.title}{" "}
 												{moment(el.pubDate).fromNow()}
 
 											</Accordion.Title>
