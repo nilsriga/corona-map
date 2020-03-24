@@ -9,10 +9,11 @@ import {
   InfoWindow,
   // Circle
   // DirectionsRenderer
-} from "react-google-maps";
+} from "react-google-maps"
 import MyStyle from "./MyStyleJSON.js"
 import moment from "moment"
 import "moment/locale/lv"
+import jwt from "jsonwebtoken"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 moment.locale('lv')
 
@@ -24,7 +25,15 @@ let state = {
   labelOrigin: {},
   i: 0,
   total: 0,
-  timeNow: moment().format('DD.MMM.YYYY')
+  timeNow: moment().format('DD.MMM.YYYY'),
+  auth: {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
+    }
+  }
 }
 
 
@@ -98,7 +107,7 @@ const MainMap = compose(
         path: linePath
       }
 
-      fetch(process.env.REACT_APP_API_HOST)
+      fetch(process.env.REACT_APP_API_HOST, state.auth)
         .then(res => res.json())
         .then(
           (result) => {

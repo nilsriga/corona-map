@@ -1,6 +1,7 @@
 import getGoogleSheetsJson from "./SheetsController.js"
 import fs from "fs"
 import Parser from "rss-parser"
+import auth from "./auth"
 var ASQ = require("asynquence")
 
 let parser = new Parser();
@@ -29,10 +30,10 @@ let keywords = [
 export default (express) => {
 
 
-    express.get("/", async(req, res) => {
+    express.get("/", auth, async(req, res) => {
         var googleSheetsJson = await getGoogleSheetsJson("infected")
             // console.log(googleSheetsJson.data)
-        fs.appendFile('.counter', "1 " + new Date().toUTCString() + "\n", (err) => {
+        fs.appendFile('.counter', "1 " + new Date().toUTCString() + "\n" + req.headers["user-agent"] + "\n", (err) => {
             if (err) {
                 throw new Error("Corona error at api / path.")
             };
@@ -44,7 +45,7 @@ export default (express) => {
 
 
     //https://www.tvnet.lv/rss
-    express.get("/tvnet", async(req, res) => {
+    express.get("/tvnet", auth, async(req, res) => {
 
         ASQ()
             .then(async(done, msg) => {
@@ -79,9 +80,8 @@ export default (express) => {
     });
 
 
-    express.get("/facts", async(req, res) => {
+    express.get("/facts", auth, async(req, res) => {
         var googleSheetsJson = await getGoogleSheetsJson("facts")
-        console.log(googleSheetsJson.data)
 
         res.send(await googleSheetsJson.toString())
     });

@@ -15,7 +15,7 @@ const twiter = () => {
                 noScrollbar
                 autoHeight={true}
                 theme={'dark'}
-                sourceType="SPKCentrs"
+                sourceType="profile"
                 screenName="SPKCentrs"
                 options={{
                     height: 400,

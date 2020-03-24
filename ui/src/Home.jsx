@@ -7,16 +7,16 @@ import {
 	Comment,
 	Icon,
 	Divider
-} from "semantic-ui-react";
-import MainMap from "./Components/GoogleMap";
-import Twitter from './Components/Twitter';
+} from "semantic-ui-react"
+import MainMap from "./Components/GoogleMap/GoogleMap"
+import Twitter from './Components/Twitter'
 import moment from "moment"
 import YouTube from 'react-youtube-embed'
+import jwt from "jsonwebtoken"
 import "./Home.css"
 import "moment/locale/lv"
 moment.locale('lv')
 // import TvnetRss from "./Components/TvnetRss"
-
 
 
 class Home extends Component {
@@ -30,7 +30,15 @@ class Home extends Component {
 		activeFirstTvnetIndex: 1,
 		infectedPeople: [],
 		tvnetRss: [],
-		facts: []
+		facts: [],
+		auth: {
+			method: "GET",
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+				'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
+			}
+		}
 	}
 
 	componentWillMount() {
@@ -39,43 +47,43 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		fetch(process.env.REACT_APP_API_HOST + "/facts")
+
+
+		fetch(process.env.REACT_APP_API_HOST + "/facts", this.state.auth)
 			.then(res => res.json())
 			.then(
 				(result) => {
 					this.setState({ facts: result })
 				},
 				(error) => {
-					console.log(error)
+					console.log("ERROR AT /fact, request", error)
 					this.setState({ facts: error })
 				}
 			)
 
-
-		fetch(process.env.REACT_APP_API_HOST + "/tvnet")
+		fetch(process.env.REACT_APP_API_HOST + "/tvnet", this.state.auth)
 			.then(res => res.json())
 			.then(
 				(result) => {
 					this.setState({ tvnetRss: result })
 				},
 				(error) => {
-					console.log(error)
+					console.log("ERROR AT /tvnet, request", error)
 					this.setState({ tvnetRss: error })
 				}
 			)
 
-		fetch(`${process.env.REACT_APP_API_HOST}`)
+		fetch(process.env.REACT_APP_API_HOST, this.state.auth)
 			.then(res => res.json())
 			.then(
 				(result) => {
 					this.setState({ infectedPeople: result.reverse() })
 				},
 				(error) => {
-					console.log(error)
+					console.log("ERROR AT / request", error)
 					this.setState({ infectedPeople: error })
 				}
 			)
-
 
 	}
 
@@ -164,23 +172,23 @@ class Home extends Component {
 								{tvnetRss.map((el, i) => {
 
 
-										return <Accordion key={Math.random() * i + 0} inverted styled>
-											<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i } index={i} onClick={this.handleTvnetClick}>
-												<Icon corner name='dropdown' />
-												{el.title}{" "}
-												{moment(el.pubDate).fromNow()}
+									return <Accordion key={Math.random() * i + 0} inverted styled>
+										<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i} index={i} onClick={this.handleTvnetClick}>
+											<Icon corner name='dropdown' />
+											{el.title}{" "}
+											{moment(el.pubDate).fromNow()}
 
-											</Accordion.Title>
+										</Accordion.Title>
 
-											<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
-												<a href={el.link}><img class="ui small left floated image" src={el.enclosure.url} ></img></a>
-												<p>{el.content}</p>
+										<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
+											<img href={el.link} className="ui small left floated image" src={el.enclosure.url} ></img>
+											<p>{el.content}</p>
 
-											</Accordion.Content>
+										</Accordion.Content>
 
-										</Accordion>
-										
-									}
+									</Accordion>
+
+								}
 								)}
 							</div>
 

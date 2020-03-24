@@ -5,7 +5,6 @@ const dotenv = require('dotenv').config();
 export default async function getGoogleSheetsJson(type) {
 
     var googleSheetsCsv
-    console.log(type)
 
     if (type === "infected") {
 
