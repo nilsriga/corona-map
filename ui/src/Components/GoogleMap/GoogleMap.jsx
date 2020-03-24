@@ -336,7 +336,7 @@ const MainMap = compose(
               </Marker> */}
 
 
-
+              
               < Polyline
                 path={
                   [
@@ -353,7 +353,7 @@ const MainMap = compose(
                 options={{
                   geodesic: true,
                   strokeColor: '#ffa18c',
-                  strokeOpacity: 0.3,
+                  strokeOpacity: item.isKnown == 1 ? 0.3 : 0,
                   strokeWeight: 2.2,
                   icons: [{
                     icon: state.lineSymbol,

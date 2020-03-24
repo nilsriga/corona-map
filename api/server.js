@@ -37,30 +37,30 @@ if (env == "production") {
 
 
 
-  const certOpts = {
-    key: "../certificates/key.pem",
-    cert: "../certificates/cert.pem"
-  }
+    const certOpts = {
+        key: "../certificates/key.pem",
+        cert: "../certificates/cert.pem"
+    }
 
-  const server = https.createServer(certOpts, express)
-  server.listen(port, () => {
-    console.log("express server listening to port " + port)
-  })
+    const server = https.createServer(certOpts, express)
+    server.listen(port, () => {
+        console.log("express server listening to port " + port)
+    })
 
-  // Secondary http express
-  const httpexpress = express()
-  const httpRouter = express.Router()
-  httpexpress.use("*", httpRouter)
-  httpRouter.get("*", (req, res) => {
-    const host = req.get("Host")
-    // replace the port in the host
-    host = host.replace(/:\d+$/, ":" + express.get("port"))
-    // determine the redirect destination
-    const destination = ["https://", host, req.url].join("")
-    return res.redirect(destination)
-  })
-  const httpServer = http.createServer(httpexpress)
-  httpServer.listen(80)
+    // Secondary http express
+    const httpexpress = express()
+    const httpRouter = express.Router()
+    httpexpress.use("*", httpRouter)
+    httpRouter.get("*", (req, res) => {
+        const host = req.get("Host")
+            // replace the port in the host
+        host = host.replace(/:\d+$/, ":" + express.get("port"))
+            // determine the redirect destination
+        const destination = ["https://", host, req.url].join("")
+        return res.redirect(destination)
+    })
+    const httpServer = http.createServer(httpexpress)
+    httpServer.listen(80)
 
 
 
@@ -70,10 +70,10 @@ if (env == "production") {
 
 
 
-  const server = http.createServer(express)
-  server.listen(port, () => {
-    console.log("express server listening to port ", "http://" + host + ":" + port)
-  })
+    const server = http.createServer(express)
+    server.listen(port, () => {
+        console.log("express server listening to port ", host + ":" + port)
+    })
 
 
 
