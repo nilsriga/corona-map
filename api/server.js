@@ -23,7 +23,13 @@ const express = Express()
 const router = Express.Router()
 
 
-var whitelist = ['http://latvijaskoronakarte.online', 'http://latvijaskoronakarte.lv', "http://localhost:3000"]
+var whitelist = [
+    'http://latvijaskoronakarte.online',
+    'http://www.latvijaskoronakarte.online',
+    'http://latvijaskoronakarte.lv',
+    'http://www.latvijaskoronakarte.lv',
+    "http://localhost:3000"
+]
 var corsOptions = {
     origin: (origin, callback) => {
         if (whitelist.indexOf(origin) !== -1) {
