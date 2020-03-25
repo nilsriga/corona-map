@@ -22,9 +22,22 @@ import routes from "./routes.js"
 const express = Express()
 const router = Express.Router()
 
+
+var whitelist = ['http://latvijaskoronakarte.online', 'http://latvijaskoronakarte.lv', "http://localhost:3000"]
+var corsOptions = {
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by Corona CORS'))
+        }
+    }
+}
+
+
 express.set("env", env)
 express.set("port", port)
-express.use(cors())
+express.use(cors(corsOptions))
 express.use("/", router)
 routes(express)
 
