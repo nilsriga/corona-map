@@ -75,3 +75,15 @@
         padding-bottom: 0.5em!important;
         min-height: 95px!important;
     }
+    
+    #twitter-widget-0 {
+        min-width: auto!important;
+    }
+    
+    div.title.accordion-title {
+        width: 100%!important;
+    }
+    
+    .ui.styled.accordion {
+        width: 100%!important;
+    }
