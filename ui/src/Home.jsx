@@ -305,7 +305,7 @@ class Home extends Component {
 
 								<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
 									<Icon corner name='dropdown' />
-									Kā interpretēt kartē attēlot
+									Kā interpretēt kartē attēloto
 								</Accordion.Title>
 
 								<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em"}} className={"accordion-content"} active={activeMapAccordionIndex}>
