@@ -175,7 +175,7 @@ class Home extends Component {
 
 							<Header className="box-header" inverted as="h4">TvNet Korona Ziņas</Header>
 
-							<div style={{ overflow: 'auto', maxHeight: 35 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 33 + "vh" }}>
 								{tvnetRss.map((el, i) => {
 
 
@@ -212,27 +212,6 @@ class Home extends Component {
 								<MainMap />
 							</Segment>
 
-							<Accordion key={0} inverted styled>
-
-								<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
-									<Icon corner name='dropdown' />
-									Kā interpretēt kartē attēlot
-								</Accordion.Title>
-
-								<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em"}} className={"accordion-content"} active={activeMapAccordionIndex}>
-									<li>Ņemiet vērā, ka visi uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</li>
-									<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
-									<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
-									<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā pilsētā</li>
-									<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
-									<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
-									<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
-									<li>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</li>
-								
-								</Accordion.Content>
-
-							</Accordion>
-
 						</Grid.Column>
 
 
@@ -246,7 +225,7 @@ class Home extends Component {
 
 
 
-							<div style={{ overflow: 'auto', maxHeight: 30 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 15 + "vh" }}>
 								{
 									infectedPeople.map((el, i) => {
 										return (
@@ -284,7 +263,7 @@ class Home extends Component {
 
 
 							<Header className="box-header" inverted as="h4">Korona/COVID-19 Fakti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 55 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 35 + "vh" }}>
 
 								<Accordion key={0} inverted styled>
 
@@ -320,12 +299,38 @@ class Home extends Component {
 
 
 
+							<Header className="box-header" inverted as="h4">Par Karti</Header>
+							<div style={{ overflow: 'auto', maxHeight: 33 + "vh" }}>
+							<Accordion key={0} inverted styled>
+
+								<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
+									<Icon corner name='dropdown' />
+									Kā interpretēt kartē attēlot
+								</Accordion.Title>
+
+								<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em"}} className={"accordion-content"} active={activeMapAccordionIndex}>
+									<li>Ņemiet vērā, ka visi uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</li>
+									<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
+									<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
+									<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā pilsētā</li>
+									<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
+									<li>Sarkanā krāsā ir iezīmētas apdzīvotas vietas un ceļi</li>
+									<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
+									<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt: <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
+								
+								</Accordion.Content>
+
+							</Accordion>
+							</div>
+
 
 						</Grid.Column>
 
 					</Grid.Row>
 
 				</Grid>
+				<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</p>
+
 
 			</Segment>
 		);
