@@ -309,6 +309,7 @@ class Home extends Component {
 								</Accordion.Title>
 
 								<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em"}} className={"accordion-content"} active={activeMapAccordionIndex}>
+									<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt: <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
 									<li>Ņemiet vērā, ka visi uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</li>
 									<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
 									<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
@@ -316,7 +317,6 @@ class Home extends Component {
 									<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
 									<li>Sarkanā krāsā ir iezīmētas apdzīvotas vietas un ceļi</li>
 									<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
-									<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt: <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
 								
 								</Accordion.Content>
 
