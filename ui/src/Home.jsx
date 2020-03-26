@@ -225,7 +225,7 @@ class Home extends Component {
 
 
 
-							<div style={{ overflow: 'auto', maxHeight: 15 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 20 + "vh" }}>
 								{
 									infectedPeople.map((el, i) => {
 										return (
@@ -300,7 +300,7 @@ class Home extends Component {
 
 
 							<Header className="box-header" inverted as="h4">Par Karti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 33 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 28 + "vh" }}>
 							<Accordion key={0} inverted styled>
 
 								<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
