@@ -263,7 +263,7 @@ class Home extends Component {
 
 
 							<Header className="box-header" inverted as="h4">Korona/COVID-19 Fakti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 35 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 40 + "vh" }}>
 
 								<Accordion key={0} inverted styled>
 
@@ -300,7 +300,7 @@ class Home extends Component {
 
 
 							<Header className="box-header" inverted as="h4">Par Karti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 28 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 23 + "vh" }}>
 							<Accordion key={0} inverted styled>
 
 								<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
@@ -310,7 +310,7 @@ class Home extends Component {
 
 								<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em"}} className={"accordion-content"} active={activeMapAccordionIndex}>
 									<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt: <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
-									<li><u>Ņemiet vērā, ka visi uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</u></li>
+									<li><u>Ņemiet vērā, ka gandrīz visi uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</u> To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
 									<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
 									<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
 									<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā apdzīvotajā teritorijā</li>
