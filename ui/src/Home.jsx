@@ -234,7 +234,13 @@ class Home extends Component {
 
 												<Accordion.Title className={"accordion-title"} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
 													<Icon corner name='dropdown' />
-													{el.label ? el.label + ", " + el.origin : ""}
+													{el.id != 1 
+													? 
+													"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.origin ? el.origin : "")
+													:
+													el.label
+												}
+													
 												</Accordion.Title>
 
 												<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeInfectedIndex === i}>
