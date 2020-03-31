@@ -10,13 +10,14 @@ import {
 	// Divider
 } from "semantic-ui-react"
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
-import MainMapWithouthPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
+import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
 import Twitter from './Components/Twitter'
 import moment from "moment"
 import YouTube from 'react-youtube-embed'
 import jwt from "jsonwebtoken"
 import "./Home.css"
 import "moment/locale/lv"
+
 moment.locale('lv')
 // import TvnetRss from "./Components/TvnetRss"
 
@@ -155,6 +156,8 @@ class Home extends Component {
 		this.setState({ polylinesVisible: bool })
 	}
 
+
+
 	render() {
 		const {
 			activeInfectedIndex,
@@ -165,10 +168,19 @@ class Home extends Component {
 			facts,
 			activeFirstFactIndex,
 			activeMapAccordionIndex,
-			polylinesVisible
+			polylinesVisible,
 		} = this.state
 
-		return (
+		function returnMapWithPolylines() {
+			return <MainMapWithPolylines />
+		}
+
+		function returnMapWithoutPolylines() {
+			return <MainMapWithoutPolylines />
+		}
+
+		return (			
+			console.log(this),
 			<Segment inverted>
 				<Grid divided stackable>
 					<Grid.Row>
@@ -227,7 +239,8 @@ class Home extends Component {
 
 							<Segment raised style={{ padding: "0" }}>
 
-								{this.state.polylinesVisible ? <MainMapWithPolylines /> :  <MainMapWithouthPolylines />}
+								{this.state.polylinesVisible && returnMapWithPolylines() }
+								{!this.state.polylinesVisible && returnMapWithoutPolylines()}
 
 							</Segment>
 

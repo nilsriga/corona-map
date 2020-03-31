@@ -1,7 +1,6 @@
 import React from 'react';
 import Home from './Home.jsx';
-import { Switch, Route } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import "./App.css"
 import PageNotFound from './Components/PageNotFound/PageNotFound';
 
