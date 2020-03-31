@@ -79,7 +79,7 @@ class Home extends Component {
 				}
 			)
 
-			fetch(process.env.REACT_APP_API_HOST, this.state.auth)
+		fetch(process.env.REACT_APP_API_HOST, this.state.auth)
 			.then(res => res.json())
 			.then(
 				(result) => {
@@ -174,7 +174,7 @@ class Home extends Component {
 			// openedInfoWindowId
 		} = this.state
 
-		return (			
+		return (
 			<Segment inverted>
 				<Grid divided stackable>
 					<Grid.Row>
@@ -222,19 +222,16 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} className={"map-container"} >
 
-							<Header className="box-header main-header" as="h3" inverted textAlign={"center"} >
-								
-								Paliec Mājās, Sargā Ģimeni
-							
+							<Header className="box-header main-header" as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni</Header>
+
+
 							<Button className={"polyline-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>
 								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
 							</Button>
-							
-							</Header>
 
 
 							<Segment raised style={{ padding: "0" }}>
-								{this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} /> }
+								{this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
