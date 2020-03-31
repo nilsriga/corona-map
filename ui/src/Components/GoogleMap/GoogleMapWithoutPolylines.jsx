@@ -236,7 +236,7 @@ const MainMap = compose(
             <div key={Math.random() * 10000000000000000}>
 
 
-              < Marker
+              {/* < Marker
                 key={index + "origin"}
                 position={{
                   lat: originLat,
@@ -251,7 +251,7 @@ const MainMap = compose(
                   fontSize: "16px",
                   labelOrigin: state.labelOrigin
                 }}
-              />
+              /> */}
 
 
 
