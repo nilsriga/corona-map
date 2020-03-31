@@ -17,8 +17,8 @@ import YouTube from 'react-youtube-embed'
 import jwt from "jsonwebtoken"
 import "./Home.css"
 import "moment/locale/lv"
-
 moment.locale('lv')
+
 // import TvnetRss from "./Components/TvnetRss"
 
 
@@ -43,7 +43,8 @@ class Home extends Component {
 				'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
 			}
 		},
-		polylinesVisible: false
+		polylinesVisible: false,
+		// openedInfoWindowId: ""
 	}
 
 	componentWillMount() {
@@ -78,7 +79,7 @@ class Home extends Component {
 				}
 			)
 
-		fetch(process.env.REACT_APP_API_HOST, this.state.auth)
+			fetch(process.env.REACT_APP_API_HOST, this.state.auth)
 			.then(res => res.json())
 			.then(
 				(result) => {
@@ -97,6 +98,7 @@ class Home extends Component {
 		const { activeInfectedIndex } = this.state
 		const newIndex = activeInfectedIndex === index ? -1 : index
 
+		// this.setState({ activeInfectedIndex: newIndex, openedInfoWindowId: titleProps.id })
 		this.setState({ activeInfectedIndex: newIndex })
 
 	}
@@ -169,18 +171,10 @@ class Home extends Component {
 			activeFirstFactIndex,
 			activeMapAccordionIndex,
 			polylinesVisible,
+			// openedInfoWindowId
 		} = this.state
 
-		function returnMapWithPolylines() {
-			return <MainMapWithPolylines />
-		}
-
-		function returnMapWithoutPolylines() {
-			return <MainMapWithoutPolylines />
-		}
-
 		return (			
-			console.log(this),
 			<Segment inverted>
 				<Grid divided stackable>
 					<Grid.Row>
@@ -232,16 +226,18 @@ class Home extends Component {
 								
 								Paliec Mājās, Sargā Ģimeni
 							
-							<Button className={"polyline-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>Ieslēgt Izplatības Ceļu</Button>
+							<Button className={"polyline-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>
+								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
+							</Button>
 							
 							</Header>
 
 
 							<Segment raised style={{ padding: "0" }}>
-
-								{this.state.polylinesVisible && returnMapWithPolylines() }
-								{!this.state.polylinesVisible && returnMapWithoutPolylines()}
-
+								{this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} /> }
+								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
+								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
+								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
 							</Segment>
 
 						</Grid.Column>
@@ -256,7 +252,6 @@ class Home extends Component {
 
 
 
-
 							<div style={{ overflow: 'auto', maxHeight: 20 + "vh" }}>
 								{
 									infectedPeople.map((el, i) => {
@@ -264,7 +259,7 @@ class Home extends Component {
 											<Accordion key={Math.random() * i + 0} inverted styled>
 
 
-												<Accordion.Title className={"accordion-title"} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
+												<Accordion.Title className={"accordion-title"} id={el.id} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
 													<Icon corner name='dropdown' />
 													{el.id != 1
 														?

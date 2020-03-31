@@ -19,21 +19,21 @@ moment.locale('lv')
 
 
 let state = {
-  data: [],
+  // data: [],
   lineSymbol: {},
   markerIcon: {},
   labelOrigin: {},
   i: 0,
   total: 0,
   timeNow: moment().format('DD.MMM.YYYY'),
-  auth: {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
-    }
-  }
+  // auth: {
+  //   method: "GET",
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
+  //   }
+  // }
 }
 
 
@@ -71,7 +71,7 @@ function getOffsetXY(num) {
 
 
 
-const MainMap = compose(
+const MapWithPolylines = compose(
 
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAPS_API_KEY}`,
@@ -90,65 +90,64 @@ const MainMap = compose(
   }),
   lifecycle({
     componentWillMount() {
-      this.setState({ data: [] });
+      // this.setState({ data: [] });
     },
     componentDidMount() {
       // THIS ENABLES DIRECTIONS
       // const DirectionsService = new window.google.maps.DirectionsService();
-      let linePath = window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW
       // linePath.strokeOpacity = 1.0
       // linePath.scale = 4
 
-
+      let lineSymbol = window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW
 
       // state.labelOrigin = new window.google.maps.Point(12, 66)
 
-      state.lineSymbol = {
-        path: linePath
-      }
 
-      fetch(process.env.REACT_APP_API_HOST, state.auth)
-        .then(res => res.json())
-        .then(
-          (result) => {
-            state.data = result
-            state.total = result.length
-          },
-          (error) => {
-            console.log(error)
-            state.data = error
-          }
-        )
-        .then(data => this.setState({ data }))
-        .then(data => {
-          // THIS ENABLES DIRECTIONS
-          // state.data.forEach(item => {
-          //   const selfLat = parseFloat(item.selfCooLat)
-          //   const selfLng = parseFloat(item.selfCooLng)
-          //   const originLat = parseFloat(item.originCooLat)
-          //   const originLng = parseFloat(item.originCooLng)
-          //   DirectionsService.route({
-          //     origin: {
-          //       lat: originLat,
-          //       lng: originLng
-          //     },
-          //     destination: {
-          //       lat: selfLat,
-          //       lng: selfLng
-          //     },
-          //     travelMode: window.google.maps.TravelMode.WALKING,
-          //   }, (result, status) => {
-          //     if (status === window.google.maps.DirectionsStatus.OK) {
-          //       this.setState({
-          //         directions: result,
-          //       });
-          //     } else {
-          //       console.error(`error fetching directions ${result}`);
-          //     }
-          //   });
-          // })
+      this.setState({ lineSymbol: lineSymbol })
+      state.lineSymbol = { path: lineSymbol }
 
-        })
+      // fetch(process.env.REACT_APP_API_HOST, state.auth)
+      //   .then(res => res.json())
+      //   .then(
+      //     (result) => {
+      //       state.data = result
+      //       state.total = result.length
+      //     },
+      //     (error) => {
+      //       console.log(error)
+      //       state.data = error
+      //     }
+      //   )
+      //   .then(data => this.setState({ data }))
+      //   .then(data => {
+      //     // THIS ENABLES DIRECTIONS
+      //     // state.data.forEach(item => {
+      //     //   const selfLat = parseFloat(item.selfCooLat)
+      //     //   const selfLng = parseFloat(item.selfCooLng)
+      //     //   const originLat = parseFloat(item.originCooLat)
+      //     //   const originLng = parseFloat(item.originCooLng)
+      //     //   DirectionsService.route({
+      //     //     origin: {
+      //     //       lat: originLat,
+      //     //       lng: originLng
+      //     //     },
+      //     //     destination: {
+      //     //       lat: selfLat,
+      //     //       lng: selfLng
+      //     //     },
+      //     //     travelMode: window.google.maps.TravelMode.WALKING,
+      //     //   }, (result, status) => {
+      //     //     if (status === window.google.maps.DirectionsStatus.OK) {
+      //     //       this.setState({
+      //     //         directions: result,
+      //     //       });
+      //     //     } else {
+      //     //       console.error(`error fetching directions ${result}`);
+      //     //     }
+      //     //   });
+      //     // })
+
+      //   })
 
 
     }
@@ -208,7 +207,7 @@ const MainMap = compose(
       {/* {THIS ENABLES DIRECTIONS} */}
       {/* {props.directions && <DirectionsRenderer directions={props.directions} />} */}
       {
-        state.data.map((item, index, arr) => {
+        props.infectedPeople.map((item, index, arr) => {
 
 
           // const selfLat = parseFloat(item.selfCooLat)
@@ -292,6 +291,7 @@ const MainMap = compose(
                   </div>
                 )}
                 label={item.id === "1" ? item.label : ""}
+                // infoBoxOpen={}
               />
 
 
@@ -408,7 +408,7 @@ const MainMap = compose(
           visible={true}
         >
           <div style={{ opacity: 0.75 }}>
-            <h2>LV Kopā: {state.total}</h2>
+            <h2>LV Kopā: {props.infectedPeople.length}</h2>
             {/* <p>{(new Date()).getUTCDate() + "." + (new Date()).getUTCMonth() + "." + (new Date()).getFullYear()}</p> */}
             <p>{state.timeNow}</p>
           </div>
@@ -434,13 +434,13 @@ class MarkerWithInfoWindow extends React.Component {
       isOpen: false
     }
     this.onToggleOpen = this.onToggleOpen.bind(this);
-  
+
   }
 
   onToggleOpen() {
     this.setState({
       isOpen: !this.state.isOpen
-      
+
     });
   }
 
@@ -469,4 +469,4 @@ class MarkerWithInfoWindow extends React.Component {
 
 
 
-export default MainMap
+export default MapWithPolylines
