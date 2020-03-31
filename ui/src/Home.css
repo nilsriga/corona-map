@@ -2,9 +2,10 @@
     padding: 0.2em!important;
 }
 
-#root>div>div>div>div>div>div.ten.wide.column>div>div>div:nth-child(1) {
-    margin: -3px;
+#root>div>div>div>div>div>div.ten.wide.column>div>div>div {
+    margin: -2px;
     border-radius: 5px;
+    /* margin-top: -0.8em; */
 }
 
 #root>div>div>div>div>div>div:nth-child(3)>div.gray.row>div>div>div {
@@ -60,23 +61,6 @@
     margin: 0px!important;
 }
 
-#root>div>div>div>div.ui.inverted.segment.footer>p:nth-child(1) {
-    margin: 0px!important;
-}
-
-#root>div>div>div>div.ui.stackable.divided.grid>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(1)>a>img {
-    margin-right: 0.3em!important;
-    margin-bottom: 0.5em!important;
-}
-
-#root>div>div>div>div.ui.stackable.divided.grid>div>div:nth-child(1)>div:nth-child(4)>div>a {
-    padding-top: 0.3em!important;
-    padding-right: 0px!important;
-    padding-left: 0.2em!important;
-    padding-bottom: 0.5em!important;
-    min-height: 95px!important;
-}
-
 #twitter-widget-0 {
     min-width: auto!important;
 }
@@ -92,3 +76,30 @@ div.title.accordion-title {
 .footer>p:nth-child(1) {
     padding-top: 1em!important;
 }
+
+.main-header {
+    display: contents;
+}
+
+.polyline-button {
+    margin-left: -20em!important;
+}
+
+
+
+/* #root>div>div>div>div.ui.inverted.segment.footer>p:nth-child(1) {
+    margin: 0px!important;
+}
+
+#root>div>div>div>div.ui.stackable.divided.grid>div>div:nth-child(1)>div:nth-child(4)>div:nth-child(1)>a>img {
+    margin-right: 0.3em!important;
+    margin-bottom: 0.5em!important;
+}
+
+#root>div>div>div>div.ui.stackable.divided.grid>div>div:nth-child(1)>div:nth-child(4)>div>a {
+    padding-top: 0.3em!important;
+    padding-right: 0px!important;
+    padding-left: 0.2em!important;
+    padding-bottom: 0.5em!important;
+    min-height: 95px!important;
+} */

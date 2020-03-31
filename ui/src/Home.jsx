@@ -4,11 +4,13 @@ import {
 	Header,
 	Segment,
 	Accordion,
-	Comment,
 	Icon,
-	Divider
+	Button
+	// Comment,
+	// Divider
 } from "semantic-ui-react"
-import MainMap from "./Components/GoogleMap/GoogleMap"
+import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
+import MainMapWithouthPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
 import Twitter from './Components/Twitter'
 import moment from "moment"
 import YouTube from 'react-youtube-embed'
@@ -39,7 +41,8 @@ class Home extends Component {
 				'Accept': 'application/json',
 				'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
 			}
-		}
+		},
+		polylinesVisible: false
 	}
 
 	componentWillMount() {
@@ -145,6 +148,13 @@ class Home extends Component {
 		this.setState({ activeMapAccordionIndex: newIndex })
 	}
 
+	handlePolylineToggle = (e) => {
+		const { polylinesVisible } = this.state
+		const bool = polylinesVisible === true ? false : true
+
+		this.setState({ polylinesVisible: bool })
+	}
+
 	render() {
 		const {
 			activeInfectedIndex,
@@ -154,7 +164,8 @@ class Home extends Component {
 			tvnetRss,
 			facts,
 			activeFirstFactIndex,
-			activeMapAccordionIndex
+			activeMapAccordionIndex,
+			polylinesVisible
 		} = this.state
 
 		return (
@@ -205,11 +216,19 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} className={"map-container"} >
 
-							<Header className="box-header" as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni</Header>
+							<Header className="box-header main-header" as="h3" inverted textAlign={"center"} >
+								
+								Paliec Mājās, Sargā Ģimeni
+							
+							<Button className={"polyline-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>Ieslēgt Izplatības Ceļu</Button>
+							
+							</Header>
 
 
 							<Segment raised style={{ padding: "0" }}>
-								<MainMap />
+
+								{this.state.polylinesVisible ? <MainMapWithPolylines /> :  <MainMapWithouthPolylines />}
+
 							</Segment>
 
 						</Grid.Column>

@@ -167,7 +167,7 @@ const MainMap = compose(
       onClick={props.onMarkerClustererClick}
       averageCenter
       enableRetinaIcons
-      gridSize={5}
+      gridSize={11}
       ignoreHidden={true}
     // ENABLE THIS FOR CUSTOM CLUSTER ICON
     // styles={[
