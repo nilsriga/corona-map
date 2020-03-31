@@ -336,8 +336,8 @@ const MainMap = compose(
               </Marker> */}
 
 
-              
-              < Polyline
+              {/* this enables lines of atecedance */}
+              {/* < Polyline
                 path={
                   [
                     {
@@ -362,7 +362,7 @@ const MainMap = compose(
 
                   }],
                 }}
-              />
+              /> */}
 
               {/* IF YOU CAN FIGURE OUT HOW TO PUT TEXT INSIDE A CIRCLE - THIS WILL LOOK BETTER */}
               {/* <Circle

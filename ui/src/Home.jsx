@@ -234,13 +234,13 @@ class Home extends Component {
 
 												<Accordion.Title className={"accordion-title"} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
 													<Icon corner name='dropdown' />
-													{el.id != 1 
-													? 
-													"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.origin ? el.origin : "")
-													:
-													el.label
-												}
-													
+													{el.id != 1
+														?
+														"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.origin ? el.origin : "")
+														:
+														el.label
+													}
+
 												</Accordion.Title>
 
 												<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeInfectedIndex === i}>
@@ -307,26 +307,26 @@ class Home extends Component {
 
 							<Header className="box-header" inverted as="h4">Par Karti</Header>
 							<div style={{ overflow: 'auto', maxHeight: 23 + "vh" }}>
-							<Accordion key={0} inverted styled>
+								<Accordion key={0} inverted styled>
 
-								<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
-									<Icon corner name='dropdown' />
+									<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
+										<Icon corner name='dropdown' />
 									Kā interpretēt kartē attēloto
-								</Accordion.Title>
+									</Accordion.Title>
 
-								<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em"}} className={"accordion-content"} active={activeMapAccordionIndex}>
-									<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt: <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
-									<li><u>Ņemiet vērā, ka uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</u> To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
-									<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
-									<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
-									<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā apdzīvotajā teritorijā</li>
-									<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
-									<li>Sarkanā krāsā ir iezīmētas apdzīvotas vietas un ceļi</li>
-									<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
-								
-								</Accordion.Content>
+									<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex}>
+										<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt: <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
+										<li><u>Ņemiet vērā, ka uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</u> To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
+										<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
+										<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
+										<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā apdzīvotajā teritorijā</li>
+										<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
+										<li>Sarkanā krāsā ir iezīmētas apdzīvotas vietas un ceļi</li>
+										<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
 
-							</Accordion>
+									</Accordion.Content>
+
+								</Accordion>
 							</div>
 
 
