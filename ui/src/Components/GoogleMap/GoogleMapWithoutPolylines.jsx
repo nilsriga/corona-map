@@ -438,7 +438,6 @@ class MarkerWithInfoWindow extends React.Component {
   }
 
   onToggleOpen() {
-    console.log(this.props.openedInfoWindowId.windowId, this.props.openedInfoWindowId.selfId)
     this.setState({
       isOpen: !this.state.isOpen
     });
