@@ -39,11 +39,6 @@
     padding-top: 0.5em!important;
 }
 
-#root>div>div>div>div>div>div:nth-child(3)>div:nth-child(4)>div:nth-child(1)>div.content.active.accordion-content {
-    padding: 0.1em!important;
-    padding-bottom: 0.3em!important;
-}
-
 .box-header {
     margin-top: 0.4em!important;
 }
@@ -78,13 +73,29 @@ div.title.accordion-title {
 }
 
 .main-header {
-    display: contents;
+    display: contents!important;
+    overflow: hidden!important;
 }
 
-.polyline-button {
-    margin-left: -20em!important;
+div.content.active.accordion-content {
+    padding-top: 4px!important;
+    padding-right: 5px!important;
+    padding-bottom: 6px!important;
+    padding-left: 3px!important;
 }
 
+#root > div > div > div > div > div > div.ten.wide.column.map-container > div { 
+    background-color: #1b1c1d!important;
+}
+
+
+
+
+
+/* #root>div>div>div>div>div>div:nth-child(3)>div:nth-child(4)>div:nth-child(1)>div.content.active.accordion-content {
+    padding: 0.1em!important;
+    padding-bottom: 0.3em!important;
+} */
 
 
 /* #root>div>div>div>div.ui.inverted.segment.footer>p:nth-child(1) {

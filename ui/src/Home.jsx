@@ -5,15 +5,16 @@ import {
 	Segment,
 	Accordion,
 	Icon,
-	Button
+	Button,
+	Embed
 	// Comment,
 	// Divider
 } from "semantic-ui-react"
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
 import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
+import SKPCMap from "./Components/SKPCMap/MainMap"
 import Twitter from './Components/Twitter'
 import moment from "moment"
-import YouTube from 'react-youtube-embed'
 import jwt from "jsonwebtoken"
 import "./Home.css"
 import "moment/locale/lv"
@@ -43,7 +44,8 @@ class Home extends Component {
 				'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
 			}
 		},
-		polylinesVisible: true,
+		polylinesVisible: false,
+		currentlyVisibleMap: "googleMap"
 		// openedInfoWindowId: ""
 	}
 
@@ -157,7 +159,12 @@ class Home extends Component {
 		this.setState({ polylinesVisible: bool })
 	}
 
+	handleMapTypeToggle = (e) => {
+		const { currentlyVisibleMap } = this.state
+		const newlyVisibleMap = currentlyVisibleMap === "googleMap" ? "skpcMap" : "googleMap"
 
+		this.setState({ currentlyVisibleMap: newlyVisibleMap })
+	}
 
 	render() {
 		const {
@@ -170,6 +177,7 @@ class Home extends Component {
 			activeFirstFactIndex,
 			activeMapAccordionIndex,
 			polylinesVisible,
+			currentlyVisibleMap
 			// openedInfoWindowId
 		} = this.state
 
@@ -224,14 +232,18 @@ class Home extends Component {
 							<Header className="box-header main-header" as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni</Header>
 
 
-							<Button className={"polyline-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>
+							<Button className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handleMapTypeToggle}>
+								{ currentlyVisibleMap === "googleMap" ? "Parādīt SKPC Karti Pa Reģioniem" : "Parādīt Izplatības Karti"}
+							</Button>
+
+							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>
 								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
 							</Button>
 
-
 							<Segment raised style={{ padding: "0" }}>
-								{polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
-								{!polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
+								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
+								{currentlyVisibleMap === "googleMap" && !polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
+								{currentlyVisibleMap === "skpcMap" ? <SKPCMap /> :  "" }
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
 							</Segment>
@@ -302,7 +314,11 @@ class Home extends Component {
 									</Accordion.Title>
 
 									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex}>
-										<YouTube id='NxvMLnCczXI' />
+										<Embed
+											id='NxvMLnCczXI'
+											source='youtube'
+											active={true}
+										/>
 									</Accordion.Content>
 
 								</Accordion>
