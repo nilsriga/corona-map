@@ -229,7 +229,7 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} className={"map-container"} >
 
-							<Header className="box-header main-header" as="h3" inverted textAlign={"center"} >Sargi Ģimeni</Header>
+							{/* <Header className="box-header main-header" as="h3" inverted textAlign={"center"} >Sargi Ģimeni</Header> */}
 
 
 							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>
