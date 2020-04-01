@@ -230,8 +230,8 @@ class Home extends Component {
 
 
 							<Segment raised style={{ padding: "0" }}>
-								{this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
-								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
+								{polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
+								{!polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
 							</Segment>

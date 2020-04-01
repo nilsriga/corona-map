@@ -93,6 +93,7 @@ const MapWithPolylines = compose(
       // this.setState({ data: [] });
     },
     componentDidMount() {
+      console.log("map with polylines")
       // THIS ENABLES DIRECTIONS
       // const DirectionsService = new window.google.maps.DirectionsService();
       // linePath.strokeOpacity = 1.0
@@ -353,7 +354,7 @@ const MapWithPolylines = compose(
                 options={{
                   geodesic: true,
                   strokeColor: '#ffa18c',
-                  strokeOpacity: item.isKnown === 1 ? 0.3 : 0,
+                  strokeOpacity: item.isKnown == 1 ? 0.3 : 0,
                   strokeWeight: 2.2,
                   icons: [{
                     icon: state.lineSymbol,

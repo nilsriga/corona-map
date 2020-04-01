@@ -93,6 +93,7 @@ const MapWithoutPolylines = compose(
       // this.setState({ data: [] });
     },
     componentDidMount() {
+      console.log("map wihtout polilines")
       // THIS ENABLES DIRECTIONS
       // const DirectionsService = new window.google.maps.DirectionsService();
       // linePath.strokeOpacity = 1.0
