@@ -54,7 +54,6 @@ class Home extends Component {
 
 	componentDidMount() {
 
-
 		fetch(process.env.REACT_APP_API_HOST + "/facts", this.state.auth)
 			.then(res => res.json())
 			.then(
@@ -192,7 +191,7 @@ class Home extends Component {
 
 							<Header className="box-header" inverted as="h4">TvNet Korona Ziņas</Header>
 
-							<div style={{ overflow: 'auto', maxHeight: 33 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 35 + "vh" }}>
 								{tvnetRss.map((el, i) => {
 
 
@@ -205,7 +204,7 @@ class Home extends Component {
 										</Accordion.Title>
 
 										<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
-											<img href={el.link} className="ui small left floated image" src={el.enclosure.url} ></img>
+											<img alt="Bile Nevarēja Ielādēties" href={el.link} className="ui small left floated image" src={el.enclosure.url} ></img>
 											<p>{el.content}</p>
 
 										</Accordion.Content>
@@ -258,7 +257,7 @@ class Home extends Component {
 
 												<Accordion.Title className={"accordion-title"} id={el.id} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
 													<Icon corner name='dropdown' />
-													{el.id != 1
+													{el.id !== 1
 														?
 														"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.origin ? el.origin : "")
 														:
@@ -330,7 +329,7 @@ class Home extends Component {
 
 
 							<Header className="box-header" inverted as="h4">Par Karti</Header>
-							<div style={{ overflow: 'auto', maxHeight: 23 + "vh" }}>
+							<div style={{ overflow: 'auto', maxHeight: 20 + "vh" }}>
 								<Accordion key={0} inverted styled>
 
 									<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>

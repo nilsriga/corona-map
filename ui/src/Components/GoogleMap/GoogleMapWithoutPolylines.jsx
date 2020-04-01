@@ -13,7 +13,7 @@ import {
 import MyStyle from "./MyStyleJSON.js"
 import moment from "moment"
 import "moment/locale/lv"
-import jwt from "jsonwebtoken"
+// import jwt from "jsonwebtoken"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 moment.locale('lv')
 
@@ -217,8 +217,8 @@ const MapWithoutPolylines = compose(
           // THIS MAKES MARKERS BE SPREAD OUT A MORE
           const selfLat = parseFloat(getOffsetCoo(item.selfCooLat))
           const selfLng = parseFloat(getOffsetCoo(item.selfCooLng))
-          const originLat = parseFloat(getOffsetCoo(item.originCooLat))
-          const originLng = parseFloat(getOffsetCoo(item.originCooLng))
+          // const originLat = parseFloat(getOffsetCoo(item.originCooLat))
+          // const originLng = parseFloat(getOffsetCoo(item.originCooLng))
 
 
 

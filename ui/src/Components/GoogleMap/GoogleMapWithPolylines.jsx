@@ -13,7 +13,7 @@ import {
 import MyStyle from "./MyStyleJSON.js"
 import moment from "moment"
 import "moment/locale/lv"
-import jwt from "jsonwebtoken"
+// import jwt from "jsonwebtoken"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 moment.locale('lv')
 
@@ -353,7 +353,7 @@ const MapWithPolylines = compose(
                 options={{
                   geodesic: true,
                   strokeColor: '#ffa18c',
-                  strokeOpacity: item.isKnown == 1 ? 0.3 : 0,
+                  strokeOpacity: item.isKnown === 1 ? 0.3 : 0,
                   strokeWeight: 2.2,
                   icons: [{
                     icon: state.lineSymbol,
