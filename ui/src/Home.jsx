@@ -298,7 +298,7 @@ class Home extends Component {
 
 									<Accordion.Title className={"accordion-title"} inverted active={activeFirstFactIndex} index={0} onClick={this.handleFirstFactClick}>
 										<Icon corner name='dropdown' />
-										Intervija Ar Inficēto Vieglā Formā
+										Intervija Ar Inficēto <u>Vieglā Formā</u>
 									</Accordion.Title>
 
 									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex}>
