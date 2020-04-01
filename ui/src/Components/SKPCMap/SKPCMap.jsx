@@ -1,6 +1,6 @@
 import React from 'react';
-import { Embed, Segment, Container } from 'semantic-ui-react'
-import "./main.css"
+import { Embed } from 'semantic-ui-react'
+import "./SKPCMap.css"
 
 const SKPCMap = () => {
 

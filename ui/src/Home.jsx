@@ -12,7 +12,7 @@ import {
 } from "semantic-ui-react"
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
 import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
-import SKPCMap from "./Components/SKPCMap/MainMap"
+import SKPCMap from "./Components/SKPCMap/SKPCMap"
 import Twitter from './Components/Twitter'
 import moment from "moment"
 import jwt from "jsonwebtoken"
@@ -51,10 +51,10 @@ class Home extends Component {
 
 	componentWillMount() {
 
-
 	}
 
 	componentDidMount() {
+
 
 		fetch(process.env.REACT_APP_API_HOST + "/facts", this.state.auth)
 			.then(res => res.json())
@@ -67,6 +67,7 @@ class Home extends Component {
 					this.setState({ facts: error })
 				}
 			)
+
 
 		fetch(process.env.REACT_APP_API_HOST + "/tvnet", this.state.auth)
 			.then(res => res.json())
@@ -91,6 +92,7 @@ class Home extends Component {
 					this.setState({ infectedPeople: error })
 				}
 			)
+
 
 	}
 
@@ -177,34 +179,33 @@ class Home extends Component {
 			activeFirstFactIndex,
 			activeMapAccordionIndex,
 			polylinesVisible,
-			currentlyVisibleMap
+			currentlyVisibleMap,
 			// openedInfoWindowId
 		} = this.state
 
 		return (
-			<Segment inverted>
-				<Grid divided stackable>
+			<Segment inverted={true}>
+				<Grid divided stackable >
 					<Grid.Row>
 
 
-
-						<Grid.Column stackable width={3} divided  >
-
+						<Grid.Column stackable="true" width={3} divided="true"  >
 
 
-							<Header className="box-header" inverted as="h4">SPKC Twittera Tvīti</Header>
+
+							<Header className="box-header" inverted={true} as="h4">SPKC Twittera Tvīti</Header>
 							<Twitter />
 
 
 
-							<Header className="box-header" inverted as="h4">TvNet Korona Ziņas</Header>
+							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas</Header>
 
 							<div style={{ overflow: 'auto', maxHeight: 35 + "vh" }}>
 								{tvnetRss.map((el, i) => {
 
 
-									return <Accordion key={Math.random() * i + 0} inverted styled>
-										<Accordion.Title className={"accordion-title"} inverted active={activeTvnetIndex === i} index={i} onClick={this.handleTvnetClick}>
+									return <Accordion key={Math.random() * i + 0} inverted={true} styled>
+										<Accordion.Title className={"accordion-title"} inverted="true" active={activeTvnetIndex === i} index={i} onClick={this.handleTvnetClick}>
 											<Icon corner name='dropdown' />
 											{el.title}{" "}
 											{moment(el.pubDate).fromNow()}
@@ -212,33 +213,33 @@ class Home extends Component {
 										</Accordion.Title>
 
 										<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
-											<img alt="Bile Nevarēja Ielādēties" href={el.link} className="ui small left floated image" src={el.enclosure.url} ></img>
+											<img alt="Bilde Nestradā" href={el.link || "#"} className="ui small left floated image" src={el.enclosure ? el.enclosure.url : el.enclosure} ></img>
 											<p>{el.content}</p>
 
 										</Accordion.Content>
 
 									</Accordion>
 
-								}
-								)}
+
+								})}
 							</div>
 
 						</Grid.Column>
 
 
 
-						<Grid.Column stackable width={10} className={"map-container"} >
-
-							{/* <Header className="box-header main-header" as="h3" inverted textAlign={"center"} >Sargi Ģimeni</Header> */}
+						<Grid.Column stackable="true" width={10} className={"map-container"} >
 
 
-							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>
+							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handlePolylineToggle}>
 								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
 							</Button>
 
-							<Button className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handleMapTypeToggle}>
+							<Button className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handleMapTypeToggle}>
 								Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
 							</Button>
+							
+							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
 
 							<Segment raised style={{ padding: "0" }}>
 								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
@@ -253,10 +254,10 @@ class Home extends Component {
 
 
 
-						<Grid.Column width={3} divided >
+						<Grid.Column width={3} divided="true" >
 
 
-							<Header className="box-header" as="h4" inverted>Atklātie Gadījumi</Header>
+							<Header className="box-header" as="h4" inverted={true}>Atklātie Gadījumi</Header>
 
 
 
@@ -264,10 +265,10 @@ class Home extends Component {
 								{
 									infectedPeople.map((el, i) => {
 										return (
-											<Accordion key={Math.random() * i + 0} inverted styled>
+											<Accordion key={Math.random() * i + 0} inverted={true} styled>
 
 
-												<Accordion.Title className={"accordion-title"} id={el.id} inverted active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
+												<Accordion.Title className={"accordion-title"} id={el.id} inverted="true" active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
 													<Icon corner name='dropdown' />
 													{el.id !== 1
 														?
@@ -303,17 +304,17 @@ class Home extends Component {
 
 
 
-							<Header className="box-header" inverted as="h4">Korona/COVID-19 Fakti</Header>
+							<Header className="box-header" inverted={true} as="h4">Korona/COVID-19 Fakti</Header>
 							<div style={{ overflow: 'auto', maxHeight: 40 + "vh" }}>
 
-								<Accordion key={0} inverted styled>
+								<Accordion key={0} inverted={true} styled>
 
-									<Accordion.Title className={"accordion-title"} inverted active={activeFirstFactIndex} index={0} onClick={this.handleFirstFactClick}>
+									<Accordion.Title className={"accordion-title"} inverted="true" active={activeFirstFactIndex === 1 ? true : false} index={0} onClick={this.handleFirstFactClick}>
 										<Icon corner name='dropdown' />
 										Intervija Ar Inficēto <u>Vieglā Formā</u>
 									</Accordion.Title>
 
-									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex}>
+									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex === 1 ? true : false}>
 										<Embed
 											id='NxvMLnCczXI'
 											source='youtube'
@@ -325,9 +326,9 @@ class Home extends Component {
 
 
 								{facts.map((el, i) => {
-									return <Accordion key={Math.random() * i + 2} inverted styled>
+									return <Accordion key={Math.random() * i + 2} inverted={true} styled>
 
-										<Accordion.Title className={"accordion-title"} inverted active={activeFactIndex === i} index={i} onClick={this.handleFactClick}>
+										<Accordion.Title className={"accordion-title"} inverted="true" active={activeFactIndex === i} index={i} onClick={this.handleFactClick}>
 											<Icon corner name='dropdown' />
 											{el.title}
 										</Accordion.Title>
@@ -344,16 +345,16 @@ class Home extends Component {
 
 
 
-							<Header className="box-header" inverted as="h4">Par Karti</Header>
+							<Header className="box-header" inverted={true} as="h4">Par Karti</Header>
 							<div style={{ overflow: 'auto', maxHeight: 20 + "vh" }}>
-								<Accordion key={0} inverted styled>
+								<Accordion key={0} inverted={true} styled>
 
-									<Accordion.Title className={"accordion-title"} inverted active={activeMapAccordionIndex} index={0} onClick={this.handleMapAccordionClick}>
+									<Accordion.Title className={"accordion-title"} inverted="true" active={activeMapAccordionIndex === 1 ? true : false} index={0} onClick={this.handleMapAccordionClick}>
 										<Icon corner name='dropdown' />
 									Kā interpretēt kartē attēloto
 									</Accordion.Title>
 
-									<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex}>
+									<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex === 1 ? true : false}>
 										<li>Ņemiet vērā, ka vairums uz kartes esošajiem punktiem ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses. To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
 										<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
 										<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
@@ -372,8 +373,11 @@ class Home extends Component {
 
 					</Grid.Row>
 
+					<Grid.Row>
+						<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</p>
+					</Grid.Row>
+
 				</Grid>
-				<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</p>
 
 
 			</Segment>

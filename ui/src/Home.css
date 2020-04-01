@@ -68,13 +68,8 @@ div.title.accordion-title {
     width: 100%!important;
 }
 
-.footer>p:nth-child(1) {
-    padding-top: 1em!important;
-}
-
 .main-header {
     display: contents!important;
-    overflow: hidden!important;
 }
 
 div.content.active.accordion-content {
@@ -88,7 +83,9 @@ div.content.active.accordion-content {
     background-color: #1b1c1d!important;
 }
 
-
+/* #root > div > div > div > div > div {
+    height: 100vh!important;
+} */
 
 /* #root>div>div>div>div>div>div:nth-child(3)>div:nth-child(4)>div:nth-child(1)>div.content.active.accordion-content {
     padding: 0.1em!important;

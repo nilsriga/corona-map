@@ -4,13 +4,12 @@
 
 
 #root > div > div > div > div > div > div.ten.wide.column.map-container > div > div {
-    /* height: 90vh!important; */
+    height: 90vh!important;
     height: inherit!important;
     margin: -1px!important;
     margin-left: -2px!important;
     border-radius: 5px;
-    width: inherit!important;
     right: -1px!important;
     bottom: -10px!important;
-    min-height: 500px!important;
+    min-height: 600px!important;
 }
