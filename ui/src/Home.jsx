@@ -229,21 +229,21 @@ class Home extends Component {
 
 						<Grid.Column stackable width={10} className={"map-container"} >
 
-							<Header className="box-header main-header" as="h3" inverted textAlign={"center"} >Paliec Mājās, Sargā Ģimeni</Header>
+							<Header className="box-header main-header" as="h3" inverted textAlign={"center"} >Sargi Ģimeni</Header>
 
-
-							<Button className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handleMapTypeToggle}>
-								{ currentlyVisibleMap === "googleMap" ? "Parādīt SKPC Karti Pa Reģioniem" : "Parādīt Izplatības Karti"}
-							</Button>
 
 							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handlePolylineToggle}>
 								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
 							</Button>
 
+							<Button className={"top-button"} compact size={"small"} inverted floated={"right"} toggle onClick={this.handleMapTypeToggle}>
+								Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
+							</Button>
+
 							<Segment raised style={{ padding: "0" }}>
 								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
 								{currentlyVisibleMap === "googleMap" && !polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
-								{currentlyVisibleMap === "skpcMap" ? <SKPCMap /> :  "" }
+								{currentlyVisibleMap === "skpcMap" ? <SKPCMap /> : ""}
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
 							</Segment>
@@ -354,8 +354,7 @@ class Home extends Component {
 									</Accordion.Title>
 
 									<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex}>
-										<li>26.03.20 tika publicēta SKPC karte, kuru var apskatīt: <a href="https://spkc.maps.arcgis.com/apps/webappviewer/index.html?id=593bb3ab785341d5b64de7df14125f21">Oficiālā SKPC Interaktīvā Karte</a></li>
-										<li><u>Ņemiet vērā, ka uz kartes esošie punkti ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses.</u> To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
+										<li>Ņemiet vērā, ka vairums uz kartes esošajiem punktiem ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses. To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
 										<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
 										<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
 										<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā apdzīvotajā teritorijā</li>
