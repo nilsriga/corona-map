@@ -43,7 +43,7 @@ class Home extends Component {
 				'Authorization': jwt.sign({ secret: process.env.REACT_APP_JWT_SECRET }, process.env.REACT_APP_JWT_KEY)
 			}
 		},
-		polylinesVisible: false,
+		polylinesVisible: true,
 		// openedInfoWindowId: ""
 	}
 
