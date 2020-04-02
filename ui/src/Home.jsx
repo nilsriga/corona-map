@@ -337,6 +337,10 @@ class Home extends Component {
 											{el.content}
 											<br></br>
 											<a href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss"}</a>
+											<br></br>
+											<a href={el.link2 || "http://google.com"}>{el.linkTitle2 || "resurss"}</a>
+											<br></br>
+											<a href={el.link3 || "http://google.com"}>{el.linkTitle3 || "resurss"}</a>
 										</Accordion.Content>
 
 									</Accordion>
