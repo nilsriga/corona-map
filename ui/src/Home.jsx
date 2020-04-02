@@ -309,12 +309,12 @@ class Home extends Component {
 
 								<Accordion key={0} inverted={true} styled>
 
-									<Accordion.Title className={"accordion-title"} inverted="true" active={activeFirstFactIndex === 1 ? true : false} index={0} onClick={this.handleFirstFactClick}>
+									<Accordion.Title className={"accordion-title"} inverted="true" active={activeFirstFactIndex } index={0} onClick={this.handleFirstFactClick}>
 										<Icon corner name='dropdown' />
 										Intervija Ar Inficēto <u>Vieglā Formā</u>
 									</Accordion.Title>
 
-									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex === 1 ? true : false}>
+									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex }>
 										<Embed
 											id='NxvMLnCczXI'
 											source='youtube'
@@ -349,12 +349,12 @@ class Home extends Component {
 							<div style={{ overflow: 'auto', maxHeight: 20 + "vh" }}>
 								<Accordion key={0} inverted={true} styled>
 
-									<Accordion.Title className={"accordion-title"} inverted="true" active={activeMapAccordionIndex === 1 ? true : false} index={0} onClick={this.handleMapAccordionClick}>
+									<Accordion.Title className={"accordion-title"} inverted="true" active={activeMapAccordionIndex } index={0} onClick={this.handleMapAccordionClick}>
 										<Icon corner name='dropdown' />
 									Kā interpretēt kartē attēloto
 									</Accordion.Title>
 
-									<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex === 1 ? true : false}>
+									<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex }>
 										<li>Ņemiet vērā, ka vairums uz kartes esošajiem punktiem ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses. To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
 										<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
 										<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
