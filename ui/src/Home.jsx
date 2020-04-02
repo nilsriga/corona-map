@@ -213,7 +213,7 @@ class Home extends Component {
 										</Accordion.Title>
 
 										<Accordion.Content href={el.link} style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeTvnetIndex === i}>
-											<img alt="Bilde Nestradā" href={el.link || "#"} className="ui small left floated image" src={el.enclosure ? el.enclosure.url : el.enclosure} ></img>
+											{el.enclosure && el.enclosure.url &&<img alt="Bilde Nestradā" href={el.link || "#"} className="ui small left floated image" src={el.enclosure ? el.enclosure.url : el.enclosure} ></img>}
 											<p>{el.content}</p>
 
 										</Accordion.Content>
@@ -238,7 +238,7 @@ class Home extends Component {
 							<Button className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handleMapTypeToggle}>
 								Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
 							</Button>
-							
+
 							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
 
 							<Segment raised style={{ padding: "0" }}>
@@ -373,12 +373,10 @@ class Home extends Component {
 
 					</Grid.Row>
 
-					<Grid.Row>
-						<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</p>
-					</Grid.Row>
 
 				</Grid>
 
+				<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</p>
 
 			</Segment>
 		);
