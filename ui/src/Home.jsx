@@ -257,7 +257,7 @@ class Home extends Component {
 
 
 							<Header className="box-header" inverted={true} as="h4">SPKC Twittera Tvīti</Header>
-							<Twitter />
+							{this.state.infectedPeople && this.state.tvnetRss && this.state.facts && <Twitter />}
 
 
 
