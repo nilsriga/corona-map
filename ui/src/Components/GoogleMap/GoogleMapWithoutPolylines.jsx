@@ -12,6 +12,7 @@ import {
 } from "react-google-maps"
 import MyStyle from "./MyStyleJSON.js"
 import moment from "moment"
+import biohazardIcon from "./bioHazzardIcon.png"
 import "moment/locale/lv"
 // import jwt from "jsonwebtoken"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
@@ -224,7 +225,7 @@ const MapWithoutPolylines = compose(
 
 
           state.markerIcon = {
-            url: 'https://iconsplace.com/wp-content/uploads/_icons/fffff0/32/png/biohazard-icon-7-32.png',
+            url: biohazardIcon,
             // scaledSize: new window.google.maps.Size(25, 25),
             origin: new window.google.maps.Point(0, 0),
             // anchor: new window.google.maps.Point(getOffsetXY(30), getOffsetXY(60)),

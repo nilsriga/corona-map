@@ -9,20 +9,18 @@ function App() {
 
         <div >
 
-            <BrowserRouter >
+                <BrowserRouter >
 
-                <Switch >
-                    <Route exact path="/"
-                        component={Home}
-                    />
-                    <Route exact path="*"
-                        component={PageNotFound}
-                    />
-                </Switch>
-            </BrowserRouter>
+                    <Switch >
+                        <Route exact path="/"
+                            component={Home}
+                        />
+                        <Route exact path="*"
+                            component={PageNotFound}
+                        />
+                    </Switch>
 
-
-
+                </BrowserRouter>
 
         </ div >
 

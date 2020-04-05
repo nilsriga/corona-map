@@ -4,7 +4,8 @@
             "name": "api",
             "script": "npm",
             "args": "run-script start",
-            "watch": "src"
+            "watch": "src",
+            "ignore_watch" : ["parsedData"]
         }
     ]
 }

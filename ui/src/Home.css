@@ -83,6 +83,14 @@ div.content.active.accordion-content {
     background-color: #1b1c1d!important;
 }
 
+#root > div > div > div > div > div > div.cookieConsent > button {
+    margin-top:2px!important;
+    margin-bottom:2px!important
+}
+#root > div > div > div > div > div > div.cookieConsent > div {
+    margin-top:2px!important;
+    margin-bottom:2px!important
+}
 
 /* #root > div > div > div > div > div {
     height: 100vh!important;

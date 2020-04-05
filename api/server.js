@@ -4,8 +4,9 @@ import Express from "express"
 import http from "http"
 import https from "https"
 import cors from "cors"
+import latestDataSaver from "./LatestDataSaver"
 const dotenv = require('dotenv').config();
-
+latestDataSaver()
 
 
 // ENV
@@ -46,8 +47,6 @@ express.set("port", port)
 express.use(cors(corsOptions))
 express.use("/", router)
 routes(express)
-
-
 
 
 

@@ -10,7 +10,8 @@
     "ignore": [
       "build",
       "node_modules",
-      "request.counter"
+      "request.counter",
+      "parsedData"
     ]
   },
   "scripts": {
@@ -43,6 +44,7 @@
     "node-sheets": "^1.1.0",
     "nodemon": "^2.0.2",
     "npm-check-updates": "^4.0.4",
+    "object-hash": "^2.0.3",
     "rimraf": "^3.0.2",
     "rss-parser": "^3.7.5",
     "serve": "^11.3.0"

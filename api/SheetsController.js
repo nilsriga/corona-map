@@ -23,7 +23,7 @@ export default async function getGoogleSheetsJson(type) {
 
     var _converting = new Promise((resolve, reject) => {
         csv.parse(googleSheetsCsv.data, { columns: true }, function(err, data) {
-            resolve(JSON.stringify(data, null, 2))
+            resolve(JSON.stringify(type === "infected" ? data.reverse() : data, null, 2))
         });
     })
 

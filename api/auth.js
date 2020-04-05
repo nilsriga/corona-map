@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 export default async(req, res, next) => {
-
     try {
         if (
             jwt.verify(req.headers.authorization, process.env.JWT_KEY).secret === process.env.JWT_SECRET &&
