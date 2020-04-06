@@ -12,7 +12,7 @@ import {
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
 import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
 import SKPCMap from "./Components/SKPCMap/SKPCMap"
-import Twitter from "./Components/Twitter"
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import moment from "moment"
 import jwt from "jsonwebtoken"
 import axios from "axios"
@@ -43,7 +43,8 @@ class Home extends Component {
 		activeTvnetIndex: -1,
 		activeFactIndex: -1,
 		activeFirstTvnetIndex: 0,
-		activeFirstFactIndex: this.userSettings !== {} && this.userSettings.activeFirstFactIndex ? this.userSettings.activeFirstFactIndex : 0,
+		activeFirstFactIndex: this.userSettings !== {} && this.userSettings.activeFirstFactIndex ? this.userSettings.activeFirstFactIndex : -1,
+		activeSecondFactIndex: this.userSettings !== {} && this.userSettings.activeSecondFactIndex ? this.userSettings.activeSecondFactIndex : 0,
 		activeMapAccordionIndex: this.userSettings !== {} && this.userSettings.activeMapAccordionIndex ? this.userSettings.activeMapAccordionIndex : 0,
 
 		polylinesVisible: this.userSettings !== {} && this.userSettings.polylinesVisible ? this.userSettings.polylinesVisible : false,
@@ -59,15 +60,16 @@ class Home extends Component {
 
 		hasError: false,
 		errorMessage: "",
+
 		// openedInfoWindowId: {}
 	}
 
 
 	componentWillMount() {
 
-		if (this.state.userSettings === {} || Object.keys(this.state.userSettings).length < 4) {
-			const { activeFirstFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap } = this.state
-			localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify({ activeFirstFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap }))
+		if (this.state.userSettings === {} || Object.keys(this.state.userSettings).length < 5) {
+			const { activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap } = this.state
+			localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify({ activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap }))
 		}
 
 		if (this.state.infectedPeopleHash === undefined || this.state.infectedPeopleHash.length < 1) {
@@ -110,7 +112,7 @@ class Home extends Component {
 			.then(
 				(result) => {
 
-					console.log(result)
+
 					if (result !== "nothingNew") {
 
 						localStorage.setItem(localStorageItemName, JSON.stringify(result.data))
@@ -174,6 +176,17 @@ class Home extends Component {
 		localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify(newLocalStorageSettings))
 	}
 
+	handleSecondFactClick = (e, titleProps) => {
+		const { index } = titleProps
+		const { activeSecondFactIndex } = this.state
+		const newIndex = activeSecondFactIndex === index ? -1 : 0
+
+		this.setState({ activeSecondFactIndex: newIndex })
+		const newLocalStorageSettings = JSON.parse(localStorage.getItem("latvijaskoronakartesSettings"))
+		newLocalStorageSettings.activeSecondFactIndex = newIndex
+		localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify(newLocalStorageSettings))
+	}
+
 	handleFirstTvnetClick = (e, titleProps) => {
 		const { index } = titleProps
 		const { activeFirstTvnetIndex } = this.state
@@ -213,6 +226,7 @@ class Home extends Component {
 		localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify(newLocalStorageSettings))
 	}
 
+
 	render() {
 		const {
 			activeInfectedIndex,
@@ -222,6 +236,7 @@ class Home extends Component {
 			tvnetRss,
 			facts,
 			activeFirstFactIndex,
+			activeSecondFactIndex,
 			activeMapAccordionIndex,
 			polylinesVisible,
 			currentlyVisibleMap,
@@ -257,7 +272,17 @@ class Home extends Component {
 
 
 							<Header className="box-header" inverted={true} as="h4">SPKC Twittera Tvīti</Header>
-							{this.state.infectedPeople && this.state.tvnetRss && this.state.facts && <Twitter />}
+							<TwitterTimelineEmbed
+								noHeader
+								noFooter
+								transparent
+								noScrollbar
+								autoHeight={true}
+								theme={'dark'}
+								sourceType="profile"
+								screenName="SPKCentrs"
+								options={{ height: "200px!important" }}
+							/>
 
 
 
@@ -292,6 +317,8 @@ class Home extends Component {
 						<Grid.Column stackable="true" width={10} className={"map-container"} >
 
 
+							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
+
 							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handlePolylineToggle}>
 
 								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
@@ -301,7 +328,6 @@ class Home extends Component {
 								Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
 							</Button>
 
-							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
 
 							<Segment raised style={{ padding: "0" }}>
 								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
@@ -310,6 +336,7 @@ class Home extends Component {
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
 							</Segment>
+
 
 						</Grid.Column>
 
@@ -385,55 +412,76 @@ class Home extends Component {
 										/>}
 									</Accordion.Content>
 
+
+
+									<Accordion.Title className={"accordion-title"} inverted="true" active={activeSecondFactIndex === -1 ? false : true} index={0} onClick={this.handleSecondFactClick}>
+										<Icon corner name="dropdown" />
+										Situācija Ķīnā
+									</Accordion.Title>
+
+									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeSecondFactIndex === -1 ? false : true}>
+										{this.state.activeSecondFactIndex !== -1 && <Embed
+											id="IhzF-5xELOE"
+											source="youtube"
+											active={true}
+											autoplay={false}
+										/>}
+									</Accordion.Content>
+
+
+
+
+
+
 								</Accordion>
 
 
-								{facts.map((el, i) => {
-									return <Accordion key={Math.random() * i + 2} inverted={true} styled>
+							{facts.map((el, i) => {
+								return <Accordion key={Math.random() * i + 2} inverted={true} styled>
 
-										<Accordion.Title className={"accordion-title"} inverted="true" active={activeFactIndex === i} index={i} onClick={this.handleFactClick}>
-											<Icon corner name="dropdown" />
-											{el.title}
-										</Accordion.Title>
-
-										<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFactIndex === i}>
-											{el.content}
-											<br></br>
-											{el.link1 && <a href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss"}</a>}
-											<br></br>
-											{el.link2 && <a href={el.link2 || "http://google.com"}>{el.linkTitle2 || "resurss"}</a>}
-											<br></br>
-											{el.link3 && <a href={el.link3 || "http://google.com"}>{el.linkTitle3 || "resurss"}</a>}
-										</Accordion.Content>
-
-									</Accordion>
-								})}
-							</div>
-
-
-
-							<Header className="box-header" inverted={true} as="h4">Par Karti</Header>
-							<div style={{ overflow: "auto", maxHeight: 20 + "vh" }}>
-								<Accordion key={0} inverted={true} styled>
-
-									<Accordion.Title className={"accordion-title"} inverted="true" active={activeMapAccordionIndex === -1 ? false : true} index={0} onClick={this.handleMapAccordionClick}>
+									<Accordion.Title className={"accordion-title"} inverted="true" active={activeFactIndex === i} index={i} onClick={this.handleFactClick}>
 										<Icon corner name="dropdown" />
-									Kā interpretēt kartē attēloto
+										{el.title}
 									</Accordion.Title>
 
-									<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex === -1 ? false : true}>
-										<li>Ņemiet vērā, ka vairums uz kartes esošajiem punktiem ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses. To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
-										<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
-										<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
-										<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā apdzīvotajā teritorijā</li>
-										<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
-										<li>Sarkanā krāsā ir iezīmētas apdzīvotas vietas un ceļi</li>
-										<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
-
+									<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFactIndex === i}>
+										{el.content}
+										<br></br>
+										{el.link1 && <a href={el.link1 || "http://google.com"}>{el.linkTitle1 || "resurss"}</a>}
+										<br></br>
+										{el.link2 && <a href={el.link2 || "http://google.com"}>{el.linkTitle2 || "resurss"}</a>}
+										<br></br>
+										{el.link3 && <a href={el.link3 || "http://google.com"}>{el.linkTitle3 || "resurss"}</a>}
 									</Accordion.Content>
 
 								</Accordion>
+							})}
 							</div>
+
+
+
+						<Header className="box-header" inverted={true} as="h4">Par Karti</Header>
+						<div style={{ overflow: "auto", maxHeight: 20 + "vh" }}>
+							<Accordion key={0} inverted={true} styled>
+
+								<Accordion.Title className={"accordion-title"} inverted="true" active={activeMapAccordionIndex === -1 ? false : true} index={0} onClick={this.handleMapAccordionClick}>
+									<Icon corner name="dropdown" />
+									Kā interpretēt kartē attēloto
+									</Accordion.Title>
+
+								<Accordion.Content style={{ color: "white", background: "#525252", paddingLeft: "1.5em" }} className={"accordion-content"} active={activeMapAccordionIndex === -1 ? false : true}>
+									<li>Ņemiet vērā, ka vairums uz kartes esošajiem punktiem ir aptuvenas informācijas vizualizācija un nenorāda konkrētas adreses. To var noskaidrot uzklikšķinot uz interesējošā punkta</li>
+									<li>Visi inficētie kuriem nav zināma atrašanās vieta atrodas Rīgā</li>
+									<li>Punkti tiek katru dienu atjaunoti, lai attēlotu pēdējo SPKC attēlojumu pa reģioniem</li>
+									<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā apdzīvotajā teritorijā</li>
+									<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
+									<li>Sarkanā krāsā ir iezīmētas apdzīvotas vietas un ceļi</li>
+									<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
+
+								</Accordion.Content>
+
+							</Accordion>
+						</div>
 
 
 						</Grid.Column>
@@ -443,9 +491,9 @@ class Home extends Component {
 
 				</Grid>
 
-				<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</p>
+			<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com</p>
 
-			</Segment>
+			</Segment >
 		);
 	}
 }
