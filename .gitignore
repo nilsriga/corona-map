@@ -2,7 +2,7 @@ api/node_modules
 api/build
 api/.env
 api/.counter
-api/parsedData/*
+
 
 ui/node_modules
 ui/build

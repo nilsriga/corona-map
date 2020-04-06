@@ -1,8 +1,5 @@
 import fs from "fs"
 import auth from "./auth"
-import infectedPeople from "./parsedData/infectedPeople.json"
-import tvnetRss from "./parsedData/tvnetRss.json"
-import facts from "./parsedData/facts.json"
 
 
 export default (express) => {
@@ -12,41 +9,78 @@ export default (express) => {
 
         fs.appendFile('.counter', "1 " + new Date().toUTCString() + "\n" + req.headers["user-agent"] + "\n", (err) => {
             if (err) {
-                throw new Error("Corona error at api / path.")
-            };
+                throw new Error("Corona error at api / path, while appending counter")
+            }
+
             console.log("1 " + new Date().toUTCString() + "\n");
-        });
+        })
 
-        if (fs.readFileSync("./parsedData/infectedPeople.json").hash === req.query.hash) {
-            res.send(JSON.stringify("nothingNew"))
-        } else {
-            res.send(fs.readFileSync("./parsedData/infectedPeople.json"))
-        }
 
-    });
+
+        fs.readFile("./parsedData/infectedPeople.json", (err, data) => {
+            if (err) {
+                throw new Error("Corona error reading file infectedPeople.json at api / path.")
+            }
+
+            const infectedPeopleJson = JSON.parse(data);
+
+            if (infectedPeopleJson.hash === req.query.hash) {
+                res.send(JSON.stringify("nothingNew"))
+            } else {
+                res.send(infectedPeopleJson)
+            }
+
+        })
+
+
+
+    })
+
 
 
     //https://www.tvnet.lv/rss
     express.post("/tvnet", auth, async (req, res) => {
 
-        if (tvnetRss.hash === req.query.hash) {
-            res.send(JSON.stringify("nothingNew"))
-        } else {
-            res.send(tvnetRss)
-        }
 
-    });
+        fs.readFile("./parsedData/tvnetRss.json", (err, data) => {
+            if (err) {
+                throw new Error("Corona error reading file tvnetRss.json at api /tvnet path.")
+            }
+
+            const tvnetRssJson = JSON.parse(data);
+
+            if (tvnetRssJson.hash === req.query.hash) {
+                res.send(JSON.stringify("nothingNew"))
+            } else {
+                res.send(tvnetRssJson)
+            }
+
+        })
+
+    })
+
 
 
     express.post("/facts", auth, async (req, res) => {
 
-        if (facts.hash === req.query.hash) {
-            res.send(JSON.stringify("nothingNew"))
-        } else {
-            res.send(facts)
-        }
-    });
+
+        fs.readFile("./parsedData/facts.json", (err, data) => {
+            if (err) {
+                throw new Error("Corona error reading file tvnetRss.json at api /tvnet path.")
+            }
+
+            const factsJson = JSON.parse(data);
+
+            if (factsJson.hash === req.query.hash) {
+                res.send(JSON.stringify("nothingNew"))
+            } else {
+                res.send(factsJson)
+            }
+
+        })
 
 
+    })
 
-};
+
+}
