@@ -9,14 +9,15 @@ import {
 } from "react-google-maps"
 import MyStyle from "./MyStyleJSON.js"
 import moment from "moment"
-import biohazardIcon from "./bioHazzardIcon.png"
+import biohHazzardIcon from "./bioHazzardIcon.png"
+import skullIcon from "./skullIcon.png"
+import checkIcon from "./checkIcon.png"
 import "moment/locale/lv"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 moment.locale('lv')
 
 
 let state = {
-  markerIcon: {},
   labelOrigin: {},
   i: 0,
   total: 0,
@@ -111,10 +112,9 @@ const MapWithoutPolylines = compose(
           const selfLat = parseFloat(getOffsetCoo(item.selfCooLat))
           const selfLng = parseFloat(getOffsetCoo(item.selfCooLng))
 
-
-
-          state.markerIcon = {
-            url: biohazardIcon,
+          const icon = item.isDead === "1" ? skullIcon : item.isRecovered === "1" ? checkIcon : biohHazzardIcon
+          const markerIcon = {
+            url: icon,
             origin: new window.google.maps.Point(0, 0),
             labelOrigin: new window.google.maps.Point(getOffsetXY(35), getOffsetXY(65))
           }
@@ -125,6 +125,7 @@ const MapWithoutPolylines = compose(
 
 
               <MarkerWithInfoWindow
+                markerIcon={markerIcon}
                 position={
                   item.id === "1"
                     ?
@@ -224,7 +225,7 @@ class MarkerWithInfoWindow extends React.Component {
         key={Math.random() * 1000 + "Coordinates"}
         position={this.props.position}
         onClick={this.onToggleOpen}
-        icon={state.markerIcon}
+        icon={this.props.markerIcon}
         label={this.props.label}
       >
 

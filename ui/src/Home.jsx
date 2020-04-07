@@ -414,11 +414,11 @@ class Home extends Component {
 											<Accordion key={Math.random() * i + 0} inverted={true} styled>
 
 
-												<Accordion.Title className={"accordion-title"} id={el.id} inverted="true" active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
+												<Accordion.Title className={el.isDead === "1" ? "accordion-title-dead" : el.isRecovered === "1" ? "accordion-title-recovered" : "accordion-title-infected"} id={el.id} inverted="true" active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
 													<Icon corner name="dropdown" />
-													{el.id !== 1
+													{el.id !== "1"
 														?
-														"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.origin ? el.origin : "")
+														"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.selfCity ? el.selfCity : "") + ""
 														:
 														el.label
 													}
@@ -569,6 +569,10 @@ class Home extends Component {
 										<li>Ja nav publicēta konkrētāka apstiprinātās personas atrašanās vieta, tad inficētais gadījums tiks novietots SPKC publicētās kartes reģiona lielākajā apdzīvotajā teritorijā</li>
 										<li>Piemēram: ja Rīgā ir norādīts, ka konkrētā dienā ir no 51-100 inficētajiem un Jelgavas reģionā 1-5, tad Rīgā tiek ielikts 51 punkts un Jelgavā tiks ielikts 1 punkts</li>
 										<li>Sarkanā krāsā ir iezīmētas apdzīvotas vietas un ceļi</li>
+										<li>Ieslēdzot inficēšanās ceļu var redzēt kā vīruss ir izplatījies, bet ņemiet vērā, ka, ja inficēšanās vieta nav publicēta, mēs pieņemam, ka inficēšanās ir notikusi ārzemēs, bet, ja konkrētā inficēšanās valsts ārzemēs arī nav publicēta, mēs norādam, ka inficēšanās ir izplatījusies no Rīgas</li>
+										<li>Ja nav publicēta inficētā atrašanās vieta mēs pieņemam, ka viņš atrodas Rīgā</li>
+										<li>Ja nav publicēts inficēšanās vieta un atrašanas vieta, bet ir publicēts, ka inficēšanās ir notikusi ārzemēs gadījumam nav inficēšanas ceļa</li>
+										<li>Ja ir publicēta inficēšanās vieta ārzemēs, tie gadījumi ir norādīti Rīgā, pārdaugavas pusē. Sākotnēji tādi gadījumi tika norādīti lidostā, bet kopš SKPC ir publicējusi konkrētu skaitu ar inficētajiem Mārupē, lai dati sakrisu, jaunā atrašnās vieta tādiem gadījumiem ir pārdaugava Rīgā.</li>
 										<li>Ja ir vēl jautājumi par to, kā interpretēt karti, jautājiet sūtot jautājumu uz ēpastu</li>
 
 									</Accordion.Content>

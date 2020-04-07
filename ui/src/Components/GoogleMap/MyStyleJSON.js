@@ -1,4 +1,8 @@
 module.exports = {
+    panControl: true,
+    mapTypeControl: true,
+    scrollwheel: true,
+    gestureHandling: "greedy",
     styles: [{
             "elementType": "geometry",
             "stylers": [{
