@@ -75,7 +75,7 @@ export default async function latestDataSaver(type) {
 
 
 
-    }, 300000)
+    }, 3000)
 
    
 
