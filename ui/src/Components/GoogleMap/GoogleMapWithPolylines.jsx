@@ -26,7 +26,7 @@ let state = {
   labelOrigin: {},
   i: 0,
   total: 0,
-  timeNow: moment().format('DD.MMM.YYYY'),
+  // timeNow: moment().format('DD.MMM.YYYY'),
   // auth: {
   //   method: "GET",
   //   headers: {
@@ -90,6 +90,9 @@ const MapWithPolylines = compose(
     })
   }),
   lifecycle({
+    shouldComponentUpdate(nextProps, nextState) {
+      return this.props.infectedPeople.length !== nextProps.infectedPeople.length ? true : false
+    },
     componentWillMount() {
       // this.setState({ data: [] });
     },
@@ -293,7 +296,7 @@ const MapWithPolylines = compose(
                   </div>
                 )}
                 label={item.id === "1" ? item.label : ""}
-                // infoBoxOpen={}
+              // infoBoxOpen={}
               />
 
 
@@ -411,8 +414,9 @@ const MapWithPolylines = compose(
         >
           <div style={{ opacity: 0.75 }}>
             <h2>LV Kopā: {props.infectedPeople.length}</h2>
-            {/* <p>{(new Date()).getUTCDate() + "." + (new Date()).getUTCMonth() + "." + (new Date()).getFullYear()}</p> */}
-            <p>{state.timeNow}</p>
+            <p>latvijaskoronakarte.lv</p>
+            <p>atjaunoja datus:</p>
+            <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p>
           </div>
         </InfoWindow>
       }

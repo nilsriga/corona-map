@@ -1,7 +1,6 @@
 import fs from "fs"
 import auth from "./auth"
 
-
 export default (express) => {
 
 
@@ -25,7 +24,7 @@ export default (express) => {
             const infectedPeopleJson = JSON.parse(data);
 
             if (infectedPeopleJson.hash === req.query.hash) {
-                res.send(JSON.stringify("nothingNew"))
+                res.send(JSON.stringify({data: "nothingNew", lastUpdateTime: infectedPeopleJson.lastUpdateTime}))
             } else {
                 res.send(infectedPeopleJson)
             }
@@ -50,7 +49,7 @@ export default (express) => {
             const tvnetRssJson = JSON.parse(data);
 
             if (tvnetRssJson.hash === req.query.hash) {
-                res.send(JSON.stringify("nothingNew"))
+                res.send(JSON.stringify({data: "nothingNew", lastUpdateTime: tvnetRssJson.lastUpdateTime}))
             } else {
                 res.send(tvnetRssJson)
             }
@@ -72,7 +71,7 @@ export default (express) => {
             const factsJson = JSON.parse(data);
 
             if (factsJson.hash === req.query.hash) {
-                res.send(JSON.stringify("nothingNew"))
+                res.send(JSON.stringify({data: "nothingNew", lastUpdateTime: factsJson.lastUpdateTime}))
             } else {
                 res.send(factsJson)
             }

@@ -17,14 +17,6 @@ const { MarkerClusterer } = require("react-google-maps/lib/components/addons/Mar
 moment.locale('lv')
 
 
-let state = {
-  labelOrigin: {},
-  i: 0,
-  total: 0,
-  timeNow: moment().format('DD.MMM.YYYY'),
-}
-
-
 // THIS SPREADS OUT THE POINTS A BIT
 function getOffsetCoo(coo) {
 
@@ -77,6 +69,9 @@ const MapWithoutPolylines = compose(
     })
   }),
   lifecycle({
+    componentWillReceiveProps() {
+      console.log("component will receive props")
+    },
     componentWillMount() {
 
     },
@@ -185,7 +180,9 @@ const MapWithoutPolylines = compose(
         >
           <div style={{ opacity: 0.75 }}>
             <h2>LV Kopā: {props.infectedPeople.length}</h2>
-            <p>{state.timeNow}</p>
+            <p>latvijaskoronakarte.lv</p>
+            <p>atjaunoja datus:</p>
+            <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p>
           </div>
         </InfoWindow>
       }

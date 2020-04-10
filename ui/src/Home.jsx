@@ -1,3 +1,4 @@
+"strict"
 import React, { Component, } from "react";
 import {
 	Grid,
@@ -8,7 +9,7 @@ import {
 	Button,
 	Embed,
 	Modal,
-	Label
+	Label,
 } from "semantic-ui-react"
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
 import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
@@ -24,6 +25,7 @@ moment.locale("lv")
 
 
 class Home extends Component {
+
 
 	userSettings = localStorage.getItem("latvijaskoronakartesSettings") ? JSON.parse(localStorage.getItem("latvijaskoronakartesSettings")) : {}
 
@@ -57,18 +59,75 @@ class Home extends Component {
 		tvnetRssHash: this.storedTvnetRssHash ? this.storedTvnetRssHash : "",
 		factsHash: this.storedFactsHash ? this.storedFactsHash : "",
 
-		hasSeenNewInfectedPeople: true,
-		hasSeenNewTvnetRss: true,
-		hasSeenNewFacts: true,
+		hasSeenNewInfectedPeople: false,
+		hasSeenNewTvnetRss: false,
+		hasSeenNewFacts: false,
+
+		whenInfectedPeopleHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
+		whenTvnetRssHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
+		whenFactsHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
+
 
 		hasError: false,
 		errorMessage: "",
+
 
 		// openedInfoWindowId: {}
 	}
 
 
 	componentWillMount() {
+
+
+		if (this.state.infectedPeopleHash.length < 1 || this.state.tvnetRssHash.length < 1 || this.state.factsHash.length < 1) {
+			console.log("ama here")
+
+			Promise.all([
+				this.fetchData("/tvnet", this.state.tvnetRssHash, "tvnetRss", "tvnetRssHash", "latvijaskoronakartesTvnetRss", "latvijaskoronakartesTvnetRssHash", "whenTvnetRssHaveBeenLastUpdated", "hasSeenNewInfectedPeople", true),
+				this.fetchData("/facts", this.state.factsHash, "facts", "factsHash", "latvijaskoronakartesFacts", "latvijaskoronakartesFactsHash", "whenFactsHaveBeenLastUpdated", "hasSeenNewTvnetRss", true),
+				this.fetchData("/infected", this.state.infectedPeopleHash, "infectedPeople", "infectedPeopleHash", "latvijaskoronakartesInfectedPeople", "latvijaskoronakartesInfectedPeopleHash", "whenInfectedPeopleHaveBeenLastUpdated", "hasSeenNewFacts", true)
+			])
+				.then(([...functionExecutions]) => {
+					this.setState({
+						...functionExecutions
+					})
+				})
+				.catch(err => {
+					this.setState({ hasError: true, errorMessage: "Corona Error at getting data" })
+				})
+
+		} else {
+			this.fetchData("/tvnet",
+				this.state.tvnetRssHash,
+				"tvnetRss",
+				"tvnetRssHash",
+				"latvijaskoronakartesTvnetRss",
+				"latvijaskoronakartesTvnetRssHash",
+				"whenTvnetRssHaveBeenLastUpdated",
+				"hasSeenNewInfectedPeople",
+				false)
+	
+			this.fetchData("/facts",
+				this.state.factsHash,
+				"facts",
+				"factsHash",
+				"latvijaskoronakartesFacts",
+				"latvijaskoronakartesFactsHash",
+				"whenFactsHaveBeenLastUpdated",
+				"hasSeenNewTvnetRss",
+				false)
+	
+			this.fetchData("/infected",
+				this.state.infectedPeopleHash,
+				"infectedPeople",
+				"infectedPeopleHash",
+				"latvijaskoronakartesInfectedPeople",
+				"latvijaskoronakartesInfectedPeopleHash",
+				"whenInfectedPeopleHaveBeenLastUpdated",
+				"hasSeenNewFacts",
+				false)
+		}
+
 
 		if (this.state.userSettings === {} || Object.keys(this.state.userSettings).length < 5) {
 			const { activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap } = this.state
@@ -87,19 +146,64 @@ class Home extends Component {
 			localStorage.setItem("latvijaskoronakartesFactsHash", "")
 		}
 
+
 	}
 
 
 	componentDidMount() {
 
-		this.fetchData("/tvnet", this.state.tvnetRssHash, "tvnetRss", "tvnetRssHash", "latvijaskoronakartesTvnetRss", "latvijaskoronakartesTvnetRssHash")
-		this.fetchData("/facts", this.state.factsHash, "facts", "factsHash", "latvijaskoronakartesFacts", "latvijaskoronakartesFactsHash")
-		this.fetchData("/infected", this.state.infectedPeopleHash, "infectedPeople", "infectedPeopleHash", "latvijaskoronakartesInfectedPeople", "latvijaskoronakartesInfectedPeopleHash")
+		if (this.state.whenInfectedPeopleHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ||
+			this.state.whenTvnetRssHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ||
+			this.state.whenFactsHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms") {
+		} {
+
+			
+			this.fetchData("/tvnet",
+				this.state.tvnetRssHash,
+				"tvnetRss",
+				"tvnetRssHash",
+				"latvijaskoronakartesTvnetRss",
+				"latvijaskoronakartesTvnetRssHash",
+				"whenTvnetRssHaveBeenLastUpdated",
+				"hasSeenNewInfectedPeople",
+				false)
+	
+			this.fetchData("/facts",
+				this.state.factsHash,
+				"facts",
+				"factsHash",
+				"latvijaskoronakartesFacts",
+				"latvijaskoronakartesFactsHash",
+				"whenFactsHaveBeenLastUpdated",
+				"hasSeenNewTvnetRss",
+				false)
+	
+			this.fetchData("/infected",
+				this.state.infectedPeopleHash,
+				"infectedPeople",
+				"infectedPeopleHash",
+				"latvijaskoronakartesInfectedPeople",
+				"latvijaskoronakartesInfectedPeopleHash",
+				"whenInfectedPeopleHaveBeenLastUpdated",
+				"hasSeenNewFacts",
+				false)
+
+		}
 
 	}
 
 
-	fetchData = (slug, hash, thisStateProperyName, thisStatePropertyHashName, localStorageItemName, localStorageItemHashName) => {
+	fetchData = (
+		slug,
+		hash,
+		thisStateProperyName,
+		thisStatePropertyHashName,
+		localStorageItemName,
+		localStorageItemHashName,
+		whenThisStateProperyNameHasBeenLastUpdated,
+		hasSeenThisStatePropertyName,
+		shouldReturnPromise
+	) => {
 
 		axios({
 			method: 'post',
@@ -117,22 +221,37 @@ class Home extends Component {
 			.then(
 				(result) => {
 
+					if (result.data === "nothingNew") {
 
-					if (result === "nothingNew") {
-
-						console.log(result)
-						console.log("there is nothing new in ")
-						this.setState({
-							hasSeenNewInfectedPeople: thisStateProperyName === "infectedPeople" ? !this.state.hasSeenNewInfectedPeople : this.state.hasSeenNewInfectedPeople,
-							hasSeenNewTvnetRss: thisStateProperyName === "tvnetRss" ? !this.state.hasSeenNewTvnetRss : this.state.hasSeenNewTvnetRss,
-							hasSeenNewFacts: thisStateProperyName === "facts" ? !this.state.hasSeenNewFacts : this.state.hasSeenNewFacts,
-						})
+						if (shouldReturnPromise) {
+							return this.setState({
+								[whenThisStateProperyNameHasBeenLastUpdated]: result.lastUpdateTime,
+								[hasSeenThisStatePropertyName]: true
+							})
+						} else {
+							this.setState({
+								[whenThisStateProperyNameHasBeenLastUpdated]: result.lastUpdateTime,
+								[hasSeenThisStatePropertyName]: true
+							})
+						}
 
 					} else {
 
 						localStorage.setItem(localStorageItemName, JSON.stringify(result.data))
 						localStorage.setItem(localStorageItemHashName, result.hash)
-						this.setState({ [thisStateProperyName]: result.data })
+						if (shouldReturnPromise) {
+							return this.setState({
+								[thisStateProperyName]: result.data,
+								[whenThisStateProperyNameHasBeenLastUpdated]: result.lastUpdateTime,
+								[hasSeenThisStatePropertyName]: false
+							})
+						} else {
+							this.setState({
+								[thisStateProperyName]: result.data,
+								[whenThisStateProperyNameHasBeenLastUpdated]: result.lastUpdateTime,
+								[hasSeenThisStatePropertyName]: false
+							})
+						}
 
 					}
 
@@ -140,7 +259,11 @@ class Home extends Component {
 				},
 				(error) => {
 					console.log(`ERROR AT ${slug} request`, error)
-					this.setState({ hasError: true, errorMessage: error })
+					if (shouldReturnPromise) {
+						return this.setState({ hasError: true, errorMessage: error })
+					} else {
+						this.setState({ hasError: true, errorMessage: error })
+					}
 				}
 			)
 
@@ -259,6 +382,9 @@ class Home extends Component {
 			hasSeenNewInfectedPeople,
 			hasSeenNewTvnetRss,
 			hasSeenNewFacts,
+			whenInfectedPeopleHaveBeenLastUpdated,
+			whenTvnetRssHaveBeenLastUpdated,
+			whenFactsHaveBeenLastUpdated,
 			// errorMessage
 			// openedInfoWindowId
 		} = this.state
@@ -309,6 +435,7 @@ class Home extends Component {
 
 							<Header className="box-header" inverted={true} as="h4">SPKC Twittera Tvīti</Header>
 							<TwitterTimelineEmbed
+								placeholder={"loading"}
 								noHeader
 								noFooter
 								transparent
@@ -333,7 +460,7 @@ class Home extends Component {
 							{/* ############################ */}
 							{/* THIS IS THE TVNET RSS WINDOW */}
 							{/* ############################ */}
-							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas{hasSeenNewTvnetRss && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
+							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas{!hasSeenNewTvnetRss && whenTvnetRssHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
 							<div style={{ overflow: "auto", maxHeight: 35 + "vh" }}>
 								{tvnetRss.map((el, i) => {
@@ -386,8 +513,8 @@ class Home extends Component {
 							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
 
 							<Segment raised style={{ padding: "0" }}>
-								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} />}
-								{currentlyVisibleMap === "googleMap" && !polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} />}
+								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
+								{currentlyVisibleMap === "googleMap" && !polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
 								{currentlyVisibleMap === "skpcMap" ? <SKPCMap /> : ""}
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
@@ -422,7 +549,7 @@ class Home extends Component {
 							{/* ############################## */}
 							{/* THIS IS THE KNOWN CASES WINDOW */}
 							{/* ############################## */}
-							<Header className="box-header" as="h4" inverted={true}>Atklātie Gadījumi</Header>
+							<Header className="box-header" as="h4" inverted={true}>Atklātie Gadījumi{!hasSeenNewInfectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
 
 							<div style={{ overflow: "auto", maxHeight: 20 + "vh" }}>
@@ -480,7 +607,7 @@ class Home extends Component {
 							{/* ############################# */}
 							{/* THIS IS THE FACTS/INFO WINDOW */}
 							{/* ############################# */}
-							<Header className="box-header" inverted={true} as="h4">Korona/COVID-19 Fakti</Header>
+							<Header className="box-header" inverted={true} as="h4">Korona/COVID-19 Fakti{!hasSeenNewFacts && whenFactsHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 							<div style={{ overflow: "auto", maxHeight: 40 + "vh" }}>
 
 
