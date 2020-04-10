@@ -7,7 +7,8 @@ import {
 	Icon,
 	Button,
 	Embed,
-	Modal
+	Modal,
+	Label
 } from "semantic-ui-react"
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
 import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
@@ -55,6 +56,10 @@ class Home extends Component {
 		infectedPeopleHash: this.storedInfectedPeopleHash ? this.storedInfectedPeopleHash : "",
 		tvnetRssHash: this.storedTvnetRssHash ? this.storedTvnetRssHash : "",
 		factsHash: this.storedFactsHash ? this.storedFactsHash : "",
+
+		hasSeenNewInfectedPeople: true,
+		hasSeenNewTvnetRss: true,
+		hasSeenNewFacts: true,
 
 		hasError: false,
 		errorMessage: "",
@@ -113,11 +118,21 @@ class Home extends Component {
 				(result) => {
 
 
-					if (result !== "nothingNew") {
+					if (result === "nothingNew") {
+
+						console.log(result)
+						console.log("there is nothing new in ")
+						this.setState({
+							hasSeenNewInfectedPeople: thisStateProperyName === "infectedPeople" ? !this.state.hasSeenNewInfectedPeople : this.state.hasSeenNewInfectedPeople,
+							hasSeenNewTvnetRss: thisStateProperyName === "tvnetRss" ? !this.state.hasSeenNewTvnetRss : this.state.hasSeenNewTvnetRss,
+							hasSeenNewFacts: thisStateProperyName === "facts" ? !this.state.hasSeenNewFacts : this.state.hasSeenNewFacts,
+						})
+
+					} else {
 
 						localStorage.setItem(localStorageItemName, JSON.stringify(result.data))
 						localStorage.setItem(localStorageItemHashName, result.hash)
-						this.setState({ [thisStateProperyName]: result.data }) // This is the cause. If I turn off the state update, the browser crash never happens. It somehow makes everything rerender or something. 
+						this.setState({ [thisStateProperyName]: result.data })
 
 					}
 
@@ -241,6 +256,9 @@ class Home extends Component {
 			polylinesVisible,
 			currentlyVisibleMap,
 			hasError,
+			hasSeenNewInfectedPeople,
+			hasSeenNewTvnetRss,
+			hasSeenNewFacts,
 			// errorMessage
 			// openedInfoWindowId
 		} = this.state
@@ -315,7 +333,7 @@ class Home extends Component {
 							{/* ############################ */}
 							{/* THIS IS THE TVNET RSS WINDOW */}
 							{/* ############################ */}
-							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas</Header>
+							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas{hasSeenNewTvnetRss && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
 							<div style={{ overflow: "auto", maxHeight: 35 + "vh" }}>
 								{tvnetRss.map((el, i) => {
