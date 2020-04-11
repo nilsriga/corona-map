@@ -62,9 +62,9 @@ class Home extends Component {
 		hasSeenNewTvnetRss: false,
 		hasSeenNewFacts: false,
 
-		whenInfectedPeopleHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
-		whenTvnetRssHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
-		whenFactsHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
+		whenInfectedPeopleHaveBeenLastUpdated: "",
+		whenTvnetRssHaveBeenLastUpdated: "",
+		whenFactsHaveBeenLastUpdated: "",
 
 
 		hasError: false,
@@ -107,6 +107,10 @@ class Home extends Component {
 			infectedPeopleHash: this.state.storedInfectedPeopleHash ? this.state.storedInfectedPeopleHash : "",
 			tvnetRssHash: this.state.storedTvnetRssHash ? this.state.storedTvnetRssHash : "",
 			factsHash: this.state.storedFactsHash ? this.state.storedFactsHash : "",
+
+			whenInfectedPeopleHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
+			whenTvnetRssHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
+			whenFactsHaveBeenLastUpdated: "Īslaicīga, problēma ar serveri, patreiz nav zināms",
 		})
 
 
