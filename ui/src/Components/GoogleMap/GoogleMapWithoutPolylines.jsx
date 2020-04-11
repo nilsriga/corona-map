@@ -8,13 +8,10 @@ import {
   InfoWindow,
 } from "react-google-maps"
 import MyStyle from "./MyStyleJSON.js"
-import moment from "moment"
 import biohHazzardIcon from "./bioHazzardIcon.png"
 import skullIcon from "./skullIcon.png"
 import checkIcon from "./checkIcon.png"
-import "moment/locale/lv"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
-moment.locale('lv')
 
 
 // THIS SPREADS OUT THE POINTS A BIT
@@ -182,7 +179,7 @@ const MapWithoutPolylines = compose(
             <h2>LV Kopā: {props.infectedPeople.length}</h2>
             <p>latvijaskoronakarte.lv</p>
             <p>atjaunoja datus:</p>
-            <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p>
+            <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : props.lastUpdate)}</p>
           </div>
         </InfoWindow>
       }

@@ -11,12 +11,12 @@ import {
   // DirectionsRenderer
 } from "react-google-maps"
 import MyStyle from "./MyStyleJSON.js"
-import moment from "moment"
+// import moment from "moment"
 import biohazardIcon from "./bioHazzardIcon.png"
-import "moment/locale/lv"
+// import "moment/locale/lv"
 // import jwt from "jsonwebtoken"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
-moment.locale('lv')
+// moment.locale('lv')
 
 
 let state = {
@@ -416,7 +416,8 @@ const MapWithPolylines = compose(
             <h2>LV Kopā: {props.infectedPeople.length}</h2>
             <p>latvijaskoronakarte.lv</p>
             <p>atjaunoja datus:</p>
-            <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p>
+            <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : props.lastUpdate)}</p>
+            {/* <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p> */}
           </div>
         </InfoWindow>
       }
