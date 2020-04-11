@@ -27,37 +27,36 @@ moment.locale("lv")
 class Home extends Component {
 
 
-	userSettings = localStorage.getItem("latvijaskoronakartesSettings") ? JSON.parse(localStorage.getItem("latvijaskoronakartesSettings")) : {}
-
-	storedInfectedPeople = localStorage.getItem("latvijaskoronakartesInfectedPeople") ? JSON.parse(localStorage.getItem("latvijaskoronakartesInfectedPeople")) : []
-	storedTvnetRss = localStorage.getItem("latvijaskoronakartesTvnetRss") ? JSON.parse(localStorage.getItem("latvijaskoronakartesTvnetRss")) : []
-	storedFacts = localStorage.getItem("latvijaskoronakartesFacts") ? JSON.parse(localStorage.getItem("latvijaskoronakartesFacts")) : []
-
-	storedInfectedPeopleHash = localStorage.getItem("latvijaskoronakartesInfectedPeopleHash") ? localStorage.getItem("latvijaskoronakartesInfectedPeopleHash") : ""
-	storedTvnetRssHash = localStorage.getItem("latvijaskoronakartesTvnetRssHash") ? localStorage.getItem("latvijaskoronakartesTvnetRssHash") : ""
-	storedFactsHash = localStorage.getItem("latvijaskoronakartesFactsHash") ? localStorage.getItem("latvijaskoronakartesFactsHash") : ""
 
 	state = {
-		userSettings: this.userSettings,
+		userSettings: JSON.parse(localStorage.getItem("latvijaskoronakartesSettings")),
+
+		storedInfectedPeople: JSON.parse(localStorage.getItem("latvijaskoronakartesInfectedPeople")),
+		storedTvnetRss: JSON.parse(localStorage.getItem("latvijaskoronakartesTvnetRss")),
+		storedFacts: JSON.parse(localStorage.getItem("latvijaskoronakartesFacts")),
+
+		storedInfectedPeopleHash: localStorage.getItem("latvijaskoronakartesInfectedPeopleHash"),
+		storedTvnetRssHash: localStorage.getItem("latvijaskoronakartesTvnetRssHash"),
+		storedFactsHash: localStorage.getItem("latvijaskoronakartesFactsHash"),
 
 		activeInfectedIndex: -1,
 		activeTvnetIndex: -1,
 		activeFactIndex: -1,
 		activeFirstTvnetIndex: 0,
-		activeFirstFactIndex: this.userSettings !== {} && this.userSettings.activeFirstFactIndex ? this.userSettings.activeFirstFactIndex : -1,
-		activeSecondFactIndex: this.userSettings !== {} && this.userSettings.activeSecondFactIndex ? this.userSettings.activeSecondFactIndex : 0,
-		activeMapAccordionIndex: this.userSettings !== {} && this.userSettings.activeMapAccordionIndex ? this.userSettings.activeMapAccordionIndex : 0,
+		activeFirstFactIndex: -1,
+		activeSecondFactIndex: 0,
+		activeMapAccordionIndex: 0,
 
-		polylinesVisible: this.userSettings !== {} && this.userSettings.polylinesVisible ? this.userSettings.polylinesVisible : false,
-		currentlyVisibleMap: this.userSettings !== {} && this.userSettings.currentlyVisibleMap ? this.userSettings.currentlyVisibleMap : "googleMap",
+		polylinesVisible: false,
+		currentlyVisibleMap: "googleMap",
 
-		infectedPeople: this.storedInfectedPeople !== [] ? this.storedInfectedPeople : [],
-		tvnetRss: this.storedTvnetRss !== [] ? this.storedTvnetRss : [],
-		facts: this.storedFacts !== [] ? this.storedFacts : [],
+		infectedPeople: [],
+		tvnetRss: [],
+		facts: [],
 
-		infectedPeopleHash: this.storedInfectedPeopleHash ? this.storedInfectedPeopleHash : "",
-		tvnetRssHash: this.storedTvnetRssHash ? this.storedTvnetRssHash : "",
-		factsHash: this.storedFactsHash ? this.storedFactsHash : "",
+		infectedPeopleHash: "",
+		tvnetRssHash: "",
+		factsHash: "",
 
 		hasSeenNewInfectedPeople: false,
 		hasSeenNewTvnetRss: false,
@@ -79,61 +78,159 @@ class Home extends Component {
 	componentWillMount() {
 
 
-		if (this.state.infectedPeopleHash.length < 1 || this.state.tvnetRssHash.length < 1 || this.state.factsHash.length < 1) {
-			console.log("ama here")
+		console.log("componentWillMount", this.state)
+		this.setState({
+			userSettings: this.state.userSettings ? this.state.userSettings : {},
 
-			Promise.all([
-				this.fetchData("/tvnet", this.state.tvnetRssHash, "tvnetRss", "tvnetRssHash", "latvijaskoronakartesTvnetRss", "latvijaskoronakartesTvnetRssHash", "whenTvnetRssHaveBeenLastUpdated", "hasSeenNewInfectedPeople", true),
-				this.fetchData("/facts", this.state.factsHash, "facts", "factsHash", "latvijaskoronakartesFacts", "latvijaskoronakartesFactsHash", "whenFactsHaveBeenLastUpdated", "hasSeenNewTvnetRss", true),
-				this.fetchData("/infected", this.state.infectedPeopleHash, "infectedPeople", "infectedPeopleHash", "latvijaskoronakartesInfectedPeople", "latvijaskoronakartesInfectedPeopleHash", "whenInfectedPeopleHaveBeenLastUpdated", "hasSeenNewFacts", true)
-			])
-				.then(([...functionExecutions]) => {
-					this.setState({
-						...functionExecutions
-					})
-				})
-				.catch(err => {
-					this.setState({ hasError: true, errorMessage: "Corona Error at getting data" })
-				})
+			storedInfectedPeople: this.state.storedInfectedPeople ? this.state.storedInfectedPeople : [],
+			storedTvnetRss: this.state.storedTvnetRss ? this.state.storedTvnetRss : [],
+			storedFacts: this.state.storedFacts ? this.state.storedFacts : [],
 
-		} else {
-			this.fetchData("/tvnet",
-				this.state.tvnetRssHash,
-				"tvnetRss",
-				"tvnetRssHash",
-				"latvijaskoronakartesTvnetRss",
-				"latvijaskoronakartesTvnetRssHash",
-				"whenTvnetRssHaveBeenLastUpdated",
-				"hasSeenNewInfectedPeople",
-				false)
-	
-			this.fetchData("/facts",
-				this.state.factsHash,
-				"facts",
-				"factsHash",
-				"latvijaskoronakartesFacts",
-				"latvijaskoronakartesFactsHash",
-				"whenFactsHaveBeenLastUpdated",
-				"hasSeenNewTvnetRss",
-				false)
-	
-			this.fetchData("/infected",
-				this.state.infectedPeopleHash,
-				"infectedPeople",
-				"infectedPeopleHash",
-				"latvijaskoronakartesInfectedPeople",
-				"latvijaskoronakartesInfectedPeopleHash",
-				"whenInfectedPeopleHaveBeenLastUpdated",
-				"hasSeenNewFacts",
-				false)
-		}
+			storedInfectedPeopleHash: this.state.storedInfectedPeopleHash ? this.state.storedInfectedPeopleHash : "",
+			storedTvnetRssHash: this.state.storedTvnetRssHash ? this.state.storedTvnetRssHash : "",
+			storedFactsHash: this.state.storedFactsHash ? this.state.storedFactsHash : "",
 
 
+			activeFirstFactIndex: this.state.userSettings !== null && this.state.userSettings.activeFirstFactIndex ? this.state.userSettings.activeFirstFactIndex : -1,
+			activeSecondFactIndex: this.state.userSettings !== null && this.state.userSettings.activeSecondFactIndex ? this.state.userSettings.activeSecondFactIndex : 0,
+			activeMapAccordionIndex: this.state.userSettings !== null && this.state.userSettings.activeMapAccordionIndex ? this.state.userSettings.activeMapAccordionIndex : 0,
+
+			polylinesVisible: this.state.userSettings !== null && this.state.userSettings.polylinesVisible ? this.state.userSettings.polylinesVisible : false,
+			currentlyVisibleMap: this.state.userSettings !== null && this.state.userSettings.currentlyVisibleMap ? this.state.userSettings.currentlyVisibleMap : "googleMap",
+
+			infectedPeople: this.state.storedInfectedPeople !== [] ? this.state.storedInfectedPeople : [],
+			tvnetRss: this.state.storedTvnetRss !== [] ? this.state.storedTvnetRss : [],
+			facts: this.state.storedFacts !== [] ? this.state.storedFacts : [],
+
+			infectedPeopleHash: this.state.storedInfectedPeopleHash ? this.state.storedInfectedPeopleHash : "",
+			tvnetRssHash: this.state.storedTvnetRssHash ? this.state.storedTvnetRssHash : "",
+			factsHash: this.state.storedFactsHash ? this.state.storedFactsHash : "",
+		})
+
+
+
+
+
+
+
+		// if (this.state.infectedPeopleHash.length < 1 || this.state.tvnetRssHash.length < 1 || this.state.factsHash.length < 1) {
+		// 	console.log("ama here")
+
+		// 	Promise.all([
+		// 		this.fetchData("/tvnet", this.state.tvnetRssHash, "tvnetRss", "tvnetRssHash", "latvijaskoronakartesTvnetRss", "latvijaskoronakartesTvnetRssHash", "whenTvnetRssHaveBeenLastUpdated", "hasSeenNewInfectedPeople", true),
+		// 		this.fetchData("/facts", this.state.factsHash, "facts", "factsHash", "latvijaskoronakartesFacts", "latvijaskoronakartesFactsHash", "whenFactsHaveBeenLastUpdated", "hasSeenNewTvnetRss", true),
+		// 		this.fetchData("/infected", this.state.infectedPeopleHash, "infectedPeople", "infectedPeopleHash", "latvijaskoronakartesInfectedPeople", "latvijaskoronakartesInfectedPeopleHash", "whenInfectedPeopleHaveBeenLastUpdated", "hasSeenNewFacts", true)
+		// 	])
+		// 		.then(([...functionExecutions]) => {
+		// 			this.setState({
+		// 				...functionExecutions
+		// 			})
+		// 		})
+		// 		.catch(err => {
+		// 			this.setState({ hasError: true, errorMessage: "Corona Error at getting data" })
+		// 		})
+
+		// } else {
+		// 	this.fetchData("/tvnet",
+		// 		this.state.tvnetRssHash,
+		// 		"tvnetRss",
+		// 		"tvnetRssHash",
+		// 		"latvijaskoronakartesTvnetRss",
+		// 		"latvijaskoronakartesTvnetRssHash",
+		// 		"whenTvnetRssHaveBeenLastUpdated",
+		// 		"hasSeenNewInfectedPeople",
+		// 		false)
+
+		// 	this.fetchData("/facts",
+		// 		this.state.factsHash,
+		// 		"facts",
+		// 		"factsHash",
+		// 		"latvijaskoronakartesFacts",
+		// 		"latvijaskoronakartesFactsHash",
+		// 		"whenFactsHaveBeenLastUpdated",
+		// 		"hasSeenNewTvnetRss",
+		// 		false)
+
+		// 	this.fetchData("/infected",
+		// 		this.state.infectedPeopleHash,
+		// 		"infectedPeople",
+		// 		"infectedPeopleHash",
+		// 		"latvijaskoronakartesInfectedPeople",
+		// 		"latvijaskoronakartesInfectedPeopleHash",
+		// 		"whenInfectedPeopleHaveBeenLastUpdated",
+		// 		"hasSeenNewFacts",
+		// 		false)
+		// }
+
+
+
+
+	}
+
+
+	componentDidMount() {
+
+		// Promise.all([
+		// 	this.fetchData("/tvnet", this.state.tvnetRssHash, "tvnetRss", "tvnetRssHash", "latvijaskoronakartesTvnetRss", "latvijaskoronakartesTvnetRssHash", "whenTvnetRssHaveBeenLastUpdated", "hasSeenNewInfectedPeople", true),
+		// 	this.fetchData("/facts", this.state.factsHash, "facts", "factsHash", "latvijaskoronakartesFacts", "latvijaskoronakartesFactsHash", "whenFactsHaveBeenLastUpdated", "hasSeenNewTvnetRss", true),
+		// 	this.fetchData("/infected", this.state.infectedPeopleHash, "infectedPeople", "infectedPeopleHash", "latvijaskoronakartesInfectedPeople", "latvijaskoronakartesInfectedPeopleHash", "whenInfectedPeopleHaveBeenLastUpdated", "hasSeenNewFacts", true)
+		// ])
+		// 	.then(([...functionExecutions]) => {
+		// 		this.setState({
+		// 			...functionExecutions
+		// 		})
+		// 	})
+		// 	.catch(err => {
+		// 		this.setState({ hasError: true, errorMessage: "Corona Error at getting data" })
+		// 	})
+
+		// if (this.state.whenInfectedPeopleHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ||
+		// 	this.state.whenTvnetRssHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ||
+		// 	this.state.whenFactsHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms") {
+		// } {
+
+		this.fetchData("/infected",
+			this.state.infectedPeopleHash,
+			"infectedPeople",
+			"infectedPeopleHash",
+			"latvijaskoronakartesInfectedPeople",
+			"latvijaskoronakartesInfectedPeopleHash",
+			"whenInfectedPeopleHaveBeenLastUpdated",
+			"hasSeenNewFacts",
+			false)
+
+		this.fetchData("/tvnet",
+			this.state.tvnetRssHash,
+			"tvnetRss",
+			"tvnetRssHash",
+			"latvijaskoronakartesTvnetRss",
+			"latvijaskoronakartesTvnetRssHash",
+			"whenTvnetRssHaveBeenLastUpdated",
+			"hasSeenNewInfectedPeople",
+			false)
+
+		this.fetchData("/facts",
+			this.state.factsHash,
+			"facts",
+			"factsHash",
+			"latvijaskoronakartesFacts",
+			"latvijaskoronakartesFactsHash",
+			"whenFactsHaveBeenLastUpdated",
+			"hasSeenNewTvnetRss",
+			false)
+
+
+		// }
+
+		// console.log(this.props)
+		// setInterval(() => {
+		// 	this.props.history.push('/')
+		// }, 1000);
 		if (this.state.userSettings === {} || Object.keys(this.state.userSettings).length < 5) {
 			const { activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap } = this.state
 			localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify({ activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap }))
-		}
 
+		}
 		if (this.state.infectedPeopleHash === undefined || this.state.infectedPeopleHash.length < 1) {
 			localStorage.setItem("latvijaskoronakartesInfectedPeopleHash", "")
 		}
@@ -145,51 +242,6 @@ class Home extends Component {
 		if (this.state.factsHash === undefined || this.state.factsHash.length < 1) {
 			localStorage.setItem("latvijaskoronakartesFactsHash", "")
 		}
-
-
-	}
-
-
-	componentDidMount() {
-
-		if (this.state.whenInfectedPeopleHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ||
-			this.state.whenTvnetRssHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ||
-			this.state.whenFactsHaveBeenLastUpdated === "Īslaicīga, problēma ar serveri, patreiz nav zināms") {
-		} {
-
-			
-			this.fetchData("/tvnet",
-				this.state.tvnetRssHash,
-				"tvnetRss",
-				"tvnetRssHash",
-				"latvijaskoronakartesTvnetRss",
-				"latvijaskoronakartesTvnetRssHash",
-				"whenTvnetRssHaveBeenLastUpdated",
-				"hasSeenNewInfectedPeople",
-				false)
-	
-			this.fetchData("/facts",
-				this.state.factsHash,
-				"facts",
-				"factsHash",
-				"latvijaskoronakartesFacts",
-				"latvijaskoronakartesFactsHash",
-				"whenFactsHaveBeenLastUpdated",
-				"hasSeenNewTvnetRss",
-				false)
-	
-			this.fetchData("/infected",
-				this.state.infectedPeopleHash,
-				"infectedPeople",
-				"infectedPeopleHash",
-				"latvijaskoronakartesInfectedPeople",
-				"latvijaskoronakartesInfectedPeopleHash",
-				"whenInfectedPeopleHaveBeenLastUpdated",
-				"hasSeenNewFacts",
-				false)
-
-		}
-
 	}
 
 
@@ -259,7 +311,7 @@ class Home extends Component {
 				},
 				(error) => {
 					console.log(`ERROR AT ${slug} request`, error)
-					if (shouldReturnPromise) {
+					if (!shouldReturnPromise) {
 						return this.setState({ hasError: true, errorMessage: error })
 					} else {
 						this.setState({ hasError: true, errorMessage: error })
@@ -460,10 +512,10 @@ class Home extends Component {
 							{/* ############################ */}
 							{/* THIS IS THE TVNET RSS WINDOW */}
 							{/* ############################ */}
-							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas{!hasSeenNewTvnetRss && whenTvnetRssHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
+							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas{!hasSeenNewTvnetRss && whenTvnetRssHaveBeenLastUpdated !== null && whenTvnetRssHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
 							<div style={{ overflow: "auto", maxHeight: 35 + "vh" }}>
-								{tvnetRss.map((el, i) => {
+								{tvnetRss && tvnetRss.map((el, i) => {
 
 
 									return <Accordion key={Math.random() * i + 0} inverted={true} styled>
@@ -553,44 +605,42 @@ class Home extends Component {
 
 
 							<div style={{ overflow: "auto", maxHeight: 20 + "vh" }}>
-								{
-									infectedPeople.map((el, i) => {
-										return (
-											<Accordion key={Math.random() * i + 0} inverted={true} styled>
+								{infectedPeople && infectedPeople.map((el, i) => {
+									return (
+										<Accordion key={Math.random() * i + 0} inverted={true} styled>
 
 
-												<Accordion.Title className={el.isDead === "1" ? "accordion-title-dead" : el.isRecovered === "1" ? "accordion-title-recovered" : "accordion-title-infected"} id={el.id} inverted="true" active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
-													<Icon corner name="dropdown" />
-													{el.id !== "1"
-														?
-														"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.selfCity ? el.selfCity : "") + ""
-														:
-														el.label
-													}
+											<Accordion.Title className={el.isDead === "1" ? "accordion-title-dead" : el.isRecovered === "1" ? "accordion-title-recovered" : "accordion-title-infected"} id={el.id} inverted="true" active={activeInfectedIndex === i} index={i} onClick={this.handleInfectedClick}>
+												<Icon corner name="dropdown" />
+												{el.id !== "1"
+													?
+													"#" + el.id + ", " + (el.dateOfDiagnosisBroadcast ? el.dateOfDiagnosisBroadcast : "") + ", " + (el.selfCity ? el.selfCity : "") + ""
+													:
+													el.label
+												}
 
-												</Accordion.Title>
+											</Accordion.Title>
 
-												<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeInfectedIndex === i}>
+											<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeInfectedIndex === i}>
 
-													{el.origin ? <li>Izcelsme: {el.origin}</li> : ""}
-													{el.totalInfected ? <li>Inficētais Nr.: {el.totalInfected}</li> : ""}
-													{el.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {el.dateOfFirstContactWIthLatvia}</li> : ""}
-													{el.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {el.dateOfDiagnosisBroadcast}</li> : ""}
-													{el.descriptionTitle ? <li>Īsumā: {el.descriptionTitle}</li> : ""}
-													{el.descriptionHeader ? <li>{el.descriptionHeader}</li> : ""}
-													{el.link ? <li><a href={el.link}>{el.link}</a></li> : ""}
-													{el.extraLink1 ? <li><a href={el.extraLink1}>{el.extraLink1}</a></li> : ""}
-													{el.extraLink2 ? <li><a href={el.extraLink2}>{el.extraLink2}</a></li> : ""}
-													{el.extraLink3 ? <li><a href={el.extraLink3}>{el.extraLink3}</a></li> : ""}
+												{el.origin ? <li>Izcelsme: {el.origin}</li> : ""}
+												{el.totalInfected ? <li>Inficētais Nr.: {el.totalInfected}</li> : ""}
+												{el.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {el.dateOfFirstContactWIthLatvia}</li> : ""}
+												{el.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {el.dateOfDiagnosisBroadcast}</li> : ""}
+												{el.descriptionTitle ? <li>Īsumā: {el.descriptionTitle}</li> : ""}
+												{el.descriptionHeader ? <li>{el.descriptionHeader}</li> : ""}
+												{el.link ? <li><a href={el.link}>{el.link}</a></li> : ""}
+												{el.extraLink1 ? <li><a href={el.extraLink1}>{el.extraLink1}</a></li> : ""}
+												{el.extraLink2 ? <li><a href={el.extraLink2}>{el.extraLink2}</a></li> : ""}
+												{el.extraLink3 ? <li><a href={el.extraLink3}>{el.extraLink3}</a></li> : ""}
 
-												</Accordion.Content>
+											</Accordion.Content>
 
 
-											</Accordion>
-										)
+										</Accordion>
+									)
 
-									})
-								}
+								})}
 							</div>
 
 
@@ -653,7 +703,7 @@ class Home extends Component {
 
 
 								{/* THESE ARE THE FACTS GOTTEN FROM THE API */}
-								{facts.map((el, i) => {
+								{facts && facts.map((el, i) => {
 									return <Accordion key={Math.random() * i + 2} inverted={true} styled>
 
 										<Accordion.Title className={"accordion-title"} inverted="true" active={activeFactIndex === i} index={i} onClick={this.handleFactClick}>
