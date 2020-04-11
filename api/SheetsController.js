@@ -13,7 +13,6 @@ export default async function getGoogleSheetsJson(type) {
     } else if (type == "facts") {
 
         googleSheetsCsv = await axios.get(process.env.GOOGLE_SHEETS_URL_FACTS)
-
     } else {
 
         googleSheetsCsv = await axios.get(process.env.GOOGLE_SHEETS_URL)

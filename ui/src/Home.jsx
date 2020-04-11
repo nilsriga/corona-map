@@ -20,6 +20,7 @@ import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import moment from "moment"
 import jwt from "jsonwebtoken"
 import axios from "axios"
+import Resizable from "react-resizable-box"
 import "./Home.css"
 import "moment/locale/lv"
 moment.locale("lv")
@@ -87,7 +88,6 @@ class Home extends Component {
 	componentWillMount() {
 
 
-		console.log("componentWillMount", this.state)
 		this.setState({
 			localStorageCleared10Apr: false,
 
@@ -416,10 +416,11 @@ class Home extends Component {
 						<Grid.Column stackable="true" width={3} divided="true"  >
 
 
-							<Header className="box-header" inverted={true} as="h4">SPKC Twittera Tvīti</Header>
-							<Dimmer.Dimmable className={"twitter-container"} dimmed={!twitterLoaded} >
+							<Dimmer.Dimmable className={!twitterLoaded ? "ui-box twitter-container" : "ui-box"} dimmed={!twitterLoaded} >
 
-								<Dimmer active={!twitterLoaded} style={{ height: 45 + "vh" }} >
+								<Header className="box-header" inverted={true} as="h4">SPKC Twittera Tvīti</Header>
+
+								<Dimmer active={!twitterLoaded}  >
 									<Loader></Loader>
 								</Dimmer>
 
@@ -452,12 +453,12 @@ class Home extends Component {
 							{/* ############################ */}
 							{/* THIS IS THE TVNET RSS WINDOW */}
 							{/* ############################ */}
-							<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas{!hasSeenNewTvnetRss && whenTvnetRssHaveBeenLastUpdated !== null && whenTvnetRssHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
-							<Dimmer.Dimmable dimmed={!tvnetLoaded} style={{ height: 40 + "Vh" }}>
+							<Dimmer.Dimmable className={"ui-box"} dimmed={!tvnetLoaded} >
 								<Dimmer active={!tvnetLoaded} >
 									<Loader></Loader>
 								</Dimmer>
+								<Header className="box-header" inverted={true} as="h4">TvNet Korona Ziņas{!hasSeenNewTvnetRss && whenTvnetRssHaveBeenLastUpdated !== null && whenTvnetRssHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
 								<div style={{ overflow: "auto", maxHeight: 40 + "vh" }}>
 									{tvnetRss && tvnetRss.map((el, i) => {
@@ -484,6 +485,7 @@ class Home extends Component {
 								</div>
 
 							</Dimmer.Dimmable>
+
 
 						</Grid.Column>
 
@@ -515,8 +517,8 @@ class Home extends Component {
 
 							<Segment raised style={{ padding: "0" }} className={infectedLoaded ? "map-loading" : "map-loading"}>
 								<Loader />
-								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && whenInfectedPeopleHaveBeenLastUpdated !== undefined && <MainMapWithPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
-								{currentlyVisibleMap === "googleMap" && !polylinesVisible && infectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && whenInfectedPeopleHaveBeenLastUpdated !== undefined && <MainMapWithoutPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
+								{currentlyVisibleMap === "googleMap" && polylinesVisible&& <MainMapWithPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
+								{currentlyVisibleMap === "googleMap" && !polylinesVisible&& <MainMapWithoutPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
 								{currentlyVisibleMap === "skpcMap" ? <SKPCMap /> : ""}
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
@@ -549,12 +551,12 @@ class Home extends Component {
 							{/* ############################## */}
 							{/* THIS IS THE KNOWN CASES WINDOW */}
 							{/* ############################## */}
-							<Header className="box-header" as="h4" inverted={true}>Atklātie Gadījumi{!hasSeenNewInfectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
-							<Dimmer.Dimmable dimmed={!infectedLoaded} style={{ height: 20 + "Vh" }}>
+							<Dimmer.Dimmable className={!infectedLoaded ? "ui-box infected-container" : "ui-box"} dimmed={!infectedLoaded}>
 								<Dimmer active={!infectedLoaded} >
 									<Loader></Loader>
 								</Dimmer>
+								<Header className="box-header" as="h4" inverted={true}>Atklātie Gadījumi{!hasSeenNewInfectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
 								<div style={{ overflow: "auto", maxHeight: 20 + "vh" }}>
 									{infectedPeople && infectedPeople.map((el, i) => {
@@ -610,12 +612,12 @@ class Home extends Component {
 							{/* ############################# */}
 							{/* THIS IS THE FACTS/INFO WINDOW */}
 							{/* ############################# */}
-							<Header className="box-header" inverted={true} as="h4">Korona/COVID-19 Fakti{!hasSeenNewFacts && whenFactsHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
-							<Dimmer.Dimmable dimmed={!factsLoaded} style={{ height: 40 + "Vh" }}>
+							<Dimmer.Dimmable className={"ui-box"} dimmed={!factsLoaded} >
 								<Dimmer active={!factsLoaded} >
 									<Loader></Loader>
 								</Dimmer>
+								<Header className="box-header" inverted={true} as="h4">Korona/COVID-19 Fakti{!hasSeenNewFacts && whenFactsHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <Label color='green' horizontal>Ir Jaunumi</Label>}</Header>
 
 								<div style={{ overflow: "auto", maxHeight: 40 + "vh" }}>
 
