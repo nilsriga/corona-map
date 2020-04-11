@@ -27,8 +27,8 @@ moment.locale("lv")
 class Home extends Component {
 
 
-
 	state = {
+		localStorageCleared10Apr: false,
 		userSettings: JSON.parse(localStorage.getItem("latvijaskoronakartesSettings")),
 
 		storedInfectedPeople: JSON.parse(localStorage.getItem("latvijaskoronakartesInfectedPeople")),
@@ -80,6 +80,8 @@ class Home extends Component {
 
 		console.log("componentWillMount", this.state)
 		this.setState({
+			localStorageCleared10Apr: false,
+
 			userSettings: this.state.userSettings ? this.state.userSettings : {},
 
 			storedInfectedPeople: this.state.storedInfectedPeople ? this.state.storedInfectedPeople : [],
@@ -226,9 +228,13 @@ class Home extends Component {
 		// setInterval(() => {
 		// 	this.props.history.push('/')
 		// }, 1000);
-		if (this.state.userSettings === {} || Object.keys(this.state.userSettings).length < 5) {
-			const { activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap } = this.state
-			localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify({ activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap }))
+		if (this.state.userSettings === {} || Object.keys(this.state.userSettings).length < 6) {
+			
+		if (this.state.localStorageCleared10Apr === false) {
+			localStorage.clear()
+		}
+			const { activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap, localStorageCleared10Apr } = this.state
+			localStorage.setItem("latvijaskoronakartesSettings", JSON.stringify({ activeFirstFactIndex, activeSecondFactIndex, activeMapAccordionIndex, polylinesVisible, currentlyVisibleMap, localStorageCleared10Apr: true }))
 
 		}
 		if (this.state.infectedPeopleHash === undefined || this.state.infectedPeopleHash.length < 1) {
