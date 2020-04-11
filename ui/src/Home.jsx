@@ -571,8 +571,8 @@ class Home extends Component {
 							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
 
 							<Segment raised style={{ padding: "0" }}>
-								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <MainMapWithPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
-								{currentlyVisibleMap === "googleMap" && !polylinesVisible && infectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && <MainMapWithoutPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
+								{currentlyVisibleMap === "googleMap" && polylinesVisible && infectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && whenInfectedPeopleHaveBeenLastUpdated !== undefined && <MainMapWithPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
+								{currentlyVisibleMap === "googleMap" && !polylinesVisible && infectedPeople && whenInfectedPeopleHaveBeenLastUpdated !== "Īslaicīga, problēma ar serveri, patreiz nav zināms" && whenInfectedPeopleHaveBeenLastUpdated !== undefined && <MainMapWithoutPolylines infectedPeople={infectedPeople} lastUpdate={whenInfectedPeopleHaveBeenLastUpdated} />}
 								{currentlyVisibleMap === "skpcMap" ? <SKPCMap /> : ""}
 								{/* {this.state.polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!this.state.polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
