@@ -20,7 +20,6 @@ import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import moment from "moment"
 import jwt from "jsonwebtoken"
 import axios from "axios"
-import Resizable from "react-resizable-box"
 import "./Home.css"
 import "moment/locale/lv"
 moment.locale("lv")

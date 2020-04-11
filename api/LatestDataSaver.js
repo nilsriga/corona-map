@@ -6,6 +6,9 @@ import createHash from "object-hash"
 import oldInfectedPeopleJson from "./parsedData/infectedPeople.json"
 import oldTvnetRssJson from "./parsedData/tvnetRss.json"
 import oldFactsJson from "./parsedData/facts.json"
+import moment from "moment"
+import "moment/locale/lv"
+moment.locale('lv')
 const ASQ = require("asynquence")
 
 const parser = new Parser();
@@ -34,22 +37,25 @@ const timeNow = getLatvianFormatDate("now", "time")
 
 
 function getLatvianFormatDate(when, time) {
-    const whenSubtractor = when === "now" ? 0 : when === "yesterday" ? 864e5 : 0
-    const dateArr = new Date(Date.now() - whenSubtractor).toLocaleString().split(',')[0].split("/")
-    const firstNumber = dateArr.splice(0, 1)
-    dateArr.splice(1, 0, firstNumber[0])
-    const latvianFormatDateArr = dateArr.map(el => { return el.length < 2 ? 0 + el : el })
-    const latvianFormatDateString = latvianFormatDateArr.join(".")
-    if (!time) {
-        return latvianFormatDateString
-    } else {
-        const hoursMinutes = []
-        const timeArr = new Date(Date.now() - whenSubtractor).toLocaleString().split(',')[1].split(" ")[1].split(":")
-        hoursMinutes.push(timeArr[0])
-        hoursMinutes.push(timeArr[1])
-        const latvianFormatTimeString = hoursMinutes.join(':')
-        return latvianFormatDateString + ", " + latvianFormatTimeString
-    }
+    return moment().format('D.M.YY, hh:mm')
+    // const whenSubtractor = when === "now" ? 0 : when === "yesterday" ? 864e5 : 0
+    // const dateArr = new Date(Date.now() - whenSubtractor).toLocaleString().split(',')[0].split("/")
+    // const firstNumber = dateArr.splice(0, 1)
+    // dateArr.splice(1, 0, firstNumber[0])
+    // const latvianFormatDateArr = dateArr.map(el => { return el.length < 2 ? 0 + el : el })
+    // const latvianFormatDateString = latvianFormatDateArr.join(".")
+    // if (!time) {
+    //     return latvianFormatDateString
+    // } else {
+    //     const hoursMinutes = []
+    //     const timeArr = new Date(Date.now() - whenSubtractor).toLocaleString()
+    //     // .split(',')[1].split(" ")[1].split(":")
+    //     console.log(timeArr)
+    //     hoursMinutes.push(timeArr[0])
+    //     hoursMinutes.push(timeArr[1])
+    //     const latvianFormatTimeString = hoursMinutes.join(':')
+    //     return latvianFormatDateString + ", " + latvianFormatTimeString
+    // }
 }
 
 function getLastUpdateTime(type, data) {
