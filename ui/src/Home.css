@@ -74,8 +74,13 @@
     margin: 0px!important;
 }
 
+.twitter-container {
+    height: 45vh!important;
+}
+
 #twitter-widget-0 {
     min-width: auto!important;
+    height: 45vh!important;
 }
 
 div.title.accordion-title {
@@ -95,6 +100,11 @@ div.content.active.accordion-content {
     padding-right: 5px!important;
     padding-bottom: 6px!important;
     padding-left: 3px!important;
+}
+
+.map-loading {
+    background: #e5e3df!important;
+    height: 90vh!important;
 }
 
 #root > div > div > div > div > div > div.ten.wide.column.map-container > div { 
