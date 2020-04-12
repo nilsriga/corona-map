@@ -47,7 +47,7 @@ export default async function latestDataSaver(type) {
 
     setInterval(async () => {
 
-        const timeNow = moment().format('D.M.YY, hh:mm:ss')
+        const timeNow = moment().format('D.M.YY, hh:mm')
 
         let oldInfectedPeopleJson = {}
         let oldTvnetRssJson = {}
@@ -78,7 +78,6 @@ export default async function latestDataSaver(type) {
                 const newFactsGoogleSheetsJson = await getGoogleSheetsJson("facts")
                 const factsPartial = getLastUpdateTime(timeNow, "facts", await newFactsGoogleSheetsJson, oldFactsJson)
                 const newfactsLastUpdateTime = factsPartial.lastUpdateTime
-                console.log(infectedPartial.shouldUpdate)
                 if (factsPartial.shouldUpdate) {
                     fs.writeFileSync("./parsedData/facts.json", JSON.stringify({ data: JSON.parse(await newFactsGoogleSheetsJson), lastUpdateTime: newfactsLastUpdateTime, hash: factsPartial.newHash }))
                 }
@@ -90,9 +89,6 @@ export default async function latestDataSaver(type) {
 
         // this parses tvnetRss
         ASQ()
-            .then(async (done, msg) => {
-
-            })
             .then(async (done, msg) => {
 
                 let getRss = async () => {
@@ -126,7 +122,7 @@ export default async function latestDataSaver(type) {
 
 
 
-    }, 30000)
+    }, 3000)
 
 
 

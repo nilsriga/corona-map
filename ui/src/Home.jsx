@@ -366,6 +366,7 @@ class Home extends Component {
 			infectedLoaded,
 			tvnetLoaded,
 			factsLoaded,
+			// storedInfectedPeople
 			// aboutMapLoaded
 			// errorMessage
 			// openedInfoWindowId
@@ -559,6 +560,14 @@ class Home extends Component {
 
 								<div style={{ overflow: "auto", maxHeight: 20 + "vh" }}>
 									{infectedPeople && infectedPeople.map((el, i) => {
+
+										// console.log(storedInfectedPeople ? el.hash !== storedInfectedPeople[i].hash : "noones Stored")
+										// if (el.hash !== storedInfectedPeople[i].hash) {
+										// 	console.log("el.hash", el.hash)
+										// 	console.log("storedHash", storedInfectedPeople[i].hash)
+										// }
+
+
 										return (
 											<Accordion key={Math.random() * i + 0} inverted={true} styled>
 
@@ -571,6 +580,7 @@ class Home extends Component {
 														:
 														el.label
 													}
+													{/* {storedInfectedPeople && storedInfectedPeople[i].hash && el.hash !== storedInfectedPeople[i].hash ? <Label color='green' horizontal>1</Label> : ""} */}
 
 												</Accordion.Title>
 
