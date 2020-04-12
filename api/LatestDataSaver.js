@@ -3,9 +3,6 @@ import fs from "fs"
 import Parser from "rss-parser"
 import auth from "./auth"
 import createHash from "object-hash"
-import oldInfectedPeopleJson from "./parsedData/infectedPeople.json"
-import oldTvnetRssJson from "./parsedData/tvnetRss.json"
-import oldFactsJson from "./parsedData/facts.json"
 import moment from "moment"
 import "moment/locale/lv"
 moment.locale('lv')
@@ -33,11 +30,9 @@ const keywords = [
     /korona/gi
 ]
 
-const timeNow = moment().format('D.M.YY, hh:mm:ss') 
 
 
-function getLastUpdateTime(type, data) {
-    const oldData = type === "infectedPeople" ? oldInfectedPeopleJson : type === "tvnetRss" ? oldTvnetRssJson : oldFactsJson
+function getLastUpdateTime(timeNow, type, data, oldData) {
     const newDataHash = createHash(data)
     const oldDataHash = oldData.hash
     const somethingNew = oldDataHash === newDataHash ? false : true
@@ -52,31 +47,52 @@ export default async function latestDataSaver(type) {
 
     setInterval(async () => {
 
+        const timeNow = moment().format('D.M.YY, hh:mm:ss')
 
-        // this updates infectedPeople.json
-        const newInfectedGoogleSheetsJson = await getGoogleSheetsJson("infected")
-        const infectedPartial = getLastUpdateTime("infectedPeople", newInfectedGoogleSheetsJson)
-        const newInfectedPeopleLastUpdateTime = infectedPartial.lastUpdateTime
+        let oldInfectedPeopleJson = {}
+        let oldTvnetRssJson = {}
+        let oldFactsJson = {}
 
-        if (infectedPartial.shouldUpdate) {
-            fs.writeFileSync("./parsedData/infectedPeople.json", JSON.stringify({ data: JSON.parse(await newInfectedGoogleSheetsJson), lastUpdateTime: newInfectedPeopleLastUpdateTime, hash: infectedPartial.newHash }))
-        }
-
-
-
-        // this updates facts.json
-        const newFactsGoogleSheetsJson = await getGoogleSheetsJson("facts")
-        const factsPartial = getLastUpdateTime("facts", newFactsGoogleSheetsJson)
-        const newfactsLastUpdateTime = factsPartial.lastUpdateTime
-
-        if (factsPartial.shouldUpdate) {
-            fs.writeFileSync("./parsedData/facts.json", JSON.stringify({ data: JSON.parse(await newFactsGoogleSheetsJson), lastUpdateTime: newfactsLastUpdateTime, hash: factsPartial.newHash }))
-        }
-
-
-
-        // this updates tvnetRss.json
         ASQ()
+            .then(async (done, msg) => {
+                oldInfectedPeopleJson = JSON.parse(fs.readFileSync("./parsedData/infectedPeople.json", "utf8"))
+                oldTvnetRssJson = JSON.parse(fs.readFileSync("./parsedData/tvnetRss.json", "utf8"))
+                oldFactsJson = JSON.parse(fs.readFileSync("./parsedData/facts.json", "utf8"))
+
+                done({oldInfectedPeopleJson, oldTvnetRssJson, oldFactsJson})
+            })
+            .then(async (done, msg) => {
+
+
+                // this updates infectedPeople.json
+                const newInfectedGoogleSheetsJson = await getGoogleSheetsJson("infected")
+                const infectedPartial = getLastUpdateTime(timeNow, "infectedPeople", await newInfectedGoogleSheetsJson, oldInfectedPeopleJson)
+                const newInfectedPeopleLastUpdateTime = infectedPartial.lastUpdateTime
+                if (infectedPartial.shouldUpdate) {
+                    fs.writeFileSync("./parsedData/infectedPeople.json", JSON.stringify({ data: JSON.parse(await newInfectedGoogleSheetsJson), lastUpdateTime: newInfectedPeopleLastUpdateTime, hash: infectedPartial.newHash }))
+                }
+
+
+
+                // this updates facts.json
+                const newFactsGoogleSheetsJson = await getGoogleSheetsJson("facts")
+                const factsPartial = getLastUpdateTime(timeNow, "facts", await newFactsGoogleSheetsJson, oldFactsJson)
+                const newfactsLastUpdateTime = factsPartial.lastUpdateTime
+                console.log(infectedPartial.shouldUpdate)
+                if (factsPartial.shouldUpdate) {
+                    fs.writeFileSync("./parsedData/facts.json", JSON.stringify({ data: JSON.parse(await newFactsGoogleSheetsJson), lastUpdateTime: newfactsLastUpdateTime, hash: factsPartial.newHash }))
+                }
+                done()
+            })
+
+
+
+
+        // this parses tvnetRss
+        ASQ()
+            .then(async (done, msg) => {
+
+            })
             .then(async (done, msg) => {
 
                 let getRss = async () => {
@@ -101,7 +117,7 @@ export default async function latestDataSaver(type) {
 
             })
             .then((done, tvnetRss) => {
-                const tvnetRssPartial = getLastUpdateTime("tvnetRss", tvnetRss)
+                const tvnetRssPartial = getLastUpdateTime(timeNow, "tvnetRss", tvnetRss, oldTvnetRssJson)
                 const newFactsLastUpdateTime = tvnetRssPartial.lastUpdateTime
                 if (tvnetRssPartial.shouldUpdate) {
                     fs.writeFileSync("./parsedData/tvnetRss.json", JSON.stringify({ data: tvnetRss, lastUpdateTime: newFactsLastUpdateTime, hash: tvnetRssPartial.newHash }))
