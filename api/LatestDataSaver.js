@@ -59,7 +59,7 @@ export default async function latestDataSaver(type) {
                 oldTvnetRssJson = JSON.parse(fs.readFileSync("./parsedData/tvnetRss.json", "utf8"))
                 oldFactsJson = JSON.parse(fs.readFileSync("./parsedData/facts.json", "utf8"))
 
-                done({oldInfectedPeopleJson, oldTvnetRssJson, oldFactsJson})
+                done()
             })
             .then(async (done, msg) => {
 
@@ -126,7 +126,7 @@ export default async function latestDataSaver(type) {
 
 
 
-    }, 3000)
+    }, 30000)
 
 
 
