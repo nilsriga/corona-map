@@ -33,30 +33,8 @@ const keywords = [
     /korona/gi
 ]
 
-const timeNow = getLatvianFormatDate("now", "time")
+const timeNow = moment().format('D.M.YY, hh:mm:ss') 
 
-
-function getLatvianFormatDate(when, time) {
-    return moment().format('D.M.YY, hh:mm')
-    // const whenSubtractor = when === "now" ? 0 : when === "yesterday" ? 864e5 : 0
-    // const dateArr = new Date(Date.now() - whenSubtractor).toLocaleString().split(',')[0].split("/")
-    // const firstNumber = dateArr.splice(0, 1)
-    // dateArr.splice(1, 0, firstNumber[0])
-    // const latvianFormatDateArr = dateArr.map(el => { return el.length < 2 ? 0 + el : el })
-    // const latvianFormatDateString = latvianFormatDateArr.join(".")
-    // if (!time) {
-    //     return latvianFormatDateString
-    // } else {
-    //     const hoursMinutes = []
-    //     const timeArr = new Date(Date.now() - whenSubtractor).toLocaleString()
-    //     // .split(',')[1].split(" ")[1].split(":")
-    //     console.log(timeArr)
-    //     hoursMinutes.push(timeArr[0])
-    //     hoursMinutes.push(timeArr[1])
-    //     const latvianFormatTimeString = hoursMinutes.join(':')
-    //     return latvianFormatDateString + ", " + latvianFormatTimeString
-    // }
-}
 
 function getLastUpdateTime(type, data) {
     const oldData = type === "infectedPeople" ? oldInfectedPeopleJson : type === "tvnetRss" ? oldTvnetRssJson : oldFactsJson
@@ -132,7 +110,7 @@ export default async function latestDataSaver(type) {
 
 
 
-    }, 30000)
+    }, 3000)
 
 
 
