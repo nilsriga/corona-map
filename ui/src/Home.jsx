@@ -11,7 +11,7 @@ import {
 	Modal,
 	Label,
 	Loader,
-	Dimmer
+	Dimmer,
 } from "semantic-ui-react"
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
 import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
@@ -522,10 +522,15 @@ class Home extends Component {
 						<Grid.Column stackable="true" width={10} className={"map-container"} >
 
 
-
-
-
 							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
+
+							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} toggle onClick={this.handlePolylineToggle}>
+								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
+							</Button>
+
+							<Button className={"top-button"} compact size={"small"} inverted={true} toggle onClick={this.handleMapTypeToggle}>
+								Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
+							</Button>
 
 
 							<Segment raised style={{ padding: "0" }} >
@@ -548,17 +553,9 @@ class Home extends Component {
 									<MainMapWithPolylines infectedPeopleData={{ infectedPeople: infectedPeople, lastUpdate: whenInfectedPeopleHaveBeenLastUpdated }} />} */}
 								{/* {polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
-
-								<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handlePolylineToggle}>
-
-									{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
-								</Button>
-
-								<Button className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handleMapTypeToggle}>
-									Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
-								</Button>
-
 							</Segment>
+
+
 
 						</Grid.Column>
 

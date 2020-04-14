@@ -120,12 +120,3 @@ div.content.active.accordion-content {
 #root > div > div > div > div > div > div.ten.wide.column.map-container > div { 
     background-color: #89a9ca!important;
 }
-
-.raised > div:nth-child(1) > div:nth-child(2){
-    display: block!important;
-    overflow:auto!important
-}
-
-.top-button {
-    margin-top: 10px!important
-}

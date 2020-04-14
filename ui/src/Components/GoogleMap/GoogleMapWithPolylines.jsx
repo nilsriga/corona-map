@@ -92,6 +92,7 @@ const MapWithPolylines = compose(
   lifecycle({
     shouldComponentUpdate(nextProps, nextState) {
       // return this.props.infectedPeople.length !== nextProps.infectedPeople.length ? true : false
+      return false
     },
     componentWillMount() {
       // this.setState({ data: [] });
