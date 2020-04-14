@@ -524,18 +524,12 @@ class Home extends Component {
 
 
 
-							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handlePolylineToggle}>
 
-								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
-							</Button>
-
-							<Button className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handleMapTypeToggle}>
-								Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
-							</Button>
 							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
 
 
 							<Segment raised style={{ padding: "0" }} >
+
 								{currentlyVisibleMap === "googleMap" &&
 									!polylinesVisible &&
 									infectedPeople &&
@@ -554,9 +548,17 @@ class Home extends Component {
 									<MainMapWithPolylines infectedPeopleData={{ infectedPeople: infectedPeople, lastUpdate: whenInfectedPeopleHaveBeenLastUpdated }} />} */}
 								{/* {polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
 								{!polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
+
+								<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handlePolylineToggle}>
+
+									{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
+								</Button>
+
+								<Button className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handleMapTypeToggle}>
+									Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
+								</Button>
+
 							</Segment>
-
-
 
 						</Grid.Column>
 
