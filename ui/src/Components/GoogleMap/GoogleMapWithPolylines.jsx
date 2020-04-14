@@ -91,13 +91,12 @@ const MapWithPolylines = compose(
   }),
   lifecycle({
     shouldComponentUpdate(nextProps, nextState) {
-      return this.props.infectedPeople.length !== nextProps.infectedPeople.length ? true : false
+      // return this.props.infectedPeople.length !== nextProps.infectedPeople.length ? true : false
     },
     componentWillMount() {
       // this.setState({ data: [] });
     },
     componentDidMount() {
-      console.log("map with polylines")
       // THIS ENABLES DIRECTIONS
       // const DirectionsService = new window.google.maps.DirectionsService();
       // linePath.strokeOpacity = 1.0
@@ -212,7 +211,7 @@ const MapWithPolylines = compose(
       {/* {THIS ENABLES DIRECTIONS} */}
       {/* {props.directions && <DirectionsRenderer directions={props.directions} />} */}
       {
-        props.infectedPeople.map((item, index, arr) => {
+        props.infectedPeopleData.infectedPeople.map((item, index, arr) => {
 
 
           // const selfLat = parseFloat(item.selfCooLat)
@@ -413,10 +412,10 @@ const MapWithPolylines = compose(
           visible={true}
         >
           <div style={{ opacity: 0.75 }}>
-            <h2>LV Kopā: {props.infectedPeople.length}</h2>
+            <h2>LV Kopā: {props.infectedPeopleData.infectedPeople.length}</h2>
             <p>latvijaskoronakarte.lv</p>
             <p>atjaunoja datus:</p>
-            <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : props.lastUpdate)}</p>
+            <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
             {/* <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p> */}
           </div>
         </InfoWindow>

@@ -522,25 +522,6 @@ class Home extends Component {
 						<Grid.Column stackable="true" width={10} className={"map-container"} >
 
 
-							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
-
-
-
-							<Segment raised style={{ padding: "0" }} >
-								{currentlyVisibleMap === "googleMap" &&
-									!polylinesVisible &&
-									infectedPeople &&
-									stateInitializationComplete ?
-									<MainMapWithoutPolylines infectedPeopleData={{ infectedPeople: infectedPeople, lastUpdate: whenInfectedPeopleHaveBeenLastUpdated }} /> : ""}
-								{currentlyVisibleMap === "skpcMap" ? <SKPCMap /> : ""}
-								{/* {currentlyVisibleMap === "googleMap" &&
-									polylinesVisible &&
-									infectedPeople &&
-									stateInitializationComplete &&
-									<MainMapWithPolylines infectedPeopleData={{ infectedPeople: infectedPeople, lastUpdate: whenInfectedPeopleHaveBeenLastUpdated }} />} */}
-								{/* {polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
-								{!polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
-							</Segment>
 
 
 							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handlePolylineToggle}>
@@ -551,6 +532,30 @@ class Home extends Component {
 							<Button className={"top-button"} compact size={"small"} inverted={true} floated={"right"} toggle onClick={this.handleMapTypeToggle}>
 								Parādīt {currentlyVisibleMap === "googleMap" ? "SKPC Reģionu Karti" : "Izplatības Karti"}
 							</Button>
+							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
+
+
+							<Segment raised style={{ padding: "0" }} >
+								{currentlyVisibleMap === "googleMap" &&
+									!polylinesVisible &&
+									infectedPeople &&
+									stateInitializationComplete ?
+									<MainMapWithoutPolylines infectedPeopleData={{ infectedPeople: infectedPeople, lastUpdate: whenInfectedPeopleHaveBeenLastUpdated }} /> : ""}
+								{currentlyVisibleMap === "googleMap" &&
+									polylinesVisible &&
+									infectedPeople &&
+									stateInitializationComplete ?
+									<MainMapWithPolylines infectedPeopleData={{ infectedPeople: infectedPeople, lastUpdate: whenInfectedPeopleHaveBeenLastUpdated }} /> : ""}
+								{currentlyVisibleMap === "skpcMap" ? <SKPCMap className={"skpc-map"} /> : ""}
+								{/* {currentlyVisibleMap === "googleMap" &&
+									polylinesVisible &&
+									infectedPeople &&
+									stateInitializationComplete &&
+									<MainMapWithPolylines infectedPeopleData={{ infectedPeople: infectedPeople, lastUpdate: whenInfectedPeopleHaveBeenLastUpdated }} />} */}
+								{/* {polylinesVisible && infectedPeople && <MainMapWithPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/> }
+								{!polylinesVisible && infectedPeople && <MainMapWithoutPolylines infectedPeople={infectedPeople} openedInfoWindowId={openedInfoWindowId}/>} */}
+							</Segment>
+
 
 
 						</Grid.Column>
@@ -716,8 +721,8 @@ class Home extends Component {
 
 										</Accordion>
 									})
-									:
-									""}
+										:
+										""}
 
 
 
