@@ -114,9 +114,9 @@ export default async function latestDataSaver(type) {
             })
             .then((done, tvnetRss) => {
                 const tvnetRssPartial = getLastUpdateTime(timeNow, "tvnetRss", tvnetRss, oldTvnetRssJson)
-                const newFactsLastUpdateTime = tvnetRssPartial.lastUpdateTime
+                const newTvnetRssLastUpdateTime = tvnetRssPartial.lastUpdateTime
                 if (tvnetRssPartial.shouldUpdate) {
-                    fs.writeFileSync("./parsedData/tvnetRss.json", JSON.stringify({ data: tvnetRss, lastUpdateTime: newFactsLastUpdateTime, hash: tvnetRssPartial.newHash }))
+                    fs.writeFileSync("./parsedData/tvnetRss.json", JSON.stringify({ data: tvnetRss, lastUpdateTime: newTvnetRssLastUpdateTime, hash: tvnetRssPartial.newHash }))
                 }
             })
 
