@@ -95,6 +95,9 @@ const MapWithPolylines = compose(
       return false
     },
     componentWillMount() {
+      let lineSymbol = window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+      this.setState({ lineSymbol: lineSymbol })
+      state.lineSymbol = { path: lineSymbol }
       // this.setState({ data: [] });
     },
     componentDidMount() {
@@ -103,13 +106,13 @@ const MapWithPolylines = compose(
       // linePath.strokeOpacity = 1.0
       // linePath.scale = 4
 
-      let lineSymbol = window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+      // let lineSymbol = window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW
 
-      // state.labelOrigin = new window.google.maps.Point(12, 66)
+      // // state.labelOrigin = new window.google.maps.Point(12, 66)
 
 
-      this.setState({ lineSymbol: lineSymbol })
-      state.lineSymbol = { path: lineSymbol }
+      // this.setState({ lineSymbol: lineSymbol })
+      // state.lineSymbol = { path: lineSymbol }
 
       // fetch(process.env.REACT_APP_API_HOST, state.auth)
       //   .then(res => res.json())

@@ -522,7 +522,7 @@ class Home extends Component {
 						<Grid.Column stackable="true" width={10} className={"map-container"} >
 
 
-							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni</Header>
+							<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni  </Header>
 
 							<Button disabled={currentlyVisibleMap === "googleMap" ? false : true} className={"top-button"} compact size={"small"} inverted={true} toggle onClick={this.handlePolylineToggle}>
 								{polylinesVisible ? "Izslēgt" : "Ieslēgt"} Izplatības Ceļu
