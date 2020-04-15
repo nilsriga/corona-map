@@ -102,7 +102,8 @@ div.title.accordion-title {
 }
 
 .main-header {
-    display: contents!important;
+    /* display: contents!important; */
+    margin-top:0px!important
 }
 
 div.content.active.accordion-content {
@@ -110,6 +111,10 @@ div.content.active.accordion-content {
     padding-right: 5px!important;
     padding-bottom: 6px!important;
     padding-left: 3px!important;
+}
+
+.top-button {
+    font-size: 90%!important;
 }
 
 .map-loading {

@@ -41,17 +41,39 @@ function getLastUpdateTime(timeNow, type, data, oldData) {
     return { shouldUpdate: somethingNew, lastUpdateTime: newfactsLastUpdateTime, newHash: somethingNew ? newDataHash : oldDataHash }
 }
 
+function addHashToEach(jsonOrString, tvnetRss) {
+    const json = typeof jsonOrString === "string" ? JSON.parse(jsonOrString) : jsonOrString
+    if (!tvnetRss) {
+        return json.map((el, i, arr) => {
+            let concatenatedValues = ""
+            for (let prop in el) {
+                concatenatedValues = concatenatedValues.concat(el[prop])
+            }
+            const hash = createHash(concatenatedValues)
+            el.hash = hash
+            return el
+        })
+    } else {
+        return json.map((el, i, arr) => {
+            const hash = createHash(el.content)
+            el.hash = hash
+            return el
+        })
+    }
+}
+
 
 
 export default async function latestDataSaver(type) {
 
     setInterval(async () => {
 
-        const timeNow = moment().format('D.M.YY, hh:mm')
+        const timeNow = moment().format('D.M.YY, HH:mm')
 
         let oldInfectedPeopleJson = {}
         let oldTvnetRssJson = {}
         let oldFactsJson = {}
+
 
         ASQ()
             .then(async (done, msg) => {
@@ -66,10 +88,29 @@ export default async function latestDataSaver(type) {
 
                 // this updates infectedPeople.json
                 const newInfectedGoogleSheetsJson = await getGoogleSheetsJson("infected")
-                const infectedPartial = getLastUpdateTime(timeNow, "infectedPeople", await newInfectedGoogleSheetsJson, oldInfectedPeopleJson)
+                const infectedPartial = getLastUpdateTime(timeNow, "infectedPeople", newInfectedGoogleSheetsJson, oldInfectedPeopleJson)
                 const newInfectedPeopleLastUpdateTime = infectedPartial.lastUpdateTime
                 if (infectedPartial.shouldUpdate) {
-                    fs.writeFileSync("./parsedData/infectedPeople.json", JSON.stringify({ data: JSON.parse(await newInfectedGoogleSheetsJson), lastUpdateTime: newInfectedPeopleLastUpdateTime, hash: infectedPartial.newHash }))
+                    const infectedWithHash = addHashToEach(newInfectedGoogleSheetsJson)
+                    const metadata = {
+                        howManyInfectedToday: 0,
+                        whereTodayInfected: {}
+                    }
+                    const placesWithInfectedToday = []
+
+                    infectedWithHash.forEach(el => {
+                        if (el.dateOfDiagnosisBroadcast === moment().format("DD.MM.YY")) {
+                            console.log(el.selfCity)
+                            metadata.howManyInfectedToday++
+                            placesWithInfectedToday.push(el.selfCity)
+                        }
+                    })
+
+                    for (var i = 0; i < placesWithInfectedToday.length; i++) {
+                        metadata.whereTodayInfected[placesWithInfectedToday[i]] = 1 + (metadata.whereTodayInfected[placesWithInfectedToday[i]] || 0);
+                    }
+
+                    fs.writeFileSync("./parsedData/infectedPeople.json", JSON.stringify({ data: infectedWithHash, lastUpdateTime: newInfectedPeopleLastUpdateTime, hash: infectedPartial.newHash, metadata: metadata }))
                 }
 
 
@@ -77,9 +118,10 @@ export default async function latestDataSaver(type) {
                 // this updates facts.json
                 const newFactsGoogleSheetsJson = await getGoogleSheetsJson("facts")
                 const factsPartial = getLastUpdateTime(timeNow, "facts", await newFactsGoogleSheetsJson, oldFactsJson)
-                const newfactsLastUpdateTime = factsPartial.lastUpdateTime
+                const newFactsLastUpdateTime = factsPartial.lastUpdateTime
                 if (factsPartial.shouldUpdate) {
-                    fs.writeFileSync("./parsedData/facts.json", JSON.stringify({ data: JSON.parse(await newFactsGoogleSheetsJson), lastUpdateTime: newfactsLastUpdateTime, hash: factsPartial.newHash }))
+                    const factsWithHash = addHashToEach(newFactsGoogleSheetsJson)
+                    fs.writeFileSync("./parsedData/facts.json", JSON.stringify({ data: factsWithHash, lastUpdateTime: newFactsLastUpdateTime, hash: factsPartial.newHash, metadata: {} }))
                 }
                 done()
             })
@@ -116,7 +158,8 @@ export default async function latestDataSaver(type) {
                 const tvnetRssPartial = getLastUpdateTime(timeNow, "tvnetRss", tvnetRss, oldTvnetRssJson)
                 const newTvnetRssLastUpdateTime = tvnetRssPartial.lastUpdateTime
                 if (tvnetRssPartial.shouldUpdate) {
-                    fs.writeFileSync("./parsedData/tvnetRss.json", JSON.stringify({ data: tvnetRss, lastUpdateTime: newTvnetRssLastUpdateTime, hash: tvnetRssPartial.newHash }))
+                    const tvnetRssWithHash = addHashToEach(tvnetRss, "tvnetRss")
+                    fs.writeFileSync("./parsedData/tvnetRss.json", JSON.stringify({ data: tvnetRssWithHash, lastUpdateTime: newTvnetRssLastUpdateTime, hash: tvnetRssPartial.newHash, metadata: {} }))
                 }
             })
 

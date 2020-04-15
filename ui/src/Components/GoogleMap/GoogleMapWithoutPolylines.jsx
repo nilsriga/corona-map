@@ -179,6 +179,16 @@ const MapWithoutPolylines = compose(
             <p>latvijaskoronakarte.lv</p>
             <p>atjaunoja datus:</p>
             <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
+            <p>Šodien:</p>
+            {
+              Object.keys(props.infectedPeopleData.metadata.whereTodayInfected).map((keyName, i, arr) => (
+
+                <li className="travelcompany-input" key={i}>
+                  <span className="input-label">{arr[i]}: {props.infectedPeopleData.metadata.whereTodayInfected[keyName]}</span>
+                </li>
+
+              ))
+            }
           </div>
         </InfoWindow>
       }

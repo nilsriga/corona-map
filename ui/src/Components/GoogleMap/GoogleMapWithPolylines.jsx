@@ -421,6 +421,16 @@ const MapWithPolylines = compose(
             <p>atjaunoja datus:</p>
             <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
             {/* <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p> */}
+            <p>Šodien:</p>
+            {
+              Object.keys(props.infectedPeopleData.metadata.whereTodayInfected).map((keyName, i, arr) => (
+
+                <li className="travelcompany-input" key={i}>
+                  <span className="input-label">{arr[i]}: {props.infectedPeopleData.metadata.whereTodayInfected[keyName]}</span>
+                </li>
+
+              ))
+            }
           </div>
         </InfoWindow>
       }
