@@ -648,7 +648,13 @@ class Home extends Component {
 											Šodien Kopā: {infectedPeopleMetadata.howManyInfectedToday}
 											<br />
 											{
-												stateInitializationComplete && infectedPeopleMetadata ? Object.keys(infectedPeopleMetadata.whereTodayInfected).map((keyName, i, arr) => (
+												stateInitializationComplete 
+												&& infectedPeopleMetadata
+												&& infectedPeopleMetadata !== null
+												&& infectedPeopleMetadata !== undefined
+												&& infectedPeopleMetadata.whereTodayInfected !== null
+												&& infectedPeopleMetadata.whereTodayInfected !== undefined
+												 ? Object.keys(infectedPeopleMetadata.whereTodayInfected).map((keyName, i, arr) => (
 
 													<li className="travelcompany-input" key={i}>
 														<span className="input-label">{arr[i]}: {infectedPeopleMetadata.whereTodayInfected[keyName]}</span>
