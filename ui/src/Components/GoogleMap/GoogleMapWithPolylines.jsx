@@ -423,13 +423,21 @@ const MapWithPolylines = compose(
             {/* <p>{"\n" + (props.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.lastUpdate : moment(props.lastUpdate).format("DD.MM.YYYY HH:MM"))}</p> */}
             <p>Šodien:</p>
             {
+              props.infectedPeopleData.metadata
+              && props.infectedPeopleData.metadata !== null
+              && props.infectedPeopleData.metadata !== undefined
+              && props.infectedPeopleData.metadata.whereTodayInfected !== null
+              && props.infectedPeopleData.metadata.whereTodayInfected !== undefined
+              ?
               Object.keys(props.infectedPeopleData.metadata.whereTodayInfected).map((keyName, i, arr) => (
 
                 <li className="travelcompany-input" key={i}>
-                  <span className="input-label">{arr[i]}: {props.infectedPeopleData.metadata.whereTodayInfected[keyName]}</span>
-                </li>
+              <span className="input-label">{arr[i]}: {props.infectedPeopleData.metadata.whereTodayInfected[keyName]}</span>
+            </li>
 
               ))
+              :
+              ""
             }
           </div>
         </InfoWindow>
