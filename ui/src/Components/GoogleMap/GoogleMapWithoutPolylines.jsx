@@ -178,12 +178,12 @@ const MapWithoutPolylines = compose(
           visible={true}
         >
           <div style={{ opacity: 0.75 }}>
-            <h2>LV šodien atklāti: {props.infectedPeopleData.metadata.howManyInfectedToday}</h2>
-            <p>LV inficēti patreiz un miruši: {props.infectedPeopleData.metadata.activeCasesCount}</p>
+            <h2>šodien atklāti: {props.infectedPeopleData.metadata.howManyInfectedToday}</h2>
+            <h3>Inficēti patreiz: {props.infectedPeopleData.metadata.activeCasesCount}</h3>
             <p>latvijaskoronakarte.lv</p>
             <p>atjaunoja datus:</p>
             <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
-            <p>Šodien Kur:</p>
+            <p>Kur šodien atklāti::</p>
             {
               props.infectedPeopleData.metadata
               && props.infectedPeopleData.metadata !== null
