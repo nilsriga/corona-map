@@ -67,7 +67,7 @@ function getActiveCasesCount(newInfectedPeople) {
     newInfectedPeople.forEach(person => {
         // console.log(person.isRecovered)
         // console.log(count)
-        if (person.isRecovered === "0") {
+        if (person.isRecovered === "0" && person.isDead === "0") {
             // console.log("person", person.isRecovered)
             count = count + 1
             // console.log(count)
@@ -180,7 +180,7 @@ export default async function latestDataSaver(type) {
 
 
 
-    }, 900)
+    }, 90000)
 
 
 
