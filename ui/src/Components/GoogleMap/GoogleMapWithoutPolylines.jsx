@@ -14,7 +14,6 @@ import checkIcon from "./checkIcon.png"
 import { componentDidUpdate } from "react-google-maps/lib/utils/MapChildHelper";
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 
-
 // THIS SPREADS OUT THE POINTS A BIT
 function getOffsetCoo(coo) {
 
@@ -99,6 +98,8 @@ const MapWithoutPolylines = compose(
       {
         props.infectedPeopleData.infectedPeople.map((item, index, arr) => {
 
+          if (item.isRecovered === "0") {
+
 
           // THIS MAKES MARKERS BE SPREAD OUT A MORE
           const selfLat = parseFloat(getOffsetCoo(item.selfCooLat))
@@ -160,6 +161,8 @@ const MapWithoutPolylines = compose(
 
           )
 
+        }
+
 
         })
       }
@@ -175,11 +178,12 @@ const MapWithoutPolylines = compose(
           visible={true}
         >
           <div style={{ opacity: 0.75 }}>
-            <h2>LV Kopā: {props.infectedPeopleData.infectedPeople.length}</h2>
+            <h2>LV šodien atklāti: {props.infectedPeopleData.metadata.howManyInfectedToday}</h2>
+            <p>LV inficēti un miruši: {props.infectedPeopleData.metadata.activeCasesCount}</p>
             <p>latvijaskoronakarte.lv</p>
             <p>atjaunoja datus:</p>
             <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
-            <p>Šodien:</p>
+            <p>Šodien Kur:</p>
             {
               props.infectedPeopleData.metadata
               && props.infectedPeopleData.metadata !== null

@@ -91,7 +91,8 @@ class Home extends Component {
 		hasError: false,
 		errorMessage: "",
 
-		firstVisit: true
+		firstVisit: true,
+
 		// openedInfoWindowId: {}
 	}
 
@@ -404,7 +405,7 @@ class Home extends Component {
 			unseenFactsCount,
 			unseenTvnetRssCount,
 			firstVisit,
-			infectedPeopleMetadata
+			infectedPeopleMetadata,
 			// storedInfectedPeople
 			// aboutMapLoaded
 			// errorMessage
