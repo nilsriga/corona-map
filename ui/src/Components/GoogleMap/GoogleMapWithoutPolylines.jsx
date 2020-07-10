@@ -89,7 +89,7 @@ const MapWithoutPolylines = compose(
       onClick={props.onMarkerClustererClick}
       averageCenter
       enableRetinaIcons
-      gridSize={11}
+      gridSize={4}
       ignoreHidden={true}
     >
 
@@ -179,7 +179,7 @@ const MapWithoutPolylines = compose(
         >
           <div style={{ opacity: 0.75 }}>
             <h2>LV šodien atklāti: {props.infectedPeopleData.metadata.howManyInfectedToday}</h2>
-            <p>LV inficēti un miruši: {props.infectedPeopleData.metadata.activeCasesCount}</p>
+            <p>LV inficēti patreiz un miruši: {props.infectedPeopleData.metadata.activeCasesCount}</p>
             <p>latvijaskoronakarte.lv</p>
             <p>atjaunoja datus:</p>
             <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
