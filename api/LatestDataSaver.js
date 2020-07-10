@@ -62,6 +62,20 @@ function addHashToEach(jsonOrString, tvnetRss) {
     }
 }
 
+function getActiveCasesCount(newInfectedPeople) {
+    let count = 0
+    newInfectedPeople.forEach(person => {
+        // console.log(person.isRecovered)
+        // console.log(count)
+        if (person.isRecovered === "0") {
+            // console.log("person", person.isRecovered)
+            count = count + 1
+            // console.log(count)
+        }
+    })
+    return count
+}
+
 
 
 export default async function latestDataSaver(type) {
@@ -94,13 +108,14 @@ export default async function latestDataSaver(type) {
                     const infectedWithHash = addHashToEach(newInfectedGoogleSheetsJson)
                     const metadata = {
                         howManyInfectedToday: 0,
-                        whereTodayInfected: {}
+                        whereTodayInfected: {},
+                        activeCasesCount: getActiveCasesCount(infectedWithHash)
                     }
                     const placesWithInfectedToday = []
 
                     infectedWithHash.forEach(el => {
                         if (el.dateOfDiagnosisBroadcast === moment().format("DD.MM.YY")) {
-                            console.log(el.selfCity)
+                            // console.log(el.selfCity)
                             metadata.howManyInfectedToday++
                             placesWithInfectedToday.push(el.selfCity)
                         }
@@ -109,7 +124,7 @@ export default async function latestDataSaver(type) {
                     for (var i = 0; i < placesWithInfectedToday.length; i++) {
                         metadata.whereTodayInfected[placesWithInfectedToday[i]] = 1 + (metadata.whereTodayInfected[placesWithInfectedToday[i]] || 0);
                     }
-
+                    // console.log(metadata)
                     fs.writeFileSync("./parsedData/infectedPeople.json", JSON.stringify({ data: infectedWithHash, lastUpdateTime: newInfectedPeopleLastUpdateTime, hash: infectedPartial.newHash, metadata: metadata }))
                 }
 
@@ -165,7 +180,7 @@ export default async function latestDataSaver(type) {
 
 
 
-    }, 3000)
+    }, 900)
 
 
 
