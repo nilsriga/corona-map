@@ -89,7 +89,7 @@ const MapWithoutPolylines = compose(
       onClick={props.onMarkerClustererClick}
       averageCenter
       enableRetinaIcons
-      gridSize={4}
+      gridSize={2}
       ignoreHidden={true}
     >
 

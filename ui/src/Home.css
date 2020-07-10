@@ -125,3 +125,9 @@ div.content.active.accordion-content {
 #root > div > div > div > div > div > div.ten.wide.column.map-container > div { 
     background-color: #89a9ca!important;
 }
+
+
+.raised > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) {
+    display: none;
+    visibility: hidden;
+}
