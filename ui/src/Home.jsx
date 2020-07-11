@@ -12,14 +12,16 @@ import {
 	Label,
 	Loader,
 	Dimmer,
+	Image
 } from "semantic-ui-react"
 import MainMapWithPolylines from "./Components/GoogleMap/GoogleMapWithPolylines"
 import MainMapWithoutPolylines from "./Components/GoogleMap/GoogleMapWithoutPolylines"
 import SKPCMap from "./Components/SKPCMap/SKPCMap"
-import { TwitterTimelineEmbed } from 'react-twitter-embed';
+import { TwitterTimelineEmbed } from 'react-twitter-embed'
 import moment from "moment"
 import jwt from "jsonwebtoken"
 import axios from "axios"
+import ContaclessImage from "./Components/Banner/contactless.png"
 import "./Home.css"
 import "moment/locale/lv"
 moment.locale("lv")
@@ -427,7 +429,7 @@ class Home extends Component {
 		return (
 			<Segment inverted={true}>
 
-			<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni  </Header>
+				<Header className="box-header main-header" as="h3" inverted={true} textAlign={"center"} >Paliec Mājās, Sargi Ģimeni  </Header>
 
 
 				{/* ####################### */}
@@ -649,19 +651,19 @@ class Home extends Component {
 											Šodien Kopā: {infectedPeopleMetadata.howManyInfectedToday}
 											<br />
 											{
-												stateInitializationComplete 
-												&& infectedPeopleMetadata
-												&& infectedPeopleMetadata !== null
-												&& infectedPeopleMetadata !== undefined
-												&& infectedPeopleMetadata.whereTodayInfected !== null
-												&& infectedPeopleMetadata.whereTodayInfected !== undefined
-												 ? Object.keys(infectedPeopleMetadata.whereTodayInfected).map((keyName, i, arr) => (
+												stateInitializationComplete
+													&& infectedPeopleMetadata
+													&& infectedPeopleMetadata !== null
+													&& infectedPeopleMetadata !== undefined
+													&& infectedPeopleMetadata.whereTodayInfected !== null
+													&& infectedPeopleMetadata.whereTodayInfected !== undefined
+													? Object.keys(infectedPeopleMetadata.whereTodayInfected).map((keyName, i, arr) => (
 
-													<li className="travelcompany-input" key={i}>
-														<span className="input-label">{arr[i]}: {infectedPeopleMetadata.whereTodayInfected[keyName]}</span>
-													</li>
+														<li className="travelcompany-input" key={i}>
+															<span className="input-label">{arr[i]}: {infectedPeopleMetadata.whereTodayInfected[keyName]}</span>
+														</li>
 
-												))
+													))
 													:
 													""
 											}
@@ -832,7 +834,18 @@ class Home extends Component {
 
 
 
+							{/* ############################ */}
+							{/* BANNER */}
+							{/* ############################ */}
+							<div className={"ui-box"}>
 
+									<Header className="box-header" inverted={true} as="h4"><a href="https://revolutforbusiness.ngih.net/c/2216684/824022/9943">latvijaskoronakarte iesaka pāriet uz bezkontakta maksājumiem</a></Header>
+
+									<a href="https://revolutforbusiness.ngih.net/c/2216684/824022/9943">
+										<Image src={ ContaclessImage }/>
+									</a>
+
+							</div>
 
 
 
@@ -876,6 +889,13 @@ class Home extends Component {
 									</div>
 								</Dimmer.Dimmable>
 							</div>
+
+
+
+
+
+
+
 
 						</Grid.Column>
 
