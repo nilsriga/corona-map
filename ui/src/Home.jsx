@@ -839,10 +839,10 @@ class Home extends Component {
 							{/* ############################ */}
 							<div className={"ui-box"}>
 
-									<Header className="box-header" inverted={true} as="h4"><a href="https://revolutforbusiness.ngih.net/c/2216684/824022/9943">latvijaskoronakarte iesaka pāriet uz bezkontakta maksājumiem</a></Header>
+									<Header className="box-banner-header" inverted={true} as="h4"><a href="https://revolutforbusiness.ngih.net/c/2216684/824022/9943">latvijaskoronakarte iesaka pāriet uz bezkontakta maksājumiem</a></Header>
 
 									<a href="https://revolutforbusiness.ngih.net/c/2216684/824022/9943">
-										<Image src={ ContaclessImage }/>
+										<Image className="banner-image" src={ ContaclessImage }/>
 									</a>
 
 							</div>

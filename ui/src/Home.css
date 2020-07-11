@@ -125,3 +125,15 @@ div.content.active.accordion-content {
 #root > div > div > div > div > div > div.ten.wide.column.map-container > div { 
     background-color: #89a9ca!important;
 }
+
+.box-banner-header {
+    /* margin-top: 0.4em!important; */
+    /* margin-top: 2em!important; */
+    margin-top: 30px!important;
+}
+
+.banner-image {
+    box-shadow: inset 11px 13px 75px -1px rgba(0,0,0,0.69);   
+    -webkit-box-shadow: inset 11px 13px 75px -1px rgba(0,0,0,0.69);
+    -moz-box-shadow: inset 11px 13px 75px -1px rgba(0,0,0,0.69);
+}
