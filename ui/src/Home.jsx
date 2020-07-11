@@ -753,14 +753,14 @@ class Home extends Component {
 
 										<Accordion.Title className={"accordion-title"} inverted="true" active={activeFirstFactIndex === -1 ? false : true} index={0} onClick={this.handleFirstFactClick}>
 											<Icon corner name="dropdown" />
-										Intervija Ar Inficēto <u>Vieglā Formā</u>
+										Saslimšanas ilgtermiņa sekas
 										</Accordion.Title>
 
 										<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeFirstFactIndex === -1 ? false : true}>
 											{
 												activeFirstFactIndex !== -1
 												&& <Embed
-													id="NxvMLnCczXI"
+													id="NQ0FaaJ73xc"
 													source="youtube"
 													active={true}
 													autoplay={false}
@@ -772,14 +772,14 @@ class Home extends Component {
 
 										<Accordion.Title className={"accordion-title"} inverted="true" active={activeSecondFactIndex === -1 ? false : true} index={0} onClick={this.handleSecondFactClick}>
 											<Icon corner name="dropdown" />
-										Situācija Ķīnā
+										Vīrusa Izplatība Gaisā
 									</Accordion.Title>
 
 										<Accordion.Content style={{ color: "white", background: "#525252" }} className={"accordion-content"} active={activeSecondFactIndex === -1 ? false : true}>
 											{
 												activeSecondFactIndex !== -1
 												&& <Embed
-													id="IhzF-5xELOE"
+													id="WZSKoNGTR6Q"
 													source="youtube"
 													active={true}
 													autoplay={false}
