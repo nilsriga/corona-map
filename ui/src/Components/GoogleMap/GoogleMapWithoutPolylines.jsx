@@ -101,67 +101,67 @@ const MapWithoutPolylines = compose(
           if (item.isRecovered === "0") {
 
 
-          // THIS MAKES MARKERS BE SPREAD OUT A MORE
-          const selfLat = parseFloat(getOffsetCoo(item.selfCooLat))
-          const selfLng = parseFloat(getOffsetCoo(item.selfCooLng))
+            // THIS MAKES MARKERS BE SPREAD OUT A MORE
+            const selfLat = parseFloat(getOffsetCoo(item.selfCooLat))
+            const selfLng = parseFloat(getOffsetCoo(item.selfCooLng))
 
-          const icon = item.isDead === "1" ? skullIcon : item.isRecovered === "1" ? checkIcon : biohHazzardIcon
-          const markerIcon = {
-            url: icon,
-            origin: new window.google.maps.Point(0, 0),
-            labelOrigin: new window.google.maps.Point(getOffsetXY(35), getOffsetXY(65))
-          }
+            const icon = item.isDead === "1" ? skullIcon : item.isRecovered === "1" ? checkIcon : biohHazzardIcon
+            const markerIcon = {
+              url: icon,
+              origin: new window.google.maps.Point(0, 0),
+              labelOrigin: new window.google.maps.Point(getOffsetXY(35), getOffsetXY(65))
+            }
 
-          return (
+            return (
 
 
 
-            <MarkerWithInfoWindow
-              key={Math.random() * 10000000000000000}
-              markerIcon={markerIcon}
-              position={
-                item.id === "1"
-                  ?
-                  {
-                    lat: parseFloat(item.selfCooLat),
-                    lng: parseFloat(item.selfCooLng)
-                  }
-                  :
-                  {
-                    lat: selfLat,
-                    lng: selfLng
-                  }
-              }
-              content={(
-                <div style={{ opacity: 0.75 }}>
-                  <div>
-                    <ul>
+              <MarkerWithInfoWindow
+                key={Math.random() * 10000000000000000}
+                markerIcon={markerIcon}
+                position={
+                  item.id === "1"
+                    ?
+                    {
+                      lat: parseFloat(item.selfCooLat),
+                      lng: parseFloat(item.selfCooLng)
+                    }
+                    :
+                    {
+                      lat: selfLat,
+                      lng: selfLng
+                    }
+                }
+                content={(
+                  <div style={{ opacity: 0.75 }}>
+                    <div>
+                      <ul>
 
-                      {item.label ? <h3>{item.label}</h3> : ""}
-                      {item.origin ? <li>Izcelsme: {item.origin}</li> : ""}
-                      {item.totalInfected ? <li>Inficētais Nr.: {item.totalInfected}</li> : ""}
-                      {item.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {item.dateOfFirstContactWIthLatvia}</li> : ""}
-                      {item.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {item.dateOfDiagnosisBroadcast}</li> : ""}
-                      {item.descriptionTitle ? <li>Īsumā: {item.descriptionTitle}</li> : ""}
-                      {item.descriptionHeader ? <li>{item.descriptionHeader}</li> : ""}
-                      {item.link ? <li><a href={item.link}>{item.link}</a></li> : ""}
-                      {item.extraLink1 ? <li><a href={item.extraLink1}>{item.extraLink1}</a></li> : ""}
-                      {item.extraLink2 ? <li><a href={item.extraLink2}>{item.extraLink1}</a></li> : ""}
-                      {item.extraLink3 ? <li><a href={item.extraLink3}>{item.extraLink1}</a></li> : ""}
+                        {item.label ? <h3>{item.label}</h3> : ""}
+                        {item.origin ? <li>Izcelsme: {item.origin}</li> : ""}
+                        {item.totalInfected ? <li>Inficētais Nr.: {item.totalInfected}</li> : ""}
+                        {item.dateOfFirstContactWIthLatvia ? <li>Pirmais Kontakts ar Latviju: {item.dateOfFirstContactWIthLatvia}</li> : ""}
+                        {item.dateOfDiagnosisBroadcast ? <li>Izsludināšanas Datums: {item.dateOfDiagnosisBroadcast}</li> : ""}
+                        {item.descriptionTitle ? <li>Īsumā: {item.descriptionTitle}</li> : ""}
+                        {item.descriptionHeader ? <li>{item.descriptionHeader}</li> : ""}
+                        {item.link ? <li><a href={item.link}>{item.link}</a></li> : ""}
+                        {item.extraLink1 ? <li><a href={item.extraLink1}>{item.extraLink1}</a></li> : ""}
+                        {item.extraLink2 ? <li><a href={item.extraLink2}>{item.extraLink1}</a></li> : ""}
+                        {item.extraLink3 ? <li><a href={item.extraLink3}>{item.extraLink1}</a></li> : ""}
 
-                    </ul>
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              )}
-              label={item.id === "1" ? item.label : ""}
-            // openedInfoWindowId={{ windowId: props.openedInfoWindowId, selfId: item.id }}
-            />
+                )}
+                label={item.id === "1" ? item.label : ""}
+              // openedInfoWindowId={{ windowId: props.openedInfoWindowId, selfId: item.id }}
+              />
 
 
 
-          )
+            )
 
-        }
+          }
 
 
         })
@@ -178,28 +178,41 @@ const MapWithoutPolylines = compose(
           visible={true}
         >
           <div style={{ opacity: 0.75 }}>
-            <h2>šodien atklāti: {props.infectedPeopleData.metadata.howManyInfectedToday}</h2>
-            <h3>Inficēti patreiz: {props.infectedPeopleData.metadata.activeCasesCount}</h3>
-            <p>latvijaskoronakarte.lv</p>
-            <p>atjaunoja datus:</p>
-            <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
-            <p>Kur šodien atklāti::</p>
+            {props.infectedPeopleData.metadata.howManyInfectedToday === 0
+              ?
+              <div>
+                <h2>Inficēti patreiz: {props.infectedPeopleData.metadata.activeCasesCount}</h2>
+                <h3>šodien atklāti: {props.infectedPeopleData.metadata.howManyInfectedToday}</h3>
+                <br/>
+              </div>
+              :
+              <div>
+                <h2>šodien atklāti: {props.infectedPeopleData.metadata.howManyInfectedToday}</h2>
+                <h3>Inficēti patreiz: {props.infectedPeopleData.metadata.activeCasesCount}</h3>
+              </div>
+            }
+            <div>
+              <p>latvijaskoronakarte.lv</p>
+              <p>atjaunoja datus:</p>
+              <p>{"\n" + (props.infectedPeopleData.lastUpdate === "Īslaicīga, problēma ar serveri, patreiz nav zināms" ? props.infectedPeopleData.lastUpdate : props.infectedPeopleData.lastUpdate)}</p>
+              <p>{props.infectedPeopleData.metadata.howManyInfectedToday === 0 ? "" : "Kur šodien atklāti:"}</p>
+            </div>
             {
               props.infectedPeopleData.metadata
-              && props.infectedPeopleData.metadata !== null
-              && props.infectedPeopleData.metadata !== undefined
-              && props.infectedPeopleData.metadata.whereTodayInfected !== null
-              && props.infectedPeopleData.metadata.whereTodayInfected !== undefined
-              ?
-              Object.keys(props.infectedPeopleData.metadata.whereTodayInfected).map((keyName, i, arr) => (
+                && props.infectedPeopleData.metadata !== null
+                && props.infectedPeopleData.metadata !== undefined
+                && props.infectedPeopleData.metadata.whereTodayInfected !== null
+                && props.infectedPeopleData.metadata.whereTodayInfected !== undefined
+                ?
+                Object.keys(props.infectedPeopleData.metadata.whereTodayInfected).map((keyName, i, arr) => (
 
-                <li className="travelcompany-input" key={i}>
-              <span className="input-label">{arr[i]}: {props.infectedPeopleData.metadata.whereTodayInfected[keyName]}</span>
-            </li>
+                  <li className="travelcompany-input" key={i}>
+                    <span className="input-label">{arr[i]}: {props.infectedPeopleData.metadata.whereTodayInfected[keyName]}</span>
+                  </li>
 
-              ))
-              :
-              ""
+                ))
+                :
+                ""
             }
           </div>
         </InfoWindow>
