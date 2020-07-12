@@ -35,9 +35,16 @@ const keywords = [
 function getLastUpdateTime(timeNow, type, data, oldData) {
     const newDataHash = createHash(data)
     const oldDataHash = oldData.hash
-    const somethingNew = oldDataHash === newDataHash ? false : true
+    let somethingNew = oldDataHash === newDataHash ? false : true
 
     const newfactsLastUpdateTime = somethingNew === false ? oldData.lastUpdateTime : timeNow
+
+
+    if (moment(timeNow).diff(oldData.lastUpdateTime, "days") !== 0) {
+        somethingNew = true
+    }
+
+
     return { shouldUpdate: somethingNew, lastUpdateTime: newfactsLastUpdateTime, newHash: somethingNew ? newDataHash : oldDataHash }
 }
 
@@ -180,7 +187,7 @@ export default async function latestDataSaver(type) {
 
 
 
-    }, 90000)
+    }, 900)
 
 
 
