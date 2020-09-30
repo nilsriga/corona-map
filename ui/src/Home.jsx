@@ -834,19 +834,6 @@ class Home extends Component {
 
 
 
-							{/* ############################ */}
-							{/* BANNER */}
-							{/* ############################ */}
-							<div className={"ui-box"}>
-
-									<Header className="box-banner-header" inverted={true} as="h4"><a href="https://revolutforbusiness.ngih.net/q7gMg">Maksā Bez Kontakta - Bezmaksas Revolut Debetkartes Piegāde</a></Header>
-
-									<a href="https://revolutforbusiness.ngih.net/q7gMg">
-										<Image className="banner-image" src={ ContaclessImage }/>
-									</a>
-
-							</div>
-
 
 
 
