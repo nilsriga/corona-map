@@ -1,0 +1,139 @@
+.ui.grid>.row>.column {
+    padding: 0.2em!important;
+}
+
+#root>div>div>div>div>div>div.ten.wide.column>div>div>div {
+    margin: -2px;
+    border-radius: 5px;
+    height: 100%!important
+}
+
+#root>div>div>div>div>div>div:nth-child(3)>div.gray.row>div>div>div {
+    padding-top: 5px!important;
+    padding-bottom: 5px!important
+}
+
+.accordion {
+    border-radius: 6px!important;
+}
+
+.accordion-content {
+    -webkit-box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 1);
+    -moz-box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 1);
+    box-shadow: inset 0px 0px 15px -2px rgba(0, 0, 0, 1);
+}
+
+.accordion-title-infected {
+    background: #2f3133!important;
+    padding: 0.5em!important;
+    border-bottom: 2px solid #525252;
+}
+
+.accordion-title-recovered {
+    background: #00f629!important;
+    padding: 0.5em!important;
+    border-bottom: 2px solid #525252;
+}
+
+.accordion-title-dead {
+    background: #000000!important;
+    padding: 0.5em!important;
+    border-bottom: 2px solid #525252;
+}
+
+.accordion-title {
+    background: #2f3133!important;
+    padding: 0.5em!important;
+    border-bottom: 2px solid #525252;
+}
+
+#twitter-widget-0 {
+    width: 100%!important;
+    height: 50vh!important;
+    background: #2f3133!important;
+}
+
+#root>div>div>div>div>div>div:nth-child(3)>div:nth-child(2)>h4 {
+    padding-top: 0.5em!important;
+}
+
+.box-header {
+    /* margin-top: 0.4em!important; */
+    /* margin-top: 2em!important; */
+    margin-top: 20px!important;
+}
+
+.ui.stackable.celled.grid>.column:not(.row),
+.ui.stackable.celled.grid>.row>.column,
+.ui.stackable.divided:not(.vertically).grid>.column:not(.row),
+.ui.stackable.divided:not(.vertically).grid>.row>.column {
+    padding-top: 0px!important;
+}
+
+.footer {
+    padding: 0px!important;
+    padding-top: 0.5em!important;
+    margin: 0px!important;
+}
+
+.twitter-container {
+    height: 50vh!important;
+}
+
+.infected-container {
+    height: 25vh!important;
+}
+
+.ui-box {
+    margin-top: -1.3em!important
+}
+
+#twitter-widget-0 {
+    min-width: auto!important;
+    height: 45vh!important;
+}
+
+div.title.accordion-title {
+    width: 100%!important;
+}
+
+.ui.styled.accordion {
+    width: 100%!important;
+}
+
+.main-header {
+    /* display: contents!important; */
+    margin-top:0px!important
+}
+
+div.content.active.accordion-content {
+    padding-top: 4px!important;
+    padding-right: 5px!important;
+    padding-bottom: 6px!important;
+    padding-left: 3px!important;
+}
+
+.top-button {
+    font-size: 90%!important;
+}
+
+.map-loading {
+    background: #e5e3df!important;
+    height: 90vh!important;
+}
+
+#root > div > div > div > div > div > div.ten.wide.column.map-container > div { 
+    background-color: #89a9ca!important;
+}
+
+.box-banner-header {
+    /* margin-top: 0.4em!important; */
+    /* margin-top: 2em!important; */
+    margin-top: 30px!important;
+}
+
+.banner-image {
+    box-shadow: inset 11px 13px 75px -1px rgba(0,0,0,0.69);   
+    -webkit-box-shadow: inset 11px 13px 75px -1px rgba(0,0,0,0.69);
+    -moz-box-shadow: inset 11px 13px 75px -1px rgba(0,0,0,0.69);
+}

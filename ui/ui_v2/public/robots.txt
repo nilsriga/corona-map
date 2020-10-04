@@ -1,0 +1,5 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Sitemap: http://latvijaskoronakarte.lv/sitemap.xml
+Sitemap: http://latvijaskoronakarte.online/sitemap.xml
+Disallow:

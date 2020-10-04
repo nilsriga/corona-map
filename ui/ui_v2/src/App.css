@@ -1,0 +1,6 @@
+#root {
+    -webkit-font-smoothing: antialiased!important;
+    -moz-osx-font-smoothing: grayscale!important;
+    text-rendering: optimizeLegibility!important;
+    -webkit-text-stroke: 0.00001px!important;
+}
