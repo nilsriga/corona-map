@@ -164,7 +164,7 @@ const MapWithoutPolylines = compose(
           }
 
 
-
+          return ""
 
         })
       }

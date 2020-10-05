@@ -1,0 +1,11 @@
+{
+    "apps": [
+        {
+            "name": "api_v1-dev",
+            "script": "npm",
+            "args": "run-script hot",
+            "watch": "src",
+            "ignore_watch" : ["parsedData"]
+        }
+    ]
+}

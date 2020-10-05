@@ -891,7 +891,7 @@ class Home extends Component {
 
 				</Grid>
 
-				<p>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com, <a href="http://latvijaskoronakarte.lv/v1">Apskatīt kartes vēsturiskos datus</a></p>
+				<p style={{"position": "absolute", "z-index": "100"}}>Karti uztur: https://github.com/snotrman/corona-map, nils.riga@gmail.com, <a href="http://v1.latvijaskoronakarte.lv">Apskatīt kartes vēsturiskos datus</a></p>
 
 			</Segment >
 		);
