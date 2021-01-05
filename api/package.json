@@ -34,7 +34,7 @@
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "asynquence": "^0.10.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "csv": "^5.3.2",
     "dotenv": "^8.2.0",
